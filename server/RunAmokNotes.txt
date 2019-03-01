@@ -1,0 +1,12 @@
+RUN AMOK
+
+ - Admin portal to add wine names / batch etc
+
+ - Frontend: only freeform comments
+
+ - Access the comments on the admin portal 
+
+ - Filter comments by batch (aka peach1, peach2)
+
+ - Maybe access comments by date saved
+ 
