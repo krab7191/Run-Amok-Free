@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const db = require("../models");
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/genericTasting", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/runAmok", { useNewUrlParser: true });
+
+const d = new Date();
 
 const userSeeds = [
     {
@@ -11,31 +13,28 @@ const userSeeds = [
         username: "krab7191",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        isMember: true,
-        newsletter: true,
-        ratings: []
+        notes: [],
+        createdOn: d
     },
     {
-        firstName: "Tom",
-        lastName: "Burchhardt",
-        email: "tlburch@gmail.com",
-        username: "Tom",
+        firstName: "Jon",
+        lastName: "Jackson",
+        email: "ocskier@gmail.com",
+        username: "ocskier",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        isMember: true,
-        newsletter: true,
-        ratings: []
+        notes: [],
+        createdOn: d
     },
     {
         firstName: "Calvin",
         lastName: "Leung",
-        email: "cl@gmail.com",
-        username: "calvin",
+        email: "calvinleung0@gmail.com",
+        username: "cleung",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        isMember: true,
-        newsletter: true,
-        ratings: []
+        notes: [],
+        createdOn: d
     }
 ];
 
