@@ -1,7 +1,7 @@
 {
-  "name": "generic-tasting-app",
+  "name": "run-amok-free",
   "version": "1.0.0",
-  "description": "A generic tasting app for alcoholic beverages of any kind, with an admin page that can be tailored to any business&#39;s needs.",
+  "description": "A company tasting app for Run Amok employees",
   "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,11 +17,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/starrlightdev/generic-tasting-app.git"
+    "url": "git@github.com:krab7191/Run-Amok-Free.git"
   },
   "author": "Karsten Rabe",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/starrlightdev/generic-tasting-app#readme",
+  "homepage": "https://github.com/krab7191/Run-Amok-Free",
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt": "^3.0.4",
