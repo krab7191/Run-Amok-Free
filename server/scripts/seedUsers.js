@@ -11,31 +11,25 @@ const userSeeds = [
         username: "krab7191",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        isMember: true,
-        newsletter: true,
-        ratings: []
+        notes: []
     },
     {
-        firstName: "Tom",
-        lastName: "Burchhardt",
-        email: "tlburch@gmail.com",
-        username: "Tom",
+        firstName: "Jon",
+        lastName: "Jackson",
+        email: "ocskier@gmail.com",
+        username: "ocskier",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        isMember: true,
-        newsletter: true,
-        ratings: []
+        notes: []
     },
     {
         firstName: "Calvin",
         lastName: "Leung",
-        email: "cl@gmail.com",
-        username: "calvin",
+        email: "calvinleung0@gmail.com",
+        username: "cleung",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        isMember: true,
-        newsletter: true,
-        ratings: []
+        notes: []
     }
 ];
 

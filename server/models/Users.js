@@ -64,29 +64,14 @@ const User = new Schema({
         // validate: [password, "Password must contain one upper and one lower case letter, one special character, one number, and be at least 8 long"]
     },
     // Specific to Starrlight: mead members have discounts etc
-    isMember: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    // Also starrlight specific
-    newsletter: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    ratings: [{
+    notes: [{
         type: Schema.Types.ObjectId,
-        ref: 'Ratings'
+        ref: 'Notes'
     }],
-    team: {
-        type: Schema.Types.ObjectId,
-        ref: 'Team',
-        default: null
-    },
+
     createdOn: {
         type: Date,
-        default: Date.now
+        required: "When creating a User entry, the date is required!!"
     },
     updatedOn: {
         type: Date,
