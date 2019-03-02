@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import EditableDataTable from './pages/EditableDataTable';
-import GraphsStats from './pages/GraphsStats';
+import Comments from './pages/Comments';
 import ListOrder from './pages/ListOrder';
-import SettingsPage from './pages/SettingsPage';
-import StatsDataTable from './pages/StatsDataTable';
 import Tasting from './pages/Tasting';
 import ApiTest from './pages/ApiTest';
 import NoMatch from './components/NoMatch';
@@ -34,9 +32,8 @@ class App extends Component {
                 <Route exact path="/" component={ListOrder} />
                 <Route exact path="/ListOrder" component={ListOrder} />
                 <Route exact path="/EditableDataTable" component={EditableDataTable} />
-                <Route exact path="/GraphsStats" component={GraphsStats} />
-                <Route exact path="/SettingsPage" component={SettingsPage} />
-                <Route exact path="/StatsDataTable" component={StatsDataTable} />
+                <Route exact path="/Comments" component={Comments} />
+               
                 <Route exact path="/Tasting" component={Tasting} />
                 <Route exact path="/ApiTest" component={ApiTest} />
                 <Route component={() => <NoMatch />} />
