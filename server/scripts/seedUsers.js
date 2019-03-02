@@ -3,6 +3,8 @@ const db = require("../models");
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/runAmok", { useNewUrlParser: true });
 
+const d = new Date();
+
 const userSeeds = [
     {
         firstName: "Karsten",
@@ -11,7 +13,8 @@ const userSeeds = [
         username: "krab7191",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        notes: []
+        notes: [],
+        createdOn: d
     },
     {
         firstName: "Jon",
@@ -20,7 +23,8 @@ const userSeeds = [
         username: "ocskier",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        notes: []
+        notes: [],
+        createdOn: d
     },
     {
         firstName: "Calvin",
@@ -29,7 +33,8 @@ const userSeeds = [
         username: "cleung",
         isAdmin: true,
         password: "$2b$10$6b4OvKXlYIziKuk8ofK7Ne27VmJ2ct1RuMVADnQlwXarhbKIdbTLS",
-        notes: []
+        notes: [],
+        createdOn: d
     }
 ];
 
