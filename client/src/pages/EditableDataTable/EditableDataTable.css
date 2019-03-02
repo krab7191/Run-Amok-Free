@@ -1,0 +1,18 @@
+#tableHeader {
+  position: absolute;
+}
+
+td {
+  border: 1px solid black;
+}
+
+/* Remove tiny red border added by react table */
+
+.rt-tr-group>div>.rt-td {
+  border-right: none !important;
+}
+
+#notify {
+  position: absolute;
+  z-index: 9999;
+}

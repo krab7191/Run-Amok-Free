@@ -55,7 +55,7 @@ class RecipeReviewCard extends React.Component {
     return (
       <MyContext.Consumer>
         {value => {
-          const { check } = value;
+          const { allBevs, check } = value;
           return(
         <Card className={classes.card}>
         <CardContent className="topcolor"
@@ -69,10 +69,10 @@ class RecipeReviewCard extends React.Component {
             title="Name"
             subheader="basic text"
             />
-          <CardHeader id="priceheader"
+          {/* <CardHeader id="priceheader"
             title= "Price"
             subheader="Alt Price"
-            />
+            /> */}
           </Grid>
           <CardContent>
           {/* context!!! */}
@@ -80,26 +80,9 @@ class RecipeReviewCard extends React.Component {
           </CardContent>
           <Grid>
             <CardActions className={classes.actions} disableActionSpacing>
-              <IconButton className="button">
-                <i className="material-icons">add_circle</i>
-              </IconButton>
-              <IconButton aria-label="Share">
-                <i className="material-icons">add_circle</i>
-              </IconButton>
-              <IconButton aria-label="Share">
-                <i className="material-icons">add_circle</i>
-              </IconButton>
-              <IconButton aria-label="Share">
-                <i className="material-icons">add_circle</i>
-              </IconButton>
-              <IconButton aria-label="Share">
-                <i className="material-icons">add_circle</i>
-              </IconButton>
-              <IconButton aria-label="Share">
-                <i className="material-icons">add_circle</i>
-              </IconButton>
-              <Button>
-                <Typography>I am a button</Typography>
+
+              <Button style={{borderStyle: 'solid', borderWidth: '2px'}}>
+                <Typography><b>Add your comments</b></Typography>
               </Button>
               <IconButton
                 className={classnames(classes.expand, {
