@@ -20,3 +20,6 @@ class ListOrder extends Component {
   }}
 
   export default ListOrder;
+
+  // {ratingMean}
+  // const ratingMean = (allBevs[0].ratings.reduce((a,b) => a + b, 0) / allBevs[0].ratings.length).toFixed(1);

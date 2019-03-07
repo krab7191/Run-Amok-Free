@@ -37,12 +37,10 @@ class Provider extends Component {
       <MyContext.Provider
         value={{
           myState: this.state,
-          addRating: (e) => {
+          addComment: (e) => {
             e.preventDefault();
-            let newBevs = this.state.allBevs;
-            newBevs[0].ratings.push(Math.round(10*(Math.random()*5))/10);
             this.setState({
-              allBevs: newBevs
+              allBevs: this.state.allBevs 
             },() => console.log(this.state))
           }
         }}

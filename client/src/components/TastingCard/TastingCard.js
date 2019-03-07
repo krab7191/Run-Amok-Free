@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import { MyContext } from "../MyContext/MyContext";
+import GrowTextInput from "../GrowTextInput";
 import './TastingCard.css';
 
 const styles = theme => ({
@@ -47,27 +48,40 @@ const styles = theme => ({
 });
 
 
-class RecipeReviewCard extends React.Component {
-  state = { expanded: false };
+class TastingCard extends React.Component {
+  state = { 
+    expanded: false,
+    inputOpen: false
+   };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  handleOpenComment = () => {
+    this.setState(state => ({ inputOpen: !state.inputOpen }));
+  }
+
   render() {
     const { classes } = this.props;
+
+    const renderCommentInput = (
+      <GrowTextInput checked={this.state.inputOpen}></GrowTextInput>
+    );
 
     return (
       <MyContext.Consumer>
           {value => {
-            const {allBevs} = value.myState;
-            const ratingMean = (allBevs[0].ratings.reduce((a,b) => a + b, 0) / allBevs[0].ratings.length).toFixed(1);
+            const { allBevs } = value.myState;
+            console.log(this.state);
+
             return (
-                <Card className={classes.card}>
+              <div>
+                <Card raised={true} className={classes.card}>
                   <CardHeader
                     avatar={
                       <Avatar aria-label="Recipe" className={classes.avatar}>
-                        {ratingMean}
+                        
                       </Avatar>
                     }
                     action={
@@ -89,7 +103,9 @@ class RecipeReviewCard extends React.Component {
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton onClick={(e)=>value.addRating(e)} aria-label="Add to favorites">
+                    <IconButton 
+                      onClick={this.handleOpenComment} 
+                      aria-label="Add to favorites">
                       <FavoriteIcon />
                     </IconButton>
                     <IconButton aria-label="Share">
@@ -112,6 +128,8 @@ class RecipeReviewCard extends React.Component {
                     </CardContent>
                   </Collapse>
                 </Card>
+                {this.state.inputOpen? renderCommentInput : null}
+              </div>
                 
                 // <Card className={classes.card}>
                 // <CardContent className="topcolor"
@@ -165,8 +183,8 @@ class RecipeReviewCard extends React.Component {
   }
 }
 
-RecipeReviewCard.propTypes = {
+TastingCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(TastingCard);
