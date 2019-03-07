@@ -25,7 +25,6 @@ class App extends Component {
     return (
       <Provider>
         <Router>
-        
           <div>
             <Nav />
               <Switch>

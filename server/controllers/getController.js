@@ -5,7 +5,7 @@ const testDataSet = [{
     isAvailable: true,
     timesTasted: 12,
     keywords: ['fresh', 'sparky', 'rejuvinating'],
-    ratings: ["4.6", "3.9"],
+    ratings: [3.9, 5.0],
     name: "Pollywog brown liquor",
     description: "One of the most popular drinks among gay hipsters in 2018",
     price: "5.50",

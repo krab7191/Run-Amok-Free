@@ -18,7 +18,7 @@ class Comments extends Component {
 
       <MyContext.Consumer>
       {value => {
-          const { allBevs , check } = value;
+          const { allBevs , check } = value.myState;
           return(
       <div>
         <h1>{check}</h1>
