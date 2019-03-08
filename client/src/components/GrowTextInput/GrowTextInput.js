@@ -33,7 +33,7 @@ class GrowTextInput extends React.Component {
   render() {
     const { classes,checked } = this.props;
 
-    const polygon = (
+    const myTextBox = (
       <Paper elevation={4} className={classes.paper}>
         <TextField
           id="filled-multiline-static"
@@ -56,7 +56,7 @@ class GrowTextInput extends React.Component {
             style={{ transformOrigin: '0 0 0' }}
             {...(checked ? { timeout: 1000 } : {})}
           >
-            {polygon}
+            {myTextBox}
           </Grow>
     )
   }
