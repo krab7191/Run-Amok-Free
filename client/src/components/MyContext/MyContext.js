@@ -5,7 +5,6 @@ const MyContext = React.createContext();
 
 class Provider extends Component {
   state = {
-    check: 'I am random stuff from MyContext',
     allBevs: [],
     isLoading: true
   };
@@ -31,17 +30,24 @@ class Provider extends Component {
       .catch(err => console.log(err));
   }
 
+  addNoteData = (data) => {
+    console.log("Added: "+data);
+    API.addNoteData(data)
+      .then((res) => {
+        this.getBevData();
+      })
+      .catch(err=>console.log(err));
+  }
+
   render() {
 
     return (
       <MyContext.Provider
         value={{
           myState: this.state,
-          addComment: (e) => {
+          postNote: (e,noteData) => {
             e.preventDefault();
-            this.setState({
-              allBevs: this.state.allBevs 
-            },() => console.log(this.state))
+            this.addNoteData(noteData);
           }
         }}
       > 

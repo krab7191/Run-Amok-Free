@@ -5,16 +5,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
@@ -37,46 +33,6 @@ const styles = theme => ({
       display: 'block',
     },
   },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 3,
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit * 1.5,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    fontSize:'1.25rem',
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
-  },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -95,7 +51,8 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     anchorPageEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    isAdmin: true
   };
 
   handleProfileMenuOpen = event => {
@@ -138,7 +95,7 @@ class PrimarySearchAppBar extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+        {this.state.isAdmin  ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null}
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
       </Menu>
     );
@@ -151,7 +108,7 @@ class PrimarySearchAppBar extends React.Component {
         open={isPageMenuOpen}
         onClose={this.handlePageMenuClose}
       >
-        <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem>
+        {/* <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem> */}
         <MenuItem onClick={this.handlePageMenuClose}><Link to="/Tasting">Tasting</Link></MenuItem>
         <MenuItem onClick={this.handlePageMenuClose}><Link to="/EditableDataTable">EditableDataTable</Link></MenuItem>
         <MenuItem onClick={this.handlePageMenuClose}><Link to="/Comments">Comments</Link></MenuItem>
@@ -166,14 +123,6 @@ class PrimarySearchAppBar extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <Badge badgeContent={11} color="secondary">
@@ -208,23 +157,6 @@ class PrimarySearchAppBar extends React.Component {
             </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                />
-              </div>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
               <IconButton color="inherit">
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
@@ -260,39 +192,60 @@ PrimarySearchAppBar.propTypes = {
 
 export default withStyles(styles)(PrimarySearchAppBar);
 
-// import React from 'react';
-// // import Button from '@material-ui/core/Button';
-// import { Link } from 'react-router-dom'
-// import './Nav.css'
-// class Nav extends React.Component {
-//   state = {
-  
-//   };
 
-//   render() {
-//     // const { anchorEl } = this.state;
+// import { fade } from '@material-ui/core/styles/colorManipulator';
+// import InputBase from '@material-ui/core/InputBase';
+// import SearchIcon from '@material-ui/icons/Search';
+              // <div className={classes.search}>
+              //   <div className={classes.searchIcon}>
+              //     <SearchIcon />
+              //   </div>
+              //   <InputBase
+              //     placeholder="Search…"
+              //     classes={{
+              //       root: classes.inputRoot,
+              //       input: classes.inputInput,
+              //     }}
+              //   />
+              // </div>
 
-//     return (
-//       <React.Fragment>
-//       <div className="navbar">
-//       <div className="dropdown">
-//         <button className="dropbtn">Dropdown 
-//           <i className="fa fa-caret-down"></i>
-//         </button>
-//         <div className="dropdown-content">
-//           <Link to="/Tasting">Tasting</Link>
-//           <Link to="/ListOrder">List</Link>
-//           <Link to="/EditableDataTable">EditableDataTable</Link>
-//         <Link to="/Comments">Comments</Link>
-         
-//           {/* <a href="#">Link 2</a>
-//           <a href="#">Link 3</a> */}
-//         </div>
-//       </div> 
-//     </div>
-//     </React.Fragment>
-//     );
-//   }
-// }
-
-// export default Nav;
+              // search: {
+              //   position: 'relative',
+              //   borderRadius: theme.shape.borderRadius,
+              //   backgroundColor: fade(theme.palette.common.white, 0.15),
+              //   '&:hover': {
+              //     backgroundColor: fade(theme.palette.common.white, 0.25),
+              //   },
+              //   marginRight: theme.spacing.unit * 2,
+              //   marginLeft: 0,
+              //   width: '100%',
+              //   [theme.breakpoints.up('sm')]: {
+              //     marginLeft: theme.spacing.unit * 3,
+              //     width: 'auto',
+              //   },
+              // },
+              // searchIcon: {
+              //   width: theme.spacing.unit * 9,
+              //   height: '100%',
+              //   position: 'absolute',
+              //   pointerEvents: 'none',
+              //   display: 'flex',
+              //   alignItems: 'center',
+              //   justifyContent: 'center',
+              // },
+              // inputRoot: {
+              //   color: 'inherit',
+              //   width: '100%',
+              // },
+              // inputInput: {
+              //   paddingTop: theme.spacing.unit * 1.5,
+              //   paddingRight: theme.spacing.unit,
+              //   paddingBottom: theme.spacing.unit,
+              //   paddingLeft: theme.spacing.unit * 10,
+              //   fontSize:'1.25rem',
+              //   transition: theme.transitions.create('width'),
+              //   width: '100%',
+              //   [theme.breakpoints.up('md')]: {
+              //     width: 200,
+              //   },
+              // },

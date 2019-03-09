@@ -17,8 +17,8 @@ class Comments extends Component {
     return(
 
       <MyContext.Consumer>
-        {value => {
-            const { allBevs } = value.myState;
+        {context => {
+            const { allBevs } = context.myState;
             const commentsArr = []
             for (let i = 0; i < 6; i++) {
               commentsArr.push(allBevs[0].name)

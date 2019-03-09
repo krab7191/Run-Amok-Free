@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grow from '@material-ui/core/Grow';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { MyContext } from '../MyContext/MyContext';
 
 const styles = theme => ({
 
@@ -30,34 +31,60 @@ const styles = theme => ({
 
 class GrowTextInput extends React.Component {
 
+  state = {
+    note: ""
+  }
+
+  handleInputChange = e => {
+    const { value } = e.target;
+    this.setState({
+      note: value
+    });
+  };
+
   render() {
-    const { classes,checked } = this.props;
-
-    const myTextBox = (
-      <Paper elevation={4} className={classes.paper}>
-        <TextField
-          id="filled-multiline-static"
-          label="Comment?"
-          multiline
-          rows="8"
-          defaultValue=""
-          className={classes.textField}
-          margin="normal"
-          variant="filled"
-        />
-        <Button className={classes.button}>Submit</Button>
-      </Paper>
-    );
-
+    const { closeInput,classes,checked } = this.props;
     return (
-          /* Conditionally applies the timeout property to change the entry speed. */
-          <Grow
-            in={checked}
-            style={{ transformOrigin: '0 0 0' }}
-            {...(checked ? { timeout: 1000 } : {})}
-          >
-            {myTextBox}
-          </Grow>
+      <MyContext.Consumer>
+        {context => {
+          const handleNoteInput = (e) => {
+            context.postNote(e,this.state.note);
+            closeInput();
+            alert("Added Note!");
+          }
+
+          const myTextBox = (
+            <Paper elevation={4} className={classes.paper}>
+              <TextField
+                id="filled-multiline-static"
+                label="Comment?"
+                multiline
+                rows="8"
+                defaultValue=""
+                className={classes.textField}
+                margin="normal"
+                variant="filled"
+                onChange={this.handleInputChange}
+              />
+              <Button 
+                onClick={handleNoteInput} 
+                className={classes.button}
+                >Submit</Button>
+            </Paper>
+          );
+
+          return (
+            /* Conditionally applies the timeout property to change the entry speed. */
+            <Grow
+              in={checked}
+              style={{ transformOrigin: '0 0 0' }}
+              {...(checked ? { timeout: 1000 } : {})}
+            >
+              {myTextBox}
+            </Grow>
+          )
+        }}
+      </MyContext.Consumer>
     )
   }
 }

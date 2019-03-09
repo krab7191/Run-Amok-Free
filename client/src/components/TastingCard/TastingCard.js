@@ -4,16 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
+// import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import AddNoteIcon from '@material-ui/icons/NoteAddTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -43,7 +41,7 @@ const styles = theme => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: "grey",
   },
 });
 
@@ -58,22 +56,27 @@ class TastingCard extends React.Component {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
-  handleOpenComment = () => {
+  handleOpenNote = () => {
     this.setState(state => ({ inputOpen: !state.inputOpen }));
   }
 
   render() {
     const { classes } = this.props;
 
-    const renderCommentInput = (
-      <GrowTextInput checked={this.state.inputOpen}></GrowTextInput>
-    );
-
     return (
       <MyContext.Consumer>
-          {value => {
-            const { allBevs } = value.myState;
+          {context => {
+            const { allBevs } = context.myState;
+            // const postNote = value.postNote;
             console.log(this.state);
+
+            const renderCommentInput = (
+              <GrowTextInput 
+                closeInput={this.handleOpenNote} 
+                // postNoteHandler={postNote} 
+                checked={this.state.inputOpen}>
+              </GrowTextInput>
+            );
 
             return (
               <div>
@@ -92,11 +95,11 @@ class TastingCard extends React.Component {
                     title={allBevs[0].name}
                     subheader="September 14, 2016"
                   />
-                  <CardMedia
+                  {/* <CardMedia
                     className={classes.media}
-                    image="https://groceries.morrisons.com/productImages/217/217703011_0_640x640.jpg?identifier=e7cf36512b30ca18065e5a740e6b2e81"
-                    title="Paella dish"
-                  />
+                    image=""
+                    title=""
+                  /> */}
                   <CardContent>
                     <Typography component="p">
                       {allBevs[0].size} {allBevs[0].unit}: ${allBevs[0].price}
@@ -104,12 +107,9 @@ class TastingCard extends React.Component {
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton 
-                      onClick={this.handleOpenComment} 
+                      onClick={this.handleOpenNote} 
                       aria-label="Add to favorites">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="Share">
-                      <ShareIcon />
+                      <AddNoteIcon />
                     </IconButton>
                     <IconButton
                       className={classnames(classes.expand, {
@@ -130,54 +130,8 @@ class TastingCard extends React.Component {
                 </Card>
                 {this.state.inputOpen? renderCommentInput : null}
               </div>
-                
-                // <Card className={classes.card}>
-                // <CardContent className="topcolor"
-                //     />
-                //   <Grid  container
-                //           direction="row"
-                //           justify="space-between"
-                //           alignItems="center">
-                //   <CardHeader id="cardheader"
-
-                //     title="Name"
-                //     subheader="basic text"
-                //     />
-                //   {/* <CardHeader id="priceheader"
-                //     title= "Price"
-                //     subheader="Alt Price"
-                //     /> */}
-                //   </Grid>
-                //   <CardContent>
-                //   {/* context!!! */}
-                //    {check}
-                //   </CardContent>
-                //   <Grid>
-                //     <CardActions className={classes.actions} disableActionSpacing>
-
-                //       <Button style={{borderStyle: 'solid', borderWidth: '2px'}}>
-                //         <Typography><b>Add your comments</b></Typography>
-                //       </Button>
-                //       <IconButton
-                //         className={classnames(classes.expand, {
-                //           [classes.expandOpen]: this.state.expanded,
-                //         })}
-                //         onClick={this.handleExpandClick}
-                //         aria-expanded={this.state.expanded}
-                //         aria-label="Show more"
-                //       >
-                //         <ExpandMoreIcon />
-                //       </IconButton>
-                //     </CardActions>
-                //   </Grid>
-                //   <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                //     <CardContent>
-                //       <Typography paragraph>Description</Typography>
-                //     </CardContent>
-                //   </Collapse>
-                // </Card>
-              )
-            }}
+            )
+          }}
       </MyContext.Consumer>
     )
   }
