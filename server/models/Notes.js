@@ -6,6 +6,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Note = new Schema({
+  // `body` is of type String
+  body: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now()
+  }
 
 });
 
