@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import TastingCard from '../../components/TastingCard'
+import TastingCard from '../../components/TastingCard';
+
 class Tasting extends Component {
 
  

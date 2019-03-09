@@ -3,24 +3,26 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 // import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-// import red from '@material-ui/core/colors/red';
+import AddNoteIcon from '@material-ui/icons/NoteAddTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CancelIcon from '@material-ui/icons/Cancel';
+
 import { MyContext } from "../MyContext/MyContext";
+import GrowTextInput from "../GrowTextInput";
 import './TastingCard.css';
 
 const styles = theme => ({
   card: {
-    maxWidth: 450,
-    minWidth: 300,
+    maxWidth: 400,
   },
   media: {
     height: 0,
@@ -38,78 +40,114 @@ const styles = theme => ({
   },
   expandOpen: {
     transform: 'rotate(180deg)',
-  }
- 
+  },
+  avatar: {
+    backgroundColor: "grey",
+  },
 });
 
-class RecipeReviewCard extends React.Component {
-  state = { expanded: false };
+
+class TastingCard extends React.Component {
+  state = { 
+    expanded: false,
+    inputOpen: true
+   };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+
+  handleOpenNote = () => {
+    this.setState(state => ({ inputOpen: !state.inputOpen }));
+  }
 
   render() {
     const { classes } = this.props;
 
     return (
       <MyContext.Consumer>
-        {value => {
-          const { allBevs, check } = value;
-          return(
-        <Card className={classes.card}>
-        <CardContent className="topcolor"
-            />
-          <Grid  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center">
-          <CardHeader id="cardheader"
+          {context => {
+            const { allBevs } = context.myState;
+            // const postNote = value.postNote;
+            console.log(this.state);
 
-            title="Name"
-            subheader="basic text"
-            />
-          {/* <CardHeader id="priceheader"
-            title= "Price"
-            subheader="Alt Price"
-            /> */}
-          </Grid>
-          <CardContent>
-          {/* context!!! */}
-           {check}
-          </CardContent>
-          <Grid>
-            <CardActions className={classes.actions} disableActionSpacing>
+            const renderCommentInput = (
+              <GrowTextInput 
+                closeInput={this.handleOpenNote} 
+                // postNoteHandler={postNote} 
+                checked={this.state.inputOpen}>
+              </GrowTextInput>
+            );
 
-              <Button style={{borderStyle: 'solid', borderWidth: '2px'}}>
-                <Typography><b>Add your comments</b></Typography>
-              </Button>
-              <IconButton
-                className={classnames(classes.expand, {
-                  [classes.expandOpen]: this.state.expanded,
-                })}
-                onClick={this.handleExpandClick}
-                aria-expanded={this.state.expanded}
-                aria-label="Show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-          </Grid>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Description</Typography>
-            </CardContent>
-          </Collapse>
-        </Card>
-          )}}
+            return (
+              <div>
+                <Card raised={true} className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="Recipe" className={classes.avatar}>
+                        
+                      </Avatar>
+                    }
+                    // action={
+                    //   <IconButton>
+                    //     <MoreVertIcon />
+                    //   </IconButton>
+                    // }
+                    title={allBevs[0].name}
+                    subheader="September 14, 2016"
+                  />
+                  {/* <CardMedia
+                    className={classes.media}
+                    image=""
+                    title=""
+                  /> */}
+                  <CardContent>
+                    <Typography component="p">
+                      {allBevs[0].description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions className={classes.actions} disableActionSpacing>
+                    {!this.state.inputOpen? <IconButton 
+                      onClick={this.handleOpenNote} 
+                      aria-label="Add A Note">
+                        <AddNoteIcon /> 
+                      </IconButton> : 
+                    <IconButton 
+                    onClick={this.handleOpenNote} 
+                    aria-label="Add A Note">
+                      <CancelIcon /> 
+                    </IconButton>}
+                    <IconButton
+                      className={classnames(classes.expand, {
+                        [classes.expandOpen]: this.state.expanded,
+                      })}
+                      onClick={this.handleExpandClick}
+                      aria-expanded={this.state.expanded}
+                      aria-label="Show more"
+                    >
+                      <ExpandMoreIcon />
+                    </IconButton>
+                  </CardActions>
+                  <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                    {/* <CardContent>
+                      <Typography variant="h6" gutterBottom>Comments</Typography>
+                      {allBevs[0].notes.map(note=>(
+                        <Typography>{note}</Typography>
+                      ))}
+                    </CardContent> */}
+                  </Collapse>
+                  {this.state.inputOpen? renderCommentInput : null}
+                </Card>
+              </div>
+            )
+          }}
       </MyContext.Consumer>
-    );
+    )
   }
 }
 
-RecipeReviewCard.propTypes = {
+TastingCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(TastingCard);
