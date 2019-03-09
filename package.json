@@ -13,7 +13,7 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
     "seed-users": "node server/scripts/seedUsers.js",
-    "seed-teams": "node server/scripts/seedTeams.js"
+    "seed-beverages": "node server/scripts/seedBeverages.js"
   },
   "repository": {
     "type": "git",
