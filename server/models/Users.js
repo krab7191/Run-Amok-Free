@@ -1,9 +1,14 @@
-const mongoose = require('mongoose');
+// @author: Karsten Rabe
 
+// Our boilerplate user model with a pre-save password hashing function
+
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema,
     // Password hashing: 1 increase in salt factor approximately doubles hashing time
     bcrypt = require('bcrypt'),
     SALT_WORK_FACTOR = 10;
+
+const helpers = require('./mongooseHelperFunctions');
 
 const allLetters = str => {
     // Regex to match all human language characters . . . (No numbers or special characters, even though you can legally change your name to an emoji???)
@@ -15,11 +20,6 @@ const lastNames = str => {
     // Regex for human language characters plus hyphen and apostrophe
     const lnRegex = new RegExp(/^[a-zA-Z '-]+$/);
     return lnRegex.test(str);
-}
-
-const email = email => {
-    const emailRegex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
-    return emailRegex.test(email);
 }
 
 const password = str => {
@@ -46,7 +46,7 @@ const User = new Schema({
         required: "Email address is required",
         trim: true,
         unique: true,
-        validate: [email, "Please enter a valid email address."]
+        validate: [helpers.email, "Please enter a valid email address."]
     },
     username: {
         type: String,
