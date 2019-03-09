@@ -102,7 +102,7 @@ class TastingCard extends React.Component {
                   /> */}
                   <CardContent>
                     <Typography component="p">
-                      {allBevs[0].size} {allBevs[0].unit}: ${allBevs[0].price}
+                      {/* {allBevs[0].size} {allBevs[0].unit}: ${allBevs[0].price} */}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>

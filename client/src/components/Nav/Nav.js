@@ -110,8 +110,9 @@ class PrimarySearchAppBar extends React.Component {
       >
         {/* <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem> */}
         <MenuItem onClick={this.handlePageMenuClose}><Link to="/Tasting">Tasting</Link></MenuItem>
-        <MenuItem onClick={this.handlePageMenuClose}><Link to="/EditableDataTable">EditableDataTable</Link></MenuItem>
-        <MenuItem onClick={this.handlePageMenuClose}><Link to="/Comments">Comments</Link></MenuItem>
+        { this.state.isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/EditableDataTable">ManageMeads</Link></MenuItem> : null }
+        { this.state.isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/ManageUsers">ManageUsers</Link></MenuItem> : null }
+        <MenuItem onClick={this.handlePageMenuClose}><Link to="/Notes">Notes</Link></MenuItem>
       </Menu>
     );
 

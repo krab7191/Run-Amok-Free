@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { MyContext } from "../../components/MyContext/MyContext";
 import CommentCard from "../../components/CommentCard";
 
-class Comments extends Component {
+class Notes extends Component {
 
  
   constructor(props) {
@@ -35,4 +35,4 @@ class Comments extends Component {
     )
   }}
 
-  export default Comments ;
+  export default Notes;

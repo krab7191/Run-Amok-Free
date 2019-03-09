@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class ListOrder extends Component {
+class UsersList extends Component {
 
  
   constructor(props) {
@@ -14,12 +14,12 @@ class ListOrder extends Component {
   render() {
     return(
       <div>
-        <h1>List Order</h1>
+        <h1>Users</h1>
       </div>
     )
   }}
 
-  export default ListOrder;
+  export default UsersList;
 
   // {ratingMean}
   // const ratingMean = (allBevs[0].ratings.reduce((a,b) => a + b, 0) / allBevs[0].ratings.length).toFixed(1);
