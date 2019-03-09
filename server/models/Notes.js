@@ -1,4 +1,4 @@
-// @author Karsten Rabe
+// @author Karsten Rabe, Jon Jackson
 
 // This model describes the way tasting notes are stored and associated with Users and Beverages
 
@@ -9,13 +9,20 @@ const Note = new Schema({
   // `body` is of type String
   body: {
     type: String,
-    required: true
+    required: "Note body is required!"
   },
-  date: {
+  dateCreated: {
     type: Date,
-    default: Date.now()
+    default: Date.now
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
+  },
+  beverages: {
+    type: Schema.Types.ObjectId,
+    ref: 'Beverages'
   }
-
 });
 
 module.exports = mongoose.model("Notes", Note);
