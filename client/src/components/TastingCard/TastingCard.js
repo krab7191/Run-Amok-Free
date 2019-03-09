@@ -13,7 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AddNoteIcon from '@material-ui/icons/NoteAddTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 import { MyContext } from "../MyContext/MyContext";
 import GrowTextInput from "../GrowTextInput";
@@ -49,7 +50,7 @@ const styles = theme => ({
 class TastingCard extends React.Component {
   state = { 
     expanded: false,
-    inputOpen: false
+    inputOpen: true
    };
 
   handleExpandClick = () => {
@@ -87,11 +88,11 @@ class TastingCard extends React.Component {
                         
                       </Avatar>
                     }
-                    action={
-                      <IconButton>
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
+                    // action={
+                    //   <IconButton>
+                    //     <MoreVertIcon />
+                    //   </IconButton>
+                    // }
                     title={allBevs[0].name}
                     subheader="September 14, 2016"
                   />
@@ -102,15 +103,20 @@ class TastingCard extends React.Component {
                   /> */}
                   <CardContent>
                     <Typography component="p">
-                      {/* {allBevs[0].size} {allBevs[0].unit}: ${allBevs[0].price} */}
+                      {allBevs[0].description}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton 
+                    {!this.state.inputOpen? <IconButton 
                       onClick={this.handleOpenNote} 
-                      aria-label="Add to favorites">
-                      <AddNoteIcon />
-                    </IconButton>
+                      aria-label="Add A Note">
+                        <AddNoteIcon /> 
+                      </IconButton> : 
+                    <IconButton 
+                    onClick={this.handleOpenNote} 
+                    aria-label="Add A Note">
+                      <CancelIcon /> 
+                    </IconButton>}
                     <IconButton
                       className={classnames(classes.expand, {
                         [classes.expandOpen]: this.state.expanded,
@@ -123,12 +129,15 @@ class TastingCard extends React.Component {
                     </IconButton>
                   </CardActions>
                   <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                      <Typography paragraph>{allBevs[0].description}</Typography>
-                    </CardContent>
+                    {/* <CardContent>
+                      <Typography variant="h6" gutterBottom>Comments</Typography>
+                      {allBevs[0].notes.map(note=>(
+                        <Typography>{note}</Typography>
+                      ))}
+                    </CardContent> */}
                   </Collapse>
+                  {this.state.inputOpen? renderCommentInput : null}
                 </Card>
-                {this.state.inputOpen? renderCommentInput : null}
               </div>
             )
           }}

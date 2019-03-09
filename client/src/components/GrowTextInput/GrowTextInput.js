@@ -14,18 +14,19 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
   paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 46,
+    position: 'relative',
+    width: "100%",
     backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 2,
     outline: 'none',
-    marginTop: "5px"
+    marginTop: "5px",
+    boxShadow: "none",
+    borderRadius: "none"
   },
   button: {
     position: "absolute",
     bottom: "5px",
-    right: "10px"
+    right: "40px"
   }
 });
 
