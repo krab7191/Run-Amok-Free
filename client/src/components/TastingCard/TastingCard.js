@@ -16,13 +16,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-import { MyContext } from "../MyContext/MyContext";
 import GrowTextInput from "../GrowTextInput";
 import './TastingCard.css';
 
 const styles = theme => ({
   card: {
     maxWidth: 400,
+    margin:"0 auto"
   },
   media: {
     height: 0,
@@ -64,23 +64,16 @@ class TastingCard extends React.Component {
   render() {
     const { classes } = this.props;
 
+    const renderCommentInput = (
+      <GrowTextInput 
+        closeInput={this.handleOpenNote} 
+        // postNoteHandler={postNote} 
+        checked={this.state.inputOpen}>
+      </GrowTextInput>
+    );
+
     return (
-      <MyContext.Consumer>
-          {context => {
-            const { allBevs } = context.myState;
-            // const postNote = value.postNote;
-            console.log(this.state);
-
-            const renderCommentInput = (
-              <GrowTextInput 
-                closeInput={this.handleOpenNote} 
-                // postNoteHandler={postNote} 
-                checked={this.state.inputOpen}>
-              </GrowTextInput>
-            );
-
-            return (
-              <div>
+              <div style={{float:"left",width:"33%"}}>
                 <Card raised={true} className={classes.card}>
                   <CardHeader
                     avatar={
@@ -93,7 +86,7 @@ class TastingCard extends React.Component {
                     //     <MoreVertIcon />
                     //   </IconButton>
                     // }
-                    title={allBevs[0].name}
+                    title={this.props.name}
                     subheader="September 14, 2016"
                   />
                   {/* <CardMedia
@@ -103,7 +96,7 @@ class TastingCard extends React.Component {
                   /> */}
                   <CardContent>
                     <Typography component="p">
-                      {allBevs[0].description}
+                      {this.props.desc}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>
@@ -128,21 +121,18 @@ class TastingCard extends React.Component {
                       <ExpandMoreIcon />
                     </IconButton>
                   </CardActions>
-                  <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    {/* <CardContent>
+                  {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
                       <Typography variant="h6" gutterBottom>Comments</Typography>
                       {allBevs[0].notes.map(note=>(
                         <Typography>{note}</Typography>
                       ))}
-                    </CardContent> */}
-                  </Collapse>
+                    </CardContent>
+                  </Collapse> */}
                   {this.state.inputOpen? renderCommentInput : null}
                 </Card>
               </div>
-            )
-          }}
-      </MyContext.Consumer>
-    )
+          )
   }
 }
 

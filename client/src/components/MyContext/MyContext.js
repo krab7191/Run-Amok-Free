@@ -16,9 +16,10 @@ class Provider extends Component {
   getBevData = () => {
     API.getBevData()
       .then(res => {
+        console.log(res);
         this.setState({
           // added .drinks because of initial seed data in getController
-          allBevs: res.data.drinks,
+          allBevs: res.data,
           isLoading: false,
           // bevName: res.data.drinks.name,
           // bevComment:res.data.drinks.comment,
@@ -30,9 +31,11 @@ class Provider extends Component {
       .catch(err => console.log(err));
   }
 
-  addNoteData = (data) => {
-    console.log("Added: "+data);
-    API.addNoteData(data)
+  addNoteData = (note) => {
+    console.log("Added: "+note);
+    API.addNoteData({
+      body: note
+    })
       .then((res) => {
         this.getBevData();
       })
