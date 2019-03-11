@@ -21,12 +21,12 @@ const styles = theme => ({
     outline: 'none',
     marginTop: "5px",
     boxShadow: "none",
-    borderRadius: "none"
+    borderRadius: "none",
   },
   button: {
-    position: "absolute",
-    bottom: "5px",
-    right: "40px"
+    marginTop:"5px",
+    left: "67%",
+    bottom: "0"
   }
 });
 
@@ -61,6 +61,7 @@ class GrowTextInput extends React.Component {
                 label="Comment?"
                 multiline
                 rows="8"
+                style={{width:"85%"}}
                 defaultValue=""
                 className={classes.textField}
                 margin="normal"
@@ -79,7 +80,7 @@ class GrowTextInput extends React.Component {
             <Grow
               in={checked}
               style={{ transformOrigin: '0 0 0' }}
-              {...(checked ? { timeout: 1000 } : {})}
+              {...(checked ? { timeout: 600 } : {})}
             >
               {myTextBox}
             </Grow>

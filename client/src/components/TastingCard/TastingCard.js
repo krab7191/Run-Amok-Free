@@ -46,7 +46,6 @@ const styles = theme => ({
   },
 });
 
-
 class TastingCard extends React.Component {
   state = { 
     expanded: false,
@@ -73,7 +72,7 @@ class TastingCard extends React.Component {
     );
 
     return (
-              <div style={{float:"left",width:"33%"}}>
+              <div className="tastingCardDiv">
                 <Card raised={true} className={classes.card}>
                   <CardHeader
                     avatar={

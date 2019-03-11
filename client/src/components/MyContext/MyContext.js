@@ -31,7 +31,7 @@ class Provider extends Component {
       .catch(err => console.log(err));
   }
 
-  getAvailBevData =
+  getAvailBevData = {}
 
   addNoteData = (note) => {
     console.log("Added: "+note);
