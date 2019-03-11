@@ -26,14 +26,14 @@ class Tasting extends Component {
     return (
       <MyContext.Consumer>
           {context => {
-              const { allBevs } = context.myState;
-              console.log(allBevs);
+              const { allAvailBevs } = context.myState;
+              console.log(allAvailBevs);
 
               return(
                 <div>
                   <h1 style={styles.tastingHeader}>Tasting</h1>
                   <div style={styles.tastingDiv}>
-                    {allBevs.map(bev=>(
+                    {allAvailBevs.map(bev=>(
                       <TastingCard key={bev._id} name={bev.name} desc={bev.description}/>
                     ))}
                   </div>

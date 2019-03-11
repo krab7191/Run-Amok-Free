@@ -6,14 +6,15 @@ const MyContext = React.createContext();
 class Provider extends Component {
   state = {
     allBevs: [],
+    allAvailBevs: [],
     isLoading: true
   };
 
   componentWillMount() {
-       this.getAllBevs();
+       this.getAllBevs(this.getAllAvailBev);
   }
     
-  getAllBevs = () => {
+  getAllBevs = (cb) => {
     API.getBevData()
       .then(res => {
         console.log(res);
@@ -29,9 +30,25 @@ class Provider extends Component {
         })
       })
       .catch(err => console.log(err));
+      cb();
   }
 
-  getAvailBevData = {}
+  getAllAvailBev = () => {
+    API.getAvailBevData()
+      .then(res => {
+        console.log(res);
+        this.setState({
+          // added .drinks because of initial seed data in getController
+          allAvailBevs: res.data,
+          // bevName: res.data.drinks.name,
+          // bevComment:res.data.drinks.comment,
+          // bevColor:res.data.drinks.color
+        },() => {
+          console.log("state ",this.state);
+        })
+      })
+      .catch(err => console.log(err));
+  }
 
   addNoteData = (note) => {
     console.log("Added: "+note);
