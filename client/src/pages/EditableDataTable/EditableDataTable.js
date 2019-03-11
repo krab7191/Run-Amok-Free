@@ -96,7 +96,7 @@ class EditableDataTable extends Component {
             .then(res => {
                 this.setState({
                   // added .drinks because of initial seed data in getController
-                    allBevs: res.data.drinks
+                    allBevs: res.data
                   });
                   console.log(res.data)
               })
@@ -206,7 +206,7 @@ class EditableDataTable extends Component {
     }
 
     render() {
-      console.log("All Bev Data", this.state.allBevs.drinks)
+      console.log("All Bev Data", this.state.allBevs)
 
         const columns = [{
             Header: 'Name',
