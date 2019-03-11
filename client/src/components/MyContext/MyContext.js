@@ -10,10 +10,10 @@ class Provider extends Component {
   };
 
   componentWillMount() {
-       this.getBevData();
+       this.getAllBevs();
   }
     
-  getBevData = () => {
+  getAllBevs = () => {
     API.getBevData()
       .then(res => {
         console.log(res);
@@ -30,6 +30,8 @@ class Provider extends Component {
       })
       .catch(err => console.log(err));
   }
+
+  getAvailBevData =
 
   addNoteData = (note) => {
     console.log("Added: "+note);

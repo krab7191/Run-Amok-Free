@@ -19,5 +19,13 @@ module.exports = {
             .populate('notes')
             .then(data => res.json(data))
             .catch(err => res.status(422).json(err))
+    },
+    getAvailBevs: function(req,res) {
+        db.Beverages.find({
+            isAvailable: true
+        })
+            .populate('notes')
+            .then(data => res.json(data))
+            .catch(err=> res.status(422).json(err))
     }
 };  
