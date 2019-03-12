@@ -6,15 +6,14 @@ const MyContext = React.createContext();
 class Provider extends Component {
   state = {
     allBevs: [],
-    allAvailBevs: [],
     isLoading: true
   };
 
   componentWillMount() {
-       this.getAllBevs(this.getAllAvailBev);
+       this.getAllBevs();
   }
     
-  getAllBevs = (cb) => {
+  getAllBevs = () => {
     API.getBevData()
       .then(res => {
         console.log(res);
@@ -30,33 +29,15 @@ class Provider extends Component {
         })
       })
       .catch(err => console.log(err));
-      cb();
   }
 
-  getAllAvailBev = () => {
-    API.getAvailBevData()
-      .then(res => {
-        console.log(res);
-        this.setState({
-          // added .drinks because of initial seed data in getController
-          allAvailBevs: res.data,
-          // bevName: res.data.drinks.name,
-          // bevComment:res.data.drinks.comment,
-          // bevColor:res.data.drinks.color
-        },() => {
-          console.log("state ",this.state);
-        })
-      })
-      .catch(err => console.log(err));
-  }
-
-  addNoteData = (note) => {
-    console.log("Added: "+note);
+  addNoteData = (id,note) => {
     API.addNoteData({
-      body: note
+      body: note,
+      beverages: id
     })
       .then((res) => {
-        this.getBevData();
+        console.log(`Added! ${res.data.body}`);
       })
       .catch(err=>console.log(err));
   }
@@ -67,9 +48,9 @@ class Provider extends Component {
       <MyContext.Provider
         value={{
           myState: this.state,
-          postNote: (e,noteData) => {
+          postNote: (e,id,noteData) => {
             e.preventDefault();
-            this.addNoteData(noteData);
+            this.addNoteData(id,noteData);
           }
         }}
       > 

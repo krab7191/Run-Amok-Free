@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {MyContext} from "../../components/MyContext/MyContext";
 import TastingCard from '../../components/TastingCard';
 
+import API from '../../utils/API';
+
 const styles = {
   tastingHeader: {
     textAlign: "center"
@@ -18,15 +20,37 @@ class Tasting extends Component {
     super(props);
 
     this.state = {
+      allAvailBevs: []
     };
    
+  }
+
+  componentWillMount () {
+    this.getAllAvailBev();
+  }
+
+  getAllAvailBev = () => {
+    API.getAvailBevData()
+      .then(res => {
+        console.log(res);
+        this.setState({
+          // added .drinks because of initial seed data in getController
+          allAvailBevs: res.data,
+          // bevName: res.data.drinks.name,
+          // bevComment:res.data.drinks.comment,
+          // bevColor:res.data.drinks.color
+        },() => {
+          console.log("state ",this.state);
+        })
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
     return (
       <MyContext.Consumer>
           {context => {
-              const { allAvailBevs } = context.myState;
+              const allAvailBevs = this.state.allAvailBevs;
               console.log(allAvailBevs);
 
               return(
@@ -34,7 +58,7 @@ class Tasting extends Component {
                   <h1 style={styles.tastingHeader}>Tasting</h1>
                   <div style={styles.tastingDiv}>
                     {allAvailBevs.map(bev=>(
-                      <TastingCard key={bev._id} name={bev.name} desc={bev.description}/>
+                      <TastingCard key={bev._id} bev={bev} />
                     ))}
                   </div>
                 </div>

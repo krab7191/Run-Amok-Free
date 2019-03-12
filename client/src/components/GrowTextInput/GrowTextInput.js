@@ -48,8 +48,9 @@ class GrowTextInput extends React.Component {
     return (
       <MyContext.Consumer>
         {context => {
-          const handleNoteInput = (e) => {
-            context.postNote(e,this.state.note);
+          
+          const handleNoteInput = (e,id) => {
+            context.postNote(e,id,this.state.note);
             closeInput();
             alert("Added Note!");
           }
@@ -69,7 +70,7 @@ class GrowTextInput extends React.Component {
                 onChange={this.handleInputChange}
               />
               <Button 
-                onClick={handleNoteInput} 
+                onClick={e=>handleNoteInput(e,this.props.id)} 
                 className={classes.button}
                 >Submit</Button>
             </Paper>

@@ -34,10 +34,10 @@ function CommentCard(props) {
     <Card raised={true} className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Name
+          {props.name}
         </Typography>
         <Typography variant="h5" component="h2">
-          {props.name}
+          {props.comment}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           

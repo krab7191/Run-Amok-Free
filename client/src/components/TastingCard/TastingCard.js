@@ -15,6 +15,7 @@ import AddNoteIcon from '@material-ui/icons/NoteAddTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Moment from 'react-moment';
 
 import GrowTextInput from "../GrowTextInput";
 import './TastingCard.css';
@@ -65,6 +66,7 @@ class TastingCard extends React.Component {
 
     const renderCommentInput = (
       <GrowTextInput 
+        id={this.props.bev._id}
         closeInput={this.handleOpenNote} 
         // postNoteHandler={postNote} 
         checked={this.state.inputOpen}>
@@ -85,8 +87,8 @@ class TastingCard extends React.Component {
                     //     <MoreVertIcon />
                     //   </IconButton>
                     // }
-                    title={this.props.name}
-                    subheader="September 14, 2016"
+                    title={this.props.bev.name}
+                    subheader={<Moment date={this.props.bev.dateUpdated} format="MMMM Do YYYY, h:mm a" />}
                   />
                   {/* <CardMedia
                     className={classes.media}
@@ -95,7 +97,7 @@ class TastingCard extends React.Component {
                   /> */}
                   <CardContent>
                     <Typography component="p">
-                      {this.props.desc}
+                      {this.props.bev.desc}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>

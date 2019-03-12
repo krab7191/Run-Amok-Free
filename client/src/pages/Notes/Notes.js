@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import { MyContext } from "../../components/MyContext/MyContext";
 import CommentCard from "../../components/CommentCard";
-import API from "../../utils/API";
 
+import API from '../../utils/API';
+
+
+const styles = {
+  header: {
+    textAlign:"-webkit-center"
+  }
+}
 class Notes extends Component {
 
   state = {
-    notes: [] 
+    allNotes: []
   };
 
-  componentDidMount () {
+  componentWillMount () {
     this.getNoteData();
   }
 
@@ -17,7 +24,9 @@ class Notes extends Component {
     API.getNoteData()
       .then((res) => {
         this.setState({
-          notes: res.data        
+          allNotes: res.data        
+        },() => {
+          console.log("state ",this.state)
         })
       })
       .catch(err => console.log(err))
@@ -28,13 +37,13 @@ class Notes extends Component {
 
       <MyContext.Consumer>
         {context => {
-            const { allBevs } = context.myState;
+            const allNotes = this.state.allNotes;
             
             return(
               <div>
-                <h1 style={{textAlign:"-webkit-center"}}>Notes</h1>
-                {this.state.notes.map((comment,index)=> (
-                  <CommentCard key={index} name={comment.body} />
+                <h1 style={styles.header}>Notes</h1>
+                {allNotes.map((comment,index)=> (
+                  <CommentCard key={index} name={comment.beverages.name} comment={comment.body} />
                 ))}
               </div>
         )}}
