@@ -5,30 +5,11 @@ const MyContext = React.createContext();
 
 class Provider extends Component {
   state = {
-    allBevs: [],
-    isLoading: true
+    isLoading: false,
+    isAdmin: true,
   };
 
   componentWillMount() {
-       this.getAllBevs();
-  }
-    
-  getAllBevs = () => {
-    API.getBevData()
-      .then(res => {
-        console.log(res);
-        this.setState({
-          // added .drinks because of initial seed data in getController
-          allBevs: res.data,
-          isLoading: false,
-          // bevName: res.data.drinks.name,
-          // bevComment:res.data.drinks.comment,
-          // bevColor:res.data.drinks.color
-        },() => {
-          console.log("state ",this.state);
-        })
-      })
-      .catch(err => console.log(err));
   }
 
   addNoteData = (id,note) => {

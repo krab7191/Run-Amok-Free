@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {MyContext} from "../../components/MyContext/MyContext";
 import TastingCard from '../../components/TastingCard';
 
 import API from '../../utils/API';
@@ -47,25 +46,21 @@ class Tasting extends Component {
   }
 
   render() {
-    return (
-      <MyContext.Consumer>
-          {context => {
-              const allAvailBevs = this.state.allAvailBevs;
-              console.log(allAvailBevs);
+      const allAvailBevs = this.state.allAvailBevs;
+      console.log(allAvailBevs);
 
-              return(
-                <div>
-                  <h1 style={styles.tastingHeader}>Tasting</h1>
-                  <div style={styles.tastingDiv}>
-                    {allAvailBevs.map(bev=>(
-                      <TastingCard key={bev._id} bev={bev} />
-                    ))}
-                  </div>
-                </div>
-              )
-          }}
-      </MyContext.Consumer>
-    )
+      return(
+        <div>
+          <h1 style={styles.tastingHeader}>Tasting</h1>
+          <div style={styles.tastingDiv}>
+            {allAvailBevs.map(bev=>(
+              <TastingCard 
+                key={bev._id} 
+                bev={bev} />
+            ))}
+          </div>
+        </div>
+      )
   }
 }
 

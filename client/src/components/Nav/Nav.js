@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
+import {MyContext} from '../MyContext/MyContext';
+
 import "./Nav.css";
 
 const styles = theme => ({
@@ -51,8 +53,7 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     anchorPageEl: null,
-    mobileMoreAnchorEl: null,
-    isAdmin: true
+    mobileMoreAnchorEl: null
   };
 
   handleProfileMenuOpen = event => {
@@ -81,109 +82,116 @@ class PrimarySearchAppBar extends React.Component {
   };
 
   render() {
-    const { anchorEl, anchorPageEl, mobileMoreAnchorEl} = this.state;
-    const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-    const isPageMenuOpen = Boolean(anchorPageEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        {this.state.isAdmin  ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null}
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-      </Menu>
-    );
-
-    const renderPageMenu = (
-      <Menu
-        anchorEl={anchorPageEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        open={isPageMenuOpen}
-        onClose={this.handlePageMenuClose}
-      >
-        {/* <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem> */}
-        <MenuItem onClick={this.handlePageMenuClose}><Link to="/Tasting">Tasting</Link></MenuItem>
-        { this.state.isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/EditableDataTable">Manage Meads</Link></MenuItem> : null }
-        { this.state.isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/ManageUsers">Manage Users</Link></MenuItem> : null }
-        <MenuItem onClick={this.handlePageMenuClose}><Link to="/Notes">Notes</Link></MenuItem>
-      </Menu>
-    );
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-
     return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton 
-              className={classes.menuButton} 
-              aria-haspopup="true" 
-              onClick={this.handlePageMenuOpen} 
-              color="inherit" 
-              aria-label="Open drawer">
-                <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Run-Amok
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
+      <MyContext.Consumer>
+          {context => {
+            const { anchorEl, anchorPageEl, mobileMoreAnchorEl} = this.state;
+            const { classes } = this.props;
+            const isMenuOpen = Boolean(anchorEl);
+            const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+            const isPageMenuOpen = Boolean(anchorPageEl);
+            const isAdmin = context.myState.isAdmin;
+
+            const renderMenu = (
+              <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={isMenuOpen}
+                onClose={this.handleMenuClose}
               >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        {renderMenu}
-        {renderPageMenu}
-        {renderMobileMenu}
-      </div>
-    );
+                {isAdmin  ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null}
+                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+              </Menu>
+            );
+
+            const renderPageMenu = (
+              <Menu
+                anchorEl={anchorPageEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                open={isPageMenuOpen}
+                onClose={this.handlePageMenuClose}
+              >
+                {/* <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem> */}
+                <MenuItem onClick={this.handlePageMenuClose}><Link to="/Tasting">Tasting</Link></MenuItem>
+                { isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/EditableDataTable">Manage Meads</Link></MenuItem> : null }
+                { isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/ManageUsers">Manage Users</Link></MenuItem> : null }
+                <MenuItem onClick={this.handlePageMenuClose}><Link to="/Notes">Notes</Link></MenuItem>
+              </Menu>
+            );
+
+            const renderMobileMenu = (
+              <Menu
+                anchorEl={mobileMoreAnchorEl}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={isMobileMenuOpen}
+                onClose={this.handleMenuClose}
+              >
+                <MenuItem onClick={this.handleMobileMenuClose}>
+                  <IconButton color="inherit">
+                    <Badge badgeContent={11} color="secondary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <p>Notifications</p>
+                </MenuItem>
+                <MenuItem onClick={this.handleProfileMenuOpen}>
+                  <IconButton color="inherit">
+                    <AccountCircle />
+                  </IconButton>
+                  <p>Profile</p>
+                </MenuItem>
+              </Menu>
+            );
+
+            return (
+              <div className={classes.root}>
+                <AppBar position="static">
+                  <Toolbar>
+                    <IconButton 
+                      className={classes.menuButton} 
+                      aria-haspopup="true" 
+                      onClick={this.handlePageMenuOpen} 
+                      color="inherit" 
+                      aria-label="Open drawer">
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                      Run-Amok
+                    </Typography>
+                    <div className={classes.grow} />
+                    <div className={classes.sectionDesktop}>
+                      <IconButton color="inherit">
+                        <Badge badgeContent={17} color="secondary">
+                          <NotificationsIcon />
+                        </Badge>
+                      </IconButton>
+                      <IconButton
+                        aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleProfileMenuOpen}
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                    </div>
+                    <div className={classes.sectionMobile}>
+                      <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                        <MoreIcon />
+                      </IconButton>
+                    </div>
+                  </Toolbar>
+                </AppBar>
+                {renderMenu}
+                {renderPageMenu}
+                {renderMobileMenu}
+              </div>
+            );
+          }}
+      </MyContext.Consumer>
+    )
   }
 }
 
