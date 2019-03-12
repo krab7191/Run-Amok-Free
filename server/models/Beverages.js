@@ -12,7 +12,11 @@ const Beverages = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Notes'
     }],
-    isAvailable: Boolean,
+    isAvailable:
+    {
+        type: Boolean,
+        default: false
+    },
     dateCreated: {
         type: Date,
         required: "Date required when creating a beverage entry"

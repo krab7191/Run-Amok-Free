@@ -4,7 +4,6 @@ import EditableDataTable from './pages/EditableDataTable';
 import Notes from './pages/Notes';
 import ManageUsers from './pages/ManageUsers';
 import Tasting from './pages/Tasting';
-import ApiTest from './pages/ApiTest';
 import NoMatch from './components/NoMatch';
 import Nav from './components/Nav'
 import { Provider} from "./components/MyContext/MyContext";
@@ -33,7 +32,6 @@ class App extends Component {
                 <Route exact path="/ManageUsers" component={ManageUsers} />
                 <Route exact path="/EditableDataTable" component={EditableDataTable} />
                 <Route exact path="/Notes" component={Notes} />
-                <Route exact path="/ApiTest" component={ApiTest} />
                 <Route component={() => <NoMatch />} />
               </Switch>
           </div>

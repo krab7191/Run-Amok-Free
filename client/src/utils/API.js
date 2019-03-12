@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default {
-  getBevData: () => {
-    return axios.get('/api/get/bevs');
+  getAllBeverages: () => {
+    return axios.get('/api/get/allBeverages');
   },
   getAvailBevData: () => {
     return axios.get('/api/get/bevs/avail')

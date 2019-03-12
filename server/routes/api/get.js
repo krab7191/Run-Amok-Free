@@ -6,8 +6,8 @@ const getController = require('../../controllers/getController');
 router.route('/notes')
     .get(getController.getAllNotes);
 
-router.route('/bevs')
-    .get(getController.getAllBevs);
+router.route('/allBeverages')
+    .get(getController.getAllBeverages);
 
 router.route('/bevs/avail')
     .get(getController.getAvailBevs);
