@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from '@material-ui/core/Typography';
-import AppForm from './modules/views/AppForm';
-import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
-import FormButton from './modules/form/FormButton';
-import FormFeedback from './modules/form/FormFeedback';
+import Typography from '../../components/Form/components/Typography';
+import AppForm from '../../components/AppForm/AppForm';
+import { email, required } from '../../components/Form/validation';
+import RFTextField from '../../components/Form/RFTextField';
+import FormButton from '../../components/Form/FormButton';
+import FormFeedback from '../../components/Form/FormFeedback';
 
 const styles = theme => ({
   form: {
@@ -17,6 +17,7 @@ const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 2,
+    backgroundColor: "blue",
   },
   feedback: {
     marginTop: theme.spacing.unit * 2,
