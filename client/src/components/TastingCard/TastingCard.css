@@ -1,7 +1,6 @@
 .topcolor {
  background: blue;
  padding: 10px;
- 
 }
 
 #cardheader{
@@ -10,4 +9,10 @@
 
 #priceheader{
   width: 100px;
+}
+
+.tastingCardDiv {
+  flex-grow: 1;
+  width: 220px;
+  margin: 5px;
 }

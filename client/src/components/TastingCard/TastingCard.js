@@ -7,7 +7,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 // import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
+// import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -15,14 +15,15 @@ import AddNoteIcon from '@material-ui/icons/NoteAddTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CancelIcon from '@material-ui/icons/Cancel';
+import Moment from 'react-moment';
 
-import { MyContext } from "../MyContext/MyContext";
 import GrowTextInput from "../GrowTextInput";
 import './TastingCard.css';
 
 const styles = theme => ({
   card: {
     maxWidth: 400,
+    margin:"0 auto"
   },
   media: {
     height: 0,
@@ -46,7 +47,6 @@ const styles = theme => ({
   },
 });
 
-
 class TastingCard extends React.Component {
   state = { 
     expanded: false,
@@ -64,23 +64,17 @@ class TastingCard extends React.Component {
   render() {
     const { classes } = this.props;
 
+    const renderCommentInput = (
+      <GrowTextInput 
+        id={this.props.bev._id}
+        closeInput={this.handleOpenNote} 
+        // postNoteHandler={postNote} 
+        checked={this.state.inputOpen}>
+      </GrowTextInput>
+    );
+
     return (
-      <MyContext.Consumer>
-          {context => {
-            const { allBevs } = context.myState;
-            // const postNote = value.postNote;
-            console.log(this.state);
-
-            const renderCommentInput = (
-              <GrowTextInput 
-                closeInput={this.handleOpenNote} 
-                // postNoteHandler={postNote} 
-                checked={this.state.inputOpen}>
-              </GrowTextInput>
-            );
-
-            return (
-              <div>
+              <div className="tastingCardDiv">
                 <Card raised={true} className={classes.card}>
                   <CardHeader
                     avatar={
@@ -93,8 +87,8 @@ class TastingCard extends React.Component {
                     //     <MoreVertIcon />
                     //   </IconButton>
                     // }
-                    title={allBevs[0].name}
-                    subheader="September 14, 2016"
+                    title={this.props.bev.name}
+                    subheader={<Moment date={this.props.bev.dateUpdated} format="MMMM Do YYYY, h:mm a" />}
                   />
                   {/* <CardMedia
                     className={classes.media}
@@ -103,7 +97,7 @@ class TastingCard extends React.Component {
                   /> */}
                   <CardContent>
                     <Typography component="p">
-                      {allBevs[0].description}
+                      {this.props.bev.desc}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.actions} disableActionSpacing>
@@ -128,21 +122,18 @@ class TastingCard extends React.Component {
                       <ExpandMoreIcon />
                     </IconButton>
                   </CardActions>
-                  <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    {/* <CardContent>
+                  {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
                       <Typography variant="h6" gutterBottom>Comments</Typography>
                       {allBevs[0].notes.map(note=>(
                         <Typography>{note}</Typography>
                       ))}
-                    </CardContent> */}
-                  </Collapse>
+                    </CardContent>
+                  </Collapse> */}
                   {this.state.inputOpen? renderCommentInput : null}
                 </Card>
               </div>
-            )
-          }}
-      </MyContext.Consumer>
-    )
+          )
   }
 }
 

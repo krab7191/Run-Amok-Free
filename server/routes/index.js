@@ -1,18 +1,14 @@
 const path = require("path");
 const router = require("express").Router();
-const api = require("./public/api");
-const secureApi = require("./secure/api");
-const admin = require('./secure/auth');
-const auth = require('./secure/auth');
+const api = require("./api");
+const admin = require("./secure/get");
+const auth = require("./auth");
 
 // Public data routes
 router.use("/api", api);
 
 // Administrator routes
 router.use("/admin", admin);
-
-// !! Secure API !!
-router.use("/secureApi", secureApi);
 
 // Authentication routes
 router.use("/auth", auth);

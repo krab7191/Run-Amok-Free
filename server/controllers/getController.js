@@ -1,35 +1,36 @@
 const db = require("../models");
 
 
-const testDataSet = [
-    {
-        _id: "eifhw29ehf29dhf",
-        dateCreated: '2019-03-08T18:12:19.892Z',
-        dateModified: '2019-03-08T18:14:03.310Z',
-        isAvailable: true,
-        name: "PEACH",
-        description: "This is our first peach recipe with cinnamon",
-        notes: [
-            "Sweet!",
-            "This is gross!"
-        ]
-    },
-    {
-        _id: ";odjfwp99u32cdj",
-        dateCreated: '2019-03-08T18:19:48.186Z',
-        dateModified: '2019-03-08T18:19:48.186Z',
-        isAvailable: false,
-        name: "Apple spiced",
-        description: "Our try at a thanksgiving mead",
-        notes: [
-        ]
-    }
-];
-
 // Functions for getting public data
 module.exports = {
-    test: (req, res) => {
-        console.log(`${req.originalUrl}`);
-        res.json({ drinks: testDataSet });
+    getAllUsers: function(req,res) {
+        db.Users.find({})
+            .select(["firstName","lastName","isAdmin"])
+            .populate('notes')
+            .then(data => res.json(data))
+            .catch(err => res.status(422).json(err))
+    },
+    getAllNotes: function(req,res) {
+        db.Notes.find({})
+            .select(["body","beverages"])
+            .populate("beverages")
+            .then(data => res.json(data))
+            .catch(err => res.status(422).json(err))
+    },
+    getAllBevs: function(req,res) {
+        db.Beverages.find({})
+            .select(["name","description","notes","isAvailable","dateUpdated"])
+            .populate('notes')
+            .then(data => res.json(data))
+            .catch(err => res.status(422).json(err))
+    },
+    getAvailBevs: function(req,res) {
+        db.Beverages.find({
+            isAvailable: true
+        })
+            .select(["name","description","notes","isAvailable","dateUpdated"])
+            .populate('notes')
+            .then(data => res.json(data))
+            .catch(err=> res.status(422).json(err))
     }
 };  

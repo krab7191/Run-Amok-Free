@@ -1,4 +1,4 @@
 const router = require('express').Router();
-const updateUser = require('../../../controllers/putController');
+const getController = require('../../controllers/getController');
 
 module.exports = router;

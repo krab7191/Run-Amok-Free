@@ -1,10 +1,17 @@
 import axios from "axios";
 
 export default {
-  getBevData: function () {
-    return axios.get("/api/get/test");
+  getBevData: () => {
+    return axios.get('/api/get/bevs');
   },
-  addNoteData: function (noteData) {
-    return axios.post("/api/post/note",noteData);
+  getAvailBevData: () => {
+    return axios.get('/api/get/bevs/avail')
+  },
+  getNoteData: () => {
+    return axios.get('/api/get/notes');
+  },
+  addNoteData: (noteData) => {
+    console.log(noteData);
+    return axios.post('/api/post/note',noteData);
   },
 };

@@ -21,12 +21,12 @@ const styles = theme => ({
     outline: 'none',
     marginTop: "5px",
     boxShadow: "none",
-    borderRadius: "none"
+    borderRadius: "none",
   },
   button: {
-    position: "absolute",
-    bottom: "5px",
-    right: "40px"
+    marginTop:"5px",
+    left: "67%",
+    bottom: "0"
   }
 });
 
@@ -48,8 +48,9 @@ class GrowTextInput extends React.Component {
     return (
       <MyContext.Consumer>
         {context => {
-          const handleNoteInput = (e) => {
-            context.postNote(e,this.state.note);
+          
+          const handleNoteInput = (e,id) => {
+            context.postNote(e,id,this.state.note);
             closeInput();
             alert("Added Note!");
           }
@@ -61,6 +62,7 @@ class GrowTextInput extends React.Component {
                 label="Comment?"
                 multiline
                 rows="8"
+                style={{width:"85%"}}
                 defaultValue=""
                 className={classes.textField}
                 margin="normal"
@@ -68,7 +70,7 @@ class GrowTextInput extends React.Component {
                 onChange={this.handleInputChange}
               />
               <Button 
-                onClick={handleNoteInput} 
+                onClick={e=>handleNoteInput(e,this.props.id)} 
                 className={classes.button}
                 >Submit</Button>
             </Paper>
@@ -79,7 +81,7 @@ class GrowTextInput extends React.Component {
             <Grow
               in={checked}
               style={{ transformOrigin: '0 0 0' }}
-              {...(checked ? { timeout: 1000 } : {})}
+              {...(checked ? { timeout: 600 } : {})}
             >
               {myTextBox}
             </Grow>
