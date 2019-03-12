@@ -4,18 +4,25 @@ import './EditableDataTable.css';
 
 // Import the material UI table
 import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+
 
 class EditableDataTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allBevs: [],
+            allBevs: ["Loading..."],
             newBev: {
                 name: "",
                 description: "",
-                isAvailable: null,
-                date: ""
-            }
+                isAvailable: null
+            },
+            heads: ["Name", "Description", "Is Available?", "Date Created", "Last updated"]
         };
     }
 
@@ -26,7 +33,7 @@ class EditableDataTable extends Component {
     getAllBeverages = () => {
         API.getAllBeverages()
             .then(res => {
-                console.log(`All beverages fetched.`)
+                console.log(`All beverages fetched.`);
                 this.setState({
                     allBevs: res.data
                 });
@@ -44,12 +51,32 @@ class EditableDataTable extends Component {
 
 
     render() {
-        console.log("All Bev Data", this.state.allBevs)
 
         return (
-            <>
-
-            </>
+            <Paper>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            {this.state.heads.map((h, i) => {
+                                return i === 0 ? <TableCell key={i}>{h}</TableCell> : <TableCell key={i} align="right">{h}</TableCell>;
+                            })}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.allBevs[0] !== "Loading..." && this.state.allBevs.map(row => (
+                            <TableRow key={row._id}>
+                                <TableCell component="th" scope="row">
+                                    {row.name}
+                                </TableCell>
+                                <TableCell align="right">{row.description}</TableCell>
+                                <TableCell align="right">{"" + row.isAvailable}</TableCell>
+                                <TableCell align="right">{row.dateCreated}</TableCell>
+                                <TableCell align="right">{row.dateUpdated}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Paper>
         );
     }
 
