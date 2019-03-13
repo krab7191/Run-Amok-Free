@@ -18,7 +18,7 @@ const styles = theme => ({
   },
 });
 
-function FormFeedback(props) {
+const FormFeedback = (props) => {
   return (
     <div
       className={classNames(

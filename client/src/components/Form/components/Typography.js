@@ -54,7 +54,7 @@ const headlineMapping = {
   subtitle1: 'h3',
 };
 
-function Typography(props) {
+const Typography = (props) => {
   const { children, classes, marked, variant, ...other } = props;
 
   return (

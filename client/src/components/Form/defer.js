@@ -1,6 +1,6 @@
 import React from 'react';
 
-function defer(Component) {
+const defer = (Component) => {
   class Defer extends React.Component {
     state = {
       mounted: false,

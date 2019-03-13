@@ -59,7 +59,7 @@ const styles = theme => ({
   },
 });
 
-function TextField(props) {
+const TextField = (props) => {
   const {
     classes,
     InputProps: {

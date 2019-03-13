@@ -18,7 +18,7 @@ const styles = theme => ({
   },
 });
 
-function AppForm(props) {
+const AppForm = (props) => {
   const { children, classes } = props;
 
   return (

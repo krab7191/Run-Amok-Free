@@ -75,7 +75,7 @@ const styles = theme => ({
   },
 });
 
-function LayoutBody(props) {
+const LayoutBody = (props) => {
   const {
     children,
     classes,

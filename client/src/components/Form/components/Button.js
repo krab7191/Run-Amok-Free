@@ -24,7 +24,7 @@ const styles = theme => ({
   },
 });
 
-function Button(props) {
+const Button = (props) => {
   return <MuiButton {...props} />;
 }
 
