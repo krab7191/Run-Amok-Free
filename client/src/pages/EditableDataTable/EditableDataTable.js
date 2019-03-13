@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import API from '../../utils/API';
 import './EditableDataTable.css';
 
-// Import the material UI table
+// Import the material UI table stuff
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,6 +14,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
+
+import Switch from '../../components/Switch';
 
 
 class EditableDataTable extends Component {
@@ -68,11 +70,25 @@ class EditableDataTable extends Component {
         });
     }
 
+    // Search state for the event target id, set isAvalable value equal to the new switch value
+    handleToggle = (e, _id) => {
+        const { checked } = e.target;
+        this.state.allBevs.forEach((bev, i) => {
+            if (bev._id === _id) {
+                let newState = [...this.state.allBevs];
+                newState[i].isAvailable = checked;
+                this.setState({
+                    allBevs: newState
+                });
+            }
+        })
+    }
+
     render() {
 
         return (
             <Paper>
-                <Table padding="checkbox">
+                <Table>
                     <TableHead>
                         <TableRow>
                             {this.state.heads.map((h, i) => {
@@ -103,8 +119,13 @@ class EditableDataTable extends Component {
                                         />
                                     </form>
                                 </TableCell>
-                                {/* Cast boolean to string for display purposes */}
-                                <TableCell align="center">{` ${row.isAvailable}`}</TableCell>
+                                <TableCell align="center">
+                                    <Switch
+                                        isAvailable={row.isAvailable}
+                                        handleToggle={this.handleToggle}
+                                        _id={row._id}
+                                    />
+                                </TableCell>
                                 <TableCell align="center">{this.makeDateReadable(row.dateCreated)}</TableCell>
                                 <TableCell align="center">{this.makeDateReadable(row.dateUpdated)}</TableCell>
                             </TableRow>
