@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import InputBase from '@material-ui/core/InputBase';
 
 
 class EditableDataTable extends Component {
@@ -22,7 +22,7 @@ class EditableDataTable extends Component {
                 description: "",
                 isAvailable: null
             },
-            heads: ["Name", "Description", "Is Available?", "Date Created", "Last updated"]
+            heads: ["Name", "Description", "Is Available?", "Date Created", "Last Updated"]
         };
     }
 
@@ -49,29 +49,52 @@ class EditableDataTable extends Component {
         return `${month} ${day}, ${year}`;
     }
 
+    handleNameChange = e => {
+        const _id = e.target.name;
+        const { value } = e.target;
+        this.state.allBevs.forEach((bev, i) => {
+            if (bev._id === _id) {
+                let newState = [...this.state.allBevs];
+                newState[i].name = value;
+                this.setState({
+                    allBevs: newState
+                });
+            };
+        });
+    }
+
 
     render() {
 
         return (
             <Paper>
-                <Table>
+                <Table padding="checkbox">
                     <TableHead>
                         <TableRow>
                             {this.state.heads.map((h, i) => {
-                                return i === 0 ? <TableCell key={i}>{h}</TableCell> : <TableCell key={i} align="right">{h}</TableCell>;
+                                return i === 0 ? <TableCell key={i}>{h}</TableCell> : <TableCell key={i} align="center">{h}</TableCell>;
                             })}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.allBevs[0] !== "Loading..." && this.state.allBevs.map(row => (
                             <TableRow key={row._id}>
-                                <TableCell component="th" scope="row">
-                                    {row.name}
+                                <TableCell component="th" scope="row" sortDirection="asc">
+                                    <form noValidate autoComplete="off">
+                                        <InputBase
+                                            className="beverage-name"
+                                            value={row.name}
+                                            onChange={this.handleNameChange}
+                                            margin="dense"
+                                            name={row._id}
+                                        />
+                                    </form>
                                 </TableCell>
-                                <TableCell align="right">{row.description}</TableCell>
-                                <TableCell align="right">{"" + row.isAvailable}</TableCell>
-                                <TableCell align="right">{row.dateCreated}</TableCell>
-                                <TableCell align="right">{row.dateUpdated}</TableCell>
+                                <TableCell align="center">{row.description}</TableCell>
+                                {/* Cast boolean to string for display purposes */}
+                                <TableCell align="center">{` ${row.isAvailable}`}</TableCell>
+                                <TableCell align="center">{this.makeDateReadable(row.dateCreated)}</TableCell>
+                                <TableCell align="center">{this.makeDateReadable(row.dateUpdated)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
