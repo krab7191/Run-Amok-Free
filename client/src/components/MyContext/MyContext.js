@@ -7,6 +7,7 @@ class Provider extends Component {
   state = {
     isLoading: false,
     isAdmin: true,
+    isLoggedIn: false,
   };
 
   componentWillMount() {
@@ -32,6 +33,20 @@ class Provider extends Component {
           postNote: (e,id,noteData) => {
             e.preventDefault();
             this.addNoteData(id,noteData);
+          },
+          handleSubmit: () => {
+            this.setState({
+              isLoggedIn: true
+            },()=>{
+              console.log(this.state);
+            })
+          },
+          handleLogout: () => {
+            this.setState({
+              isLoggedIn: false
+            },()=>{
+              console.log(this.state)
+            })
           }
         }}
       > 

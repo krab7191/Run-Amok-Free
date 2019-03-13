@@ -4,21 +4,10 @@ import PropTypes from 'prop-types';
 import MuiPaper from '@material-ui/core/Paper';
 
 import { withStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: grey,
-    secondary: {
-      main: '#e0e0e0',
-    },
-  },
-});
 
 const styles = theme => ({
   background: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#e0e0e0'
   },
   padding: {
     padding: theme.spacing.unit,
@@ -26,13 +15,17 @@ const styles = theme => ({
 });
 
 function Paper(props) {
+
   const { background, classes, className, padding, ...other } = props;
+  
   return (
     <MuiPaper
       elevation={0}
       square
       className={classNames(
-        classes["background"],
+        {
+          [classes.background]: background,
+        },
         {
           [classes.padding]: padding,
         },
@@ -44,15 +37,15 @@ function Paper(props) {
 }
 
 Paper.propTypes = {
-  background: PropTypes.string,
+  background: PropTypes.bool,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   padding: PropTypes.bool,
 };
 
 Paper.defaultProps = {
-  background: 'main',
-  padding: false,
+  background: true,
+  padding: true,
 };
 
-export default withStyles(styles(theme))(Paper);
+export default withStyles(styles)(Paper);

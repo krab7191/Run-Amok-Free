@@ -90,7 +90,8 @@ class PrimarySearchAppBar extends React.Component {
             const isMenuOpen = Boolean(anchorEl);
             const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
             const isPageMenuOpen = Boolean(anchorPageEl);
-            const isAdmin = context.myState.isAdmin;
+            const { isAdmin,isLoggedIn } = context.myState;
+            const handleLogout = context.handleLogout;
 
             const renderMenu = (
               <Menu
@@ -100,8 +101,9 @@ class PrimarySearchAppBar extends React.Component {
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
               >
-                {isAdmin  ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null}
-                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                {isAdmin && isLoggedIn ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null}
+                <MenuItem onClick={this.handleMenuClose}>{isLoggedIn ? "My account" : <Link to="/sign-in">Login</Link>}</MenuItem>
+                {isLoggedIn ? <MenuItem onClick={handleLogout}>Logout</MenuItem> : null}
               </Menu>
             );
 
