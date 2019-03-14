@@ -7,7 +7,7 @@ const MyContext = React.createContext();
 class Provider extends Component {
   state = {
     isLoading: false,
-    isAdmin: true,
+    isAdmin: false,
     isLoggedIn: false,
     isRegistered: false,
     loginAttempt: false,
@@ -15,6 +15,24 @@ class Provider extends Component {
   };
 
   componentWillMount() {
+    AUTH.getUser().then(res => {
+      console.log(res.data);
+			if (!!res.data.user) {
+				this.setState({
+					isLoggedIn: true,
+          loginAttempt: false,
+          isAdmin: res.data.user.isAdmin,
+					user: res.data.user
+        });
+      }
+      else {
+        this.setState({
+					isLoggedIn: false,
+					loginAttempt: 0,
+					user: null
+				});
+      }
+      })
   }
 
   render() {
@@ -35,15 +53,16 @@ class Provider extends Component {
               .catch(err=>console.log(err));
           },
           handleSignInSubmit: (userData) => {
-            console.log(userData.email);
-            AUTH.logIn(userData.email,userData.password)
+            console.log(userData);
+            AUTH.login(userData)
               .then((res) => {
                 console.log(`Logged in: ${res.data.user}`);
-                if (response.status === 200) {
+                if (res.status === 200) {
                   // update the state
                   this.setState({
                     isLoggedIn: true,
-                    user: response.data.user
+                    isAdmin: res.data.user.isAdmin,
+                    user: res.data.user
                   });
                 }
               })
@@ -55,7 +74,7 @@ class Provider extends Component {
                });
           },
           handleRegisterSubmit: (userData) => {
-            API.registerUser({
+            AUTH.register({
               createdOn: Date.now(),
               ...userData
             })
@@ -68,11 +87,14 @@ class Provider extends Component {
               .catch(err => console.log(err));
           },
           handleLogout: () => {
-            this.setState({
-              isLoggedIn: false
-            },()=>{
-              console.log(this.state)
+            AUTH.logout().then((value) => {
+              this.setState({
+                isLoggedIn: false,
+              },()=>{
+                console.log(this.state)
+              })
             })
+            .catch((err) => {console.log(err)})
           }
         }}
       > 
