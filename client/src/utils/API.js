@@ -12,6 +12,10 @@ export default {
   },
   addNoteData: (noteData) => {
     console.log(noteData);
-    return axios.post('/api/post/note',noteData);
+    return axios.post('/api/post/note', noteData);
   },
+  changeBeverage: (id, changes) => {
+    console.log(`Sending beverage changes...`);
+    return axios.put('/api/put/beverageChanges', { _id: id, changes: changes });
+  }
 };

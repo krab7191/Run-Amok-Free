@@ -71,7 +71,7 @@ class EditableDataTable extends Component {
     }
 
     // Search state for the event target id, set isAvalable value equal to the new switch value
-    handleToggle = (e, _id) => {
+    handleSwitchToggle = (e, _id) => {
         const { checked } = e.target;
         this.state.allBevs.forEach((bev, i) => {
             if (bev._id === _id) {
@@ -80,9 +80,52 @@ class EditableDataTable extends Component {
                 this.setState({
                     allBevs: newState
                 });
+                this.sendUpdateBeverage(_id, { isAvailable: checked });
             }
         })
     }
+
+    // After an api call to change the database fails, rollback the state so it's in sync
+    // !! ** ASSUME changes is an object which contains one beverage property / value pair
+    rollbackStateAfterAPIFail = (id, changes) => {
+        const k = Object.keys(changes)[0];
+        const v = Object.values(changes)[0];
+        this.state.allBevs.forEach((bev, i) => {
+            if (bev._id === id) {
+                let newState = [...this.state.allBevs];
+                newState[i][k] = v;
+                this.setState({
+                    allBevs: newState
+                });
+            }
+        })
+    }
+
+    // Handle updating database when a beverage is changed
+    sendUpdateBeverage = (id, changes) => {
+        API.changeBeverage(id, changes)
+            .then(resp => {
+                if (resp.status === 200 && resp.statusText === "OK") {
+                    console.log(`All good. Fire save related modal to let user know.`);
+                }
+                else {
+                    console.log(`Update beverage returned non-error status code: please debug`);
+                    console.log(resp.status, resp.statusText);
+                }
+            })
+            .catch(err => {
+                console.log(`Error updating beverage: ${err}`);
+                if (err.Error === 'Network Error') {
+                    console.log(`Internet disconnected, undo state changes and fire modal to let user know`);
+                    this.rollbackStateAfterAPIFail(id, changes);
+                }
+                else {
+                    console.log(`Non network-related error. Please debug: ${err}`);
+                    // Error: Request failed with status code 500
+                }
+            });
+    }
+
 
     render() {
 
@@ -122,7 +165,7 @@ class EditableDataTable extends Component {
                                 <TableCell align="center">
                                     <Switch
                                         isAvailable={row.isAvailable}
-                                        handleToggle={this.handleToggle}
+                                        handleToggle={this.handleSwitchToggle}
                                         _id={row._id}
                                     />
                                 </TableCell>
