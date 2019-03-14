@@ -28,7 +28,7 @@ class App extends Component {
       <Provider>
         <MyContext.Consumer>
           {context => {
-            const { isLoggedIn } = context.myState;
+            const { isLoggedIn,isRegistered } = context.myState;
             console.log(context);
             return(
               <Router>
@@ -49,7 +49,7 @@ class App extends Component {
                     <Switch>
                       <Route exact path="/" component={SignIn} />
                       <Route exact path="/sign-in" component={SignIn} />
-                      <Route exact path="/sign-up" component={SignUp} />
+                      {!isRegistered && (<Route exact path="/sign-up" component={SignUp} />)}
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
                     )}

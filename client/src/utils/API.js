@@ -14,4 +14,10 @@ export default {
     console.log(noteData);
     return axios.post('/api/post/note',noteData);
   },
+  registerUser: (userData) => {
+    return axios.post('/auth/post/user',userData);
+  },
+  logInUser: (userData) => {
+    return axios.get('/auth/get/user/'+userData);
+  }
 };

@@ -52,8 +52,6 @@ class SignIn extends React.Component {
     return (
       <MyContext.Consumer>
         {context => {
-          console.log(context);
-
           return (
             <React.Fragment>
               <AppForm>
@@ -69,7 +67,7 @@ class SignIn extends React.Component {
                   </Typography>
                 </React.Fragment>
                 <Form
-                  onSubmit={context.handleSubmit}
+                  onSubmit={context.handleSignInSubmit}
                   subscription={{ submitting: true }}
                   validate={this.validate}
                 >
@@ -120,7 +118,7 @@ class SignIn extends React.Component {
                   )}
                 </Form>
                 <Typography align="center">
-                  <Link underline="always" href="/premium-themes/onepirate/forgot-password">
+                  <Link underline="always" href="/forgot-password">
                     Forgot password?
                   </Link>
                 </Typography>

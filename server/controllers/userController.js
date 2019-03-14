@@ -19,13 +19,23 @@ module.exports = {
 
   },
   registerUser: (req, res) => {
-
+    console.log(req.body);
+    db.Users.create(req.body)
+      .then(data => res.json(data))
+      .catch(err => res.status(422).json(err));
   },
   logout: (req, res) => {
 
   },
   authenticate: (req, res) => {
 
+  },
+  signin: (req, res) => {
+    db.Users.find({
+      email: req.params.email,
+    })
+      .then(data => res.json(data))
+      .catch(err => res.status(422).json(err));
   }
   
 };
