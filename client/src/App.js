@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
-import EditableDataTable from './pages/EditableDataTable';
+import ManageBevs from './pages/ManageBevs';
 import Notes from './pages/Notes';
 import ManageUsers from './pages/ManageUsers';
 import Tasting from './pages/Tasting';
@@ -39,7 +39,7 @@ class App extends Component {
                       <Route exact path="/" component={Tasting} />
                       <Route exact path="/Tasting" component={Tasting} />
                       <Route exact path="/ManageUsers" component={ManageUsers} />
-                      <Route exact path="/EditableDataTable" component={EditableDataTable} />
+                      <Route exact path="/ManageBevs" component={ManageBevs} />
                       <Route exact path="/Notes" component={Notes} />
                       <Route exact path="/ApiTest" component={ApiTest} />
                       <Route component={() => <Redirect to="/" />} />
