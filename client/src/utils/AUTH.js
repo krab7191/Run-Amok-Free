@@ -11,6 +11,9 @@ export default {
         return axios.post('/auth/post/logout');
     },
     getUser: () => {
-        return axios.get('/auth/get/user/');
+        return axios.get('/auth/get/user');
+    },
+    getAllUsers: () => {
+        return axios.get('/admin/users');
     }
 }

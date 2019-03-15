@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const getController = require('../../controllers/getController');
+const userController = require('../../controllers/userController');
 
 // Private GET routes here:
 // router.get('/secureData', secureGetController.secureData);
-router.route('/user')
-    .get(getController.getAllUsers);
+router.route('/users')
+    .get(userController.getAllUsers);
 
 module.exports = router;
