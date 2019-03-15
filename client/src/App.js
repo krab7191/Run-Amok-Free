@@ -11,6 +11,8 @@ import SignUp from './pages/SignUp';
 import Nav from './components/Nav';
 import { Provider, MyContext} from "./components/MyContext/MyContext";
 
+import './App.css';
+
 
 class App extends Component {
 
