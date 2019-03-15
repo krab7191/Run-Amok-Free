@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserTable from '../../components/UserTable';
+import EditableDataTable from '../../components/EditableDataTable';
 
 class UsersList extends Component {
 
@@ -15,7 +15,7 @@ class UsersList extends Component {
   render() {
     return(
       <div>
-        <UserTable />
+        <EditableDataTable />
       </div>
     )
   }}
