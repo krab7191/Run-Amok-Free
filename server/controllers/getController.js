@@ -13,8 +13,8 @@ module.exports = {
     getAllNotes: function(req,res) {
         db.Notes.find({})
             .select(["body","beverages","user"])
-            .populate("beverages")
-            .populate("user")
+            .populate("beverages",["name","description"])
+            .populate("user","firstName")
             .then(data => res.json(data))
             .catch(err => res.status(422).json(err))
     },
