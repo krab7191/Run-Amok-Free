@@ -54,7 +54,6 @@ class Provider extends Component {
               .catch(err=>console.log(err));
           },
           handleSignInSubmit: (userData) => {
-            console.log(userData);
             AUTH.login(userData)
               .then((res) => {
                 console.log(`Logged in: ${res.data.user.firstName}`);
