@@ -19,19 +19,22 @@ class Notes extends Component {
           body: "I think this one is too tart. It won't appeal to many people",
           user: {
             firstName: "Karsten"
-          }
+          },
+          name: "Peach"
         },
         {
           body: "This one is way too sweet. We should use more chicken stock in the next batch",
           user: {
             firstName: "Karsten"
-          }
+          },
+          name: "Apple"
         },
         {
           body: "Perfect this one will be an instant hit.",
           user: {
             firstName: "Karsten"
-          }
+          },
+          name: "Christmas"
         }
       ]
     };
@@ -68,7 +71,7 @@ class Notes extends Component {
                 <CommentCard
                   key={index}
                   leftBy={comment.user ? comment.user.firstName : ""}
-                  // name={comment.beverages.name}
+                  name={comment.name}
                   comment={comment.body} />
               ))}
             </div>
