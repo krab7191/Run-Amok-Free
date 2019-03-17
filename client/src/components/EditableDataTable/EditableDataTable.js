@@ -22,7 +22,26 @@ class EditableDataTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allBevs: ["Loading..."],
+            allBevs: [
+                {
+                    name: "Peach Mead",
+                    description: "Our first attempt at a peach mead. Very Tart and fruity.",
+                    isAvailable: false,
+                    dateCreated: "2019-03-17T22:52:28.197Z"
+                },
+                {
+                    name: "Standard Honey Mead",
+                    description: "Typical honey mead, made with local honey.",
+                    isAvailable: true,
+                    dateCreated: "2019-03-17T22:52:28.197Z"
+                },
+                {
+                    name: "Andy's Ginger Mead",
+                    description: "13 pounds of fresh ginger per batch",
+                    isAvailable: true,
+                    dateCreated: "2019-03-17T22:52:28.197Z"
+                }
+            ],
             newBev: {
                 name: "",
                 description: "",
@@ -33,7 +52,7 @@ class EditableDataTable extends Component {
     }
 
     componentWillMount() {
-        this.getAllBeverages();
+        // this.getAllBeverages();
     }
 
     getAllBeverages = () => {

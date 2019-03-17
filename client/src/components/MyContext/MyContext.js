@@ -7,7 +7,7 @@ const MyContext = React.createContext();
 class Provider extends Component {
   state = {
     isLoading: false,
-    isAdmin: false,
+    isAdmin: true,
     isLoggedIn: false,
     isRegistered: false,
     loginAttempt: false,
