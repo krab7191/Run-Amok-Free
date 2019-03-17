@@ -74,66 +74,66 @@ class TastingCard extends React.Component {
     );
 
     return (
-              <div className="tastingCardDiv">
-                <Card raised={true} className={classes.card}>
-                  <CardHeader
-                    avatar={
-                      <Avatar aria-label="Recipe" className={classes.avatar}>
-                        
-                      </Avatar>
-                    }
-                    // action={
-                    //   <IconButton>
-                    //     <MoreVertIcon />
-                    //   </IconButton>
-                    // }
-                    title={this.props.bev.name}
-                    subheader={<Moment date={this.props.bev.dateUpdated} format="MMMM Do YYYY, h:mm a" />}
-                  />
-                  {/* <CardMedia
-                    className={classes.media}
-                    image=""
-                    title=""
-                  /> */}
-                  <CardContent>
-                    <Typography component="p">
-                      {this.props.bev.desc}
-                    </Typography>
-                  </CardContent>
-                  <CardActions className={classes.actions} disableActionSpacing>
-                    {!this.state.inputOpen? <IconButton 
-                      onClick={this.handleOpenNote} 
-                      aria-label="Add A Note">
-                        <AddNoteIcon /> 
-                      </IconButton> : 
-                    <IconButton 
-                    onClick={this.handleOpenNote} 
-                    aria-label="Add A Note">
-                      <CancelIcon /> 
-                    </IconButton>}
-                    <IconButton
-                      className={classnames(classes.expand, {
-                        [classes.expandOpen]: this.state.expanded,
-                      })}
-                      onClick={this.handleExpandClick}
-                      aria-expanded={this.state.expanded}
-                      aria-label="Show more"
-                    >
-                      <ExpandMoreIcon />
-                    </IconButton>
-                  </CardActions>
-                  {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                      <Typography variant="h6" gutterBottom>Comments</Typography>
-                      {allBevs[0].notes.map(note=>(
-                        <Typography>{note}</Typography>
-                      ))}
-                    </CardContent>
-                  </Collapse> */}
-                  {this.state.inputOpen? renderCommentInput : null}
-                </Card>
-              </div>
-          )
+      <div className="tastingCardDiv">
+        <Card raised={true} className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="Recipe" className={classes.avatar}>
+                
+              </Avatar>
+            }
+            // action={
+            //   <IconButton>
+            //     <MoreVertIcon />
+            //   </IconButton>
+            // }
+            title={this.props.bev.name}
+            subheader={<Moment date={this.props.bev.dateUpdated} format="MMMM Do YYYY, h:mm a" />}
+          />
+          {/* <CardMedia
+            className={classes.media}
+            image=""
+            title=""
+          /> */}
+          <CardContent>
+            <Typography component="p">
+              {this.props.bev.desc}
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.actions} disableActionSpacing>
+            {!this.state.inputOpen? <IconButton 
+              onClick={this.handleOpenNote} 
+              aria-label="Add A Note">
+                <AddNoteIcon /> 
+              </IconButton> : 
+            <IconButton 
+            onClick={this.handleOpenNote} 
+            aria-label="Add A Note">
+              <CancelIcon /> 
+            </IconButton>}
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>Comments</Typography>
+              {allBevs[0].notes.map(note=>(
+                <Typography>{note}</Typography>
+              ))}
+            </CardContent>
+          </Collapse> */}
+          {this.state.inputOpen? renderCommentInput : null}
+        </Card>
+      </div>
+    )
   }
 }
 
