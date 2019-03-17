@@ -35,7 +35,7 @@ class App extends Component {
               <Router>
                 <div>
                   <Nav />
-                    {isLoggedIn && (
+                    {/* {isLoggedIn && ( */}
                     <Switch>
                       <Route exact path="/" component={Tasting} />
                       <Route exact path="/Tasting" component={Tasting} />
@@ -44,15 +44,15 @@ class App extends Component {
                       <Route exact path="/Notes" component={Notes} />
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
-                    )}
-                    {!isLoggedIn && (
+                    {/* // )} */}
+                    {/* {!isLoggedIn && (
                     <Switch>
                       <Route exact path="/" component={SignIn} />
                       <Route exact path="/sign-in" component={SignIn} />
                       {!isRegistered && (<Route exact path="/sign-up" component={SignUp} />)}
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
-                    )}
+                    )} */}
                 </div>
               </Router> 
             )
