@@ -33,15 +33,21 @@ const styles = theme => ({
 class GrowTextInput extends React.Component {
 
   state = {
-    note: ""
+    note: "",
+    inputErr: false
   }
 
   handleInputChange = e => {
     const { value } = e.target;
     this.setState({
-      note: value
+      note: value,
+      inputErr: false
     });
   };
+
+  showErr = () => {
+    this.setState({inputErr: true});
+  }
 
   render() {
     const { closeInput,classes,checked } = this.props;
@@ -58,7 +64,7 @@ class GrowTextInput extends React.Component {
           const myTextBox = (
             <Paper elevation={4} className={classes.paper}>
               <TextField
-                id="filled-multiline-static"
+                id="outlined-multiline-static"
                 label="Comment?"
                 multiline
                 rows="8"
@@ -66,11 +72,14 @@ class GrowTextInput extends React.Component {
                 defaultValue=""
                 className={classes.textField}
                 margin="normal"
-                variant="filled"
+                variant="outlined"
                 onChange={this.handleInputChange}
+                error={this.state.inputErr ? true : false }
               />
               <Button 
-                onClick={e=>handleNoteInput(e,this.props.id)} 
+                onClick={this.state.note.trim() ? 
+                    e=>handleNoteInput(e,this.props.id) : 
+                    this.showErr} 
                 className={classes.button}
                 >Submit</Button>
             </Paper>
