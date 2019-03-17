@@ -45,7 +45,8 @@ class Provider extends Component {
             e.preventDefault();
             API.addNoteData({
               body: noteData,
-              beverages: id
+              beverages: id,
+              user: this.state.user._id
             })
               .then((res) => {
                 console.log(`Added! ${res.data.body}`);
@@ -53,10 +54,9 @@ class Provider extends Component {
               .catch(err=>console.log(err));
           },
           handleSignInSubmit: (userData) => {
-            console.log(userData);
             AUTH.login(userData)
               .then((res) => {
-                console.log(`Logged in: ${res.data.user}`);
+                console.log(`Logged in: ${res.data.user.firstName}`);
                 if (res.status === 200) {
                   // update the state
                   this.setState({

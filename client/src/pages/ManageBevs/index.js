@@ -1,1 +1,1 @@
-export {default} from './ManageBevs' 
+export { default } from './ManageBevs';

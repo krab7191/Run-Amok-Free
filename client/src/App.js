@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
+import ManageBevs from './pages/ManageBevs';
 import Notes from './pages/Notes';
 import ManageUsers from './pages/ManageUsers';
 import Tasting from './pages/Tasting';
@@ -9,7 +10,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Nav from './components/Nav';
 import { Provider, MyContext} from "./components/MyContext/MyContext";
-import ManageBevs from './pages/ManageBevs';
+
+import './App.css';
 
 
 class App extends Component {

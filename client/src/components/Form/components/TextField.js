@@ -57,6 +57,9 @@ const styles = theme => ({
     top: '50%',
     marginTop: -12,
   },
+  valid: {
+    border: '2px solid green',
+  },
 });
 
 const TextField = (props) => {
@@ -67,6 +70,7 @@ const TextField = (props) => {
       ...InputPropsOther
     } = {},
     InputLabelProps,
+    valid,
     noBorder,
     size,
     SelectProps,
@@ -82,6 +86,7 @@ const TextField = (props) => {
           input: classNames(
             classes.input,
             classes[`inputSize${capitalize(size)}`],
+            valid ? classes.valid :
             {
               [classes.inputBorder]: !noBorder,
             },

@@ -7,13 +7,14 @@ const RFTextField = (props) => {
     autoComplete,
     input,
     InputProps,
-    meta: { touched, error, submitError },
+    meta: { touched, error, valid, submitError },
     ...other
   } = props;
 
   return (
     <TextField
       error={Boolean(touched && (error || submitError))}
+      valid={Boolean(valid)}
       {...input}
       {...other}
       InputProps={{
@@ -33,6 +34,7 @@ RFTextField.propTypes = {
   InputProps: PropTypes.object,
   meta: PropTypes.shape({
     error: PropTypes.string,
+    valid: PropTypes.bool.isRequired,
     touched: PropTypes.bool.isRequired,
   }).isRequired,
 };
