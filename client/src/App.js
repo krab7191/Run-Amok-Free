@@ -5,7 +5,6 @@ import ManageBevs from './pages/ManageBevs';
 import Notes from './pages/Notes';
 import ManageUsers from './pages/ManageUsers';
 import Tasting from './pages/Tasting';
-import ApiTest from './pages/ApiTest';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Nav from './components/Nav';
@@ -43,7 +42,6 @@ class App extends Component {
                       <Route exact path="/ManageUsers" component={ManageUsers} />
                       <Route exact path="/ManageBevs" component={ManageBevs} />
                       <Route exact path="/Notes" component={Notes} />
-                      <Route exact path="/ApiTest" component={ApiTest} />
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
                     )}

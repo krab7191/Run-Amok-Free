@@ -1,18 +1,9 @@
-#tableHeader {
-  position: absolute;
+.beverage-description {
+  width: 100%;
 }
 
-td {
-  border: 1px solid black;
-}
-
-/* Remove tiny red border added by react table */
-
-.rt-tr-group>div>.rt-td {
-  border-right: none !important;
-}
-
-#notify {
-  position: absolute;
-  z-index: 9999;
+.editable {
+  padding: 3px;
+  border-radius: 4px;
+  background-color: #eee;
 }
