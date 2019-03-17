@@ -90,8 +90,13 @@ class PrimarySearchAppBar extends React.Component {
             const isMenuOpen = Boolean(anchorEl);
             const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
             const isPageMenuOpen = Boolean(anchorPageEl);
-            const isAdmin = context.myState.isAdmin;
+            const { isAdmin,isLoggedIn } = context.myState;
+            const handleLogout = context.handleLogout;
 
+            const handleLogoutClose = () => {
+              this.handleMenuClose();
+              handleLogout();
+            }
             const renderMenu = (
               <Menu
                 anchorEl={anchorEl}
@@ -100,8 +105,9 @@ class PrimarySearchAppBar extends React.Component {
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
               >
-                {isAdmin  ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null}
-                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                {/* {isAdmin && isLoggedIn ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null} */}
+                <MenuItem onClick={this.handleMenuClose}>{isLoggedIn ? "My account" : <Link to="/sign-in">Login</Link>}</MenuItem>
+                {isLoggedIn ? <MenuItem onClick={handleLogoutClose}>Logout</MenuItem> : null}
               </Menu>
             );
 
@@ -115,7 +121,7 @@ class PrimarySearchAppBar extends React.Component {
               >
                 {/* <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem> */}
                 <MenuItem onClick={this.handlePageMenuClose}><Link to="/Tasting">Tasting</Link></MenuItem>
-                { isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/EditableDataTable">Manage Meads</Link></MenuItem> : null }
+                { isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/ManageBevs">Manage Meads</Link></MenuItem> : null }
                 { isAdmin ? <MenuItem onClick={this.handlePageMenuClose}><Link to="/ManageUsers">Manage Users</Link></MenuItem> : null }
                 <MenuItem onClick={this.handlePageMenuClose}><Link to="/Notes">Notes</Link></MenuItem>
               </Menu>

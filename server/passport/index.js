@@ -10,7 +10,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
 	console.log('Deserialize called');
-	db.User.findOne(
+	db.Users.findOne(
 		{ _id: id },
 		'firstName lastName email isAdmin',
 		(err, user) => {

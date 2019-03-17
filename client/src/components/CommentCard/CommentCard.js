@@ -23,7 +23,15 @@ const styles = {
   },
   pos: {
     marginBottom: 12,
+    position: "absolute",
+    top: "15px",
+    right: "30px",
+    fontSize: 18,
+    fontWeight: "bolder"
   },
+  content: {
+    position: "relative",
+  }
 };
 
 function CommentCard(props) {
@@ -32,15 +40,15 @@ function CommentCard(props) {
 
   return (
     <Card raised={true} className={classes.card}>
-      <CardContent>
+      <CardContent className={classes.content}>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           {props.name}
         </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          {props.leftBy}
+        </Typography>
         <Typography variant="h5" component="h2">
           {props.comment}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          
         </Typography>
         <Typography component="p">
          

@@ -43,7 +43,11 @@ class Notes extends Component {
               <div>
                 <h1 style={styles.header}>Notes</h1>
                 {allNotes.map((comment,index)=> (
-                  <CommentCard key={index} name={comment.beverages.name} comment={comment.body} />
+                  <CommentCard 
+                    key={index} 
+                    leftBy={comment.user ? comment.user.firstName : ""} 
+                    name={comment.beverages.name} 
+                    comment={comment.body} />
                 ))}
               </div>
         )}}
