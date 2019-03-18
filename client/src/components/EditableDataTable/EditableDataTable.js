@@ -67,6 +67,7 @@ class EditableDataTable extends Component {
     // Given the change event of input fields, update state based on ObjectId and column name
     handleFieldChange = (e, col, _id) => {
         const { value } = e.target;
+        console.log(value);
         this.state.data.forEach((n, i) => {
             if (n._id === _id) {
                 let newState = [...this.state.data];
@@ -146,9 +147,9 @@ class EditableDataTable extends Component {
                         this.state.data[0] !== "Loading..." && this.state.data.map(row => (
                             <BevTableRow 
                                 key={row._id}
-                                readable={this.makeDateReadable}
                                 handleFieldChange={this.handleFieldChange}
                                 handleSwitchToggle={this.handleSwitchToggle}
+                                readable={this.makeDateReadable}
                                 {...row} /> )) :
                         this.state.data[0] !== "Loading..." && this.state.data.map(row => (
                             <UsersTableRow 

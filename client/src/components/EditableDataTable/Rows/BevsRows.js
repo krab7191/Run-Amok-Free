@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch';
 class BevTableRow extends React.Component {
     
     render() {
+        console.log(this.props);
         const { _id, 
                 name, 
                 description, 
@@ -42,7 +43,7 @@ class BevTableRow extends React.Component {
                 </TableCell>
                 <TableCell align="center">
                     <Switch
-                        isavailable={isAvailable.toString()}
+                        checked={isAvailable}
                         onChange={(e)=>handleSwitchToggle(e,_id)}
                         _id={_id}
                     />
