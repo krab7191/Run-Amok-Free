@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import EditableDataTable from '../../components/EditableDataTable';
+// import EditableDataTable from '../../components/EditableDataTable';
 
 class UsersList extends Component {
 

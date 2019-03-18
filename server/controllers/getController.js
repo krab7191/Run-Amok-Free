@@ -23,8 +23,8 @@ module.exports = {
         db.Beverages.find({
             isAvailable: true
         })
-            .select(["name", "description", "notes", "isAvailable", "dateUpdated"])
-            .populate('notes')
+            .select(["-dateCreated","-isAvail"])
+            .populate('notes',["body","beverages"])
             .then(data => res.json(data))
             .catch(err => res.status(422).json(err))
     }

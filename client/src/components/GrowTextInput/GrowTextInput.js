@@ -7,6 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { MyContext } from '../MyContext/MyContext';
 
+import Modal from '../Modal';
+
 const styles = theme => ({
 
   textField: {
@@ -34,9 +36,13 @@ class GrowTextInput extends React.Component {
 
   state = {
     note: "",
-    inputErr: false
+    inputErr: false,
+    modalOpen: false
   }
 
+  componentWillMount () {
+    this.setState({modalOpen: false})
+  }
   handleInputChange = e => {
     const { value } = e.target;
     this.setState({
@@ -50,15 +56,18 @@ class GrowTextInput extends React.Component {
   }
 
   render() {
-    const { closeInput,classes,checked } = this.props;
+    const { closeInput,classes,checked,bev } = this.props;
     return (
       <MyContext.Consumer>
         {context => {
           
+          const handleClose = () => {
+            this.setState({ open: false });
+            closeInput();
+          };
           const handleNoteInput = (e,id) => {
             context.postNote(e,id,this.state.note);
-            closeInput();
-            alert("Added Note!");
+            this.setState({modalOpen: true});
           }
 
           const myTextBox = (
@@ -78,10 +87,15 @@ class GrowTextInput extends React.Component {
               />
               <Button 
                 onClick={this.state.note.trim() ? 
-                    e=>handleNoteInput(e,this.props.id) : 
+                    e=>handleNoteInput(e,bev.id) : 
                     this.showErr} 
                 className={classes.button}
                 >Submit</Button>
+                <Modal 
+                  open={this.state.modalOpen} 
+                  close={handleClose} 
+                  bev={bev}
+                  note={this.state.note}/>
             </Paper>
           );
 

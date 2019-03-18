@@ -62,14 +62,14 @@ class TastingCard extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, bev } = this.props;
 
     const renderCommentInput = (
       <GrowTextInput 
-        id={this.props.bev._id}
         closeInput={this.handleOpenNote} 
         // postNoteHandler={postNote} 
-        checked={this.state.inputOpen}>
+        checked={this.state.inputOpen}
+        bev={bev}>
       </GrowTextInput>
     );
 
