@@ -23,7 +23,8 @@ class EditableDataTable extends Component {
         this.state = {
             data: ["Loading..."],
             newData: {},
-            isAvailable: null
+            isAvailable: null,
+            isAdmin: null
         };
     }
 
@@ -85,7 +86,8 @@ class EditableDataTable extends Component {
         this.state.data.forEach((n, i) => {
             if (n._id === _id) {
                 let newState = [...this.state.data];
-                newState[i].isAvailable = checked;
+                this.props.type === "bevs" ? newState[i].isAvailable = checked :
+                newState[i].isAdmin = checked
                 this.setState({
                     data: newState
                 });
