@@ -3,13 +3,6 @@ const db = require("../models");
 
 // Functions for getting public data
 module.exports = {
-    getAllUsers: function (req, res) {
-        db.Users.find({})
-            .select(["firstName", "lastName", "isAdmin"])
-            .populate('notes')
-            .then(data => res.json(data))
-            .catch(err => res.status(422).json(err))
-    },
     getAllNotes: function (req, res) {
         db.Notes.find({})
             .select(["body","beverages","user"])
@@ -30,8 +23,8 @@ module.exports = {
         db.Beverages.find({
             isAvailable: true
         })
-            .select(["name", "description", "notes", "isAvailable", "dateUpdated"])
-            .populate('notes')
+            .select(["-dateCreated","-isAvail"])
+            .populate('notes',["body","beverages"])
             .then(data => res.json(data))
             .catch(err => res.status(422).json(err))
     }

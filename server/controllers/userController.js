@@ -16,7 +16,10 @@ module.exports = {
     }
   },
   getAllUsers: (req, res) => {
-
+    db.Users.find({})
+        .select(["-username","-password","-notes","-updatedOn"])
+        .then(data => res.json(data))
+        .catch(err => res.status(422).json(err))
   },
   searchUserByEmail: (req, res) => {
 
