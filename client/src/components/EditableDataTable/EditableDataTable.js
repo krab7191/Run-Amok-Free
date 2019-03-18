@@ -4,36 +4,33 @@
 
 import React, { Component } from 'react';
 import API from '../../utils/API';
+import AUTH from '../../utils/AUTH';
 import './EditableDataTable.css';
 
 // Import the material UI table stuff
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import BevTableHeader from './Headers/BevsHeader';
+import BevTableRow from './Rows/BevsRows';
+import UsersTableHeader from './Headers/UsersHeader';
+import UsersTableRow from './Rows/UsersRows';
 import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-
-import Switch from '../../components/Switch';
 
 
 class EditableDataTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allBevs: ["Loading..."],
-            newBev: {
-                name: "",
-                description: "",
-                isAvailable: null
-            },
-            heads: ["Name", "Description", "Is Available?", "Date Created", "Last Updated"]
+            data: ["Loading..."],
+            newData: {},
+            isAvailable: null
         };
     }
 
     componentWillMount() {
-        this.getAllBeverages();
+        this.props.type === "bevs" ? 
+            this.getAllBeverages() : 
+            this.getAllUsers();
     }
 
     getAllBeverages = () => {
@@ -41,10 +38,21 @@ class EditableDataTable extends Component {
             .then(res => {
                 console.log(`All beverages fetched.`);
                 this.setState({
-                    allBevs: res.data
+                    data: res.data
                 });
             })
             .catch(err => console.log(`Error getting all beverages: ${err}`));
+    };
+
+    getAllUsers = () => {
+        AUTH.getAllUsers()
+            .then(res => {
+                console.log(`All users fetched.`);
+                this.setState({
+                    data: res.data
+                });
+            })
+            .catch(err => console.log(`Error getting all users: ${err}`));
     };
 
     // Convert mongoose datestamp to human friendly date
@@ -59,12 +67,12 @@ class EditableDataTable extends Component {
     // Given the change event of input fields, update state based on ObjectId and column name
     handleFieldChange = (e, col, _id) => {
         const { value } = e.target;
-        this.state.allBevs.forEach((bev, i) => {
-            if (bev._id === _id) {
-                let newState = [...this.state.allBevs];
+        this.state.data.forEach((n, i) => {
+            if (n._id === _id) {
+                let newState = [...this.state.data];
                 newState[i][col] = value;
                 this.setState({
-                    allBevs: newState
+                    data: newState
                 });
             };
         });
@@ -73,12 +81,12 @@ class EditableDataTable extends Component {
     // Search state for the event target id, set isAvalable value equal to the new switch value
     handleSwitchToggle = (e, _id) => {
         const { checked } = e.target;
-        this.state.allBevs.forEach((bev, i) => {
-            if (bev._id === _id) {
-                let newState = [...this.state.allBevs];
+        this.state.data.forEach((n, i) => {
+            if (n._id === _id) {
+                let newState = [...this.state.data];
                 newState[i].isAvailable = checked;
                 this.setState({
-                    allBevs: newState
+                    data: newState
                 });
                 this.sendUpdateBeverage(_id, { isAvailable: checked });
             }
@@ -90,12 +98,12 @@ class EditableDataTable extends Component {
     rollbackStateAfterAPIFail = (id, changes) => {
         const k = Object.keys(changes)[0];
         const v = Object.values(changes)[0];
-        this.state.allBevs.forEach((bev, i) => {
-            if (bev._id === id) {
+        this.state.data.forEach((n, i) => {
+            if (n._id === id) {
                 let newState = [...this.state.allBevs];
                 newState[i][k] = v;
                 this.setState({
-                    allBevs: newState
+                    data: newState
                 });
             }
         })
@@ -132,47 +140,24 @@ class EditableDataTable extends Component {
         return (
             <Paper>
                 <Table>
-                    <TableHead>
-                        <TableRow>
-                            {this.state.heads.map((h, i) => {
-                                return i === 0 ? <TableCell key={i}>{h}</TableCell> : <TableCell key={i} align="center">{h}</TableCell>;
-                            })}
-                        </TableRow>
-                    </TableHead>
+                    {this.props.type === "bevs" ? <BevTableHeader /> : <UsersTableHeader />}
                     <TableBody>
-                        {this.state.allBevs[0] !== "Loading..." && this.state.allBevs.map(row => (
-                            <TableRow key={row._id}>
-                                <TableCell component="th" scope="row">
-                                    <form noValidate autoComplete="off">
-                                        <InputBase
-                                            className="beverage-name editable"
-                                            value={row.name}
-                                            onChange={e => this.handleFieldChange(e, 'name', row._id)}
-                                            margin="dense"
-                                        />
-                                    </form>
-                                </TableCell>
-                                <TableCell align="left">
-                                    <form noValidate autoComplete="off">
-                                        <InputBase
-                                            className="beverage-description editable"
-                                            value={row.description}
-                                            onChange={e => this.handleFieldChange(e, 'description', row._id)}
-                                            margin="dense"
-                                        />
-                                    </form>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <Switch
-                                        isAvailable={row.isAvailable}
-                                        handleToggle={this.handleSwitchToggle}
-                                        _id={row._id}
-                                    />
-                                </TableCell>
-                                <TableCell align="center">{this.makeDateReadable(row.dateCreated)}</TableCell>
-                                <TableCell align="center">{this.makeDateReadable(row.dateUpdated)}</TableCell>
-                            </TableRow>
-                        ))}
+                        {this.props.type === "bevs" ? 
+                        this.state.data[0] !== "Loading..." && this.state.data.map(row => (
+                            <BevTableRow 
+                                key={row._id}
+                                readable={this.makeDateReadable}
+                                handleFieldChange={this.handleFieldChange}
+                                handleSwitchToggle={this.handleSwitchToggle}
+                                {...row} /> )) :
+                        this.state.data[0] !== "Loading..." && this.state.data.map(row => (
+                            <UsersTableRow 
+                                key={row._id}
+                                readable={this.makeDateReadable}
+                                // handleFieldChange={this.handleFieldChange}
+                                handleSwitchToggle={this.handleSwitchToggle}
+                                {...row} /> ))
+                        }
                     </TableBody>
                 </Table>
             </Paper>

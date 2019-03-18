@@ -9,7 +9,7 @@ class ManageBevs extends React.Component {
 
     render() {
         return (
-            <EditableDataTable />
+            <EditableDataTable type="bevs" />
         )
     }
 }

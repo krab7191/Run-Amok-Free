@@ -87,7 +87,7 @@ class GrowTextInput extends React.Component {
               />
               <Button 
                 onClick={this.state.note.trim() ? 
-                    e=>handleNoteInput(e,bev.id) : 
+                    e=>handleNoteInput(e,bev._id) : 
                     this.showErr} 
                 className={classes.button}
                 >Submit</Button>
