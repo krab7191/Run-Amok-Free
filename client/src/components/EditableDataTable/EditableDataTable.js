@@ -27,8 +27,6 @@ class EditableDataTable extends Component {
     super(props);
     this.state = {
       data: ["Loading..."],
-      // Put modified bevs here for easier DB PUT requests
-      edits: [],
       // Data for a NEW beverage goes here
       newData: {},
       isAvailable: null,
@@ -78,6 +76,7 @@ class EditableDataTable extends Component {
       if (n._id === _id) {
         let newState = [...this.state.data];
         newState[i][col] = value;
+        newState[i].edited = true;
         this.setState({
           data: newState
         });
@@ -97,7 +96,7 @@ class EditableDataTable extends Component {
         this.setState({
           data: newState
         });
-        this.sendUpdateBeverage(_id, { isAvailable: checked });
+        this.sendUpdateBeverage(n);
       }
     });
   };
@@ -119,8 +118,8 @@ class EditableDataTable extends Component {
   };
 
   // Handle updating database when a beverage is changed
-  sendUpdateBeverage = (id, changes) => {
-    API.changeBeverage(id, changes)
+  sendUpdateBeverage = bevObj => {
+    API.changeBeverage(bevObj)
       .then(resp => {
         if (resp.status === 200 && resp.statusText === "OK") {
           console.log(`All good. Fire save related modal to let user know.`);
@@ -141,11 +140,41 @@ class EditableDataTable extends Component {
           console.log(
             `Internet disconnected, undo state changes and fire modal to let user know`
           );
-          this.rollbackStateAfterAPIFail(id, changes);
+          this.rollbackStateAfterAPIFail(bevObj);
         } else {
           console.log(`Non network-related error. Please debug: ${err}`);
         }
       });
+  };
+
+  // Save handler for editing the beverages
+  saveHandler = () => {
+    this.state.data.forEach(bev => {
+      if (bev.edited) {
+        API.changeBeverage(bev)
+          .then(res => {
+            console.log(res);
+            this.updateStateWithModifiedBeverage(
+              res.data._id,
+              res.data.dateUpdated
+            );
+          })
+          .catch(err => console.log(`Error changing bev: ${err}`));
+      }
+    });
+  };
+
+  updateStateWithModifiedBeverage = (_id, dateMod) => {
+    let newState = [...this.state.data];
+    console.log(newState);
+    newState.forEach((bev, i) => {
+      if (bev._id === _id) {
+        newState[i].dateUpdated = dateMod;
+      }
+    });
+    this.setState({
+      data: newState
+    });
   };
 
   render() {
@@ -161,7 +190,7 @@ class EditableDataTable extends Component {
             <TableBody>
               {this.props.type === "bevs"
                 ? this.state.data[0] !== "Loading..." &&
-                  this.state.data.map(row => (
+                  this.state.data.map((row, i) => (
                     <BevTableRow
                       key={row._id}
                       handleFieldChange={this.handleFieldChange}
@@ -184,7 +213,7 @@ class EditableDataTable extends Component {
           </Table>
         </Paper>
         {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
-          <SaveButton />
+          <SaveButton saveHandler={this.saveHandler} />
         )}
       </>
     );

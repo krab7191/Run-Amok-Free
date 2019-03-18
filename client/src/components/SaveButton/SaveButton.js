@@ -24,7 +24,11 @@ class SaveButton extends Component {
     return (
       <MuiThemeProvider theme={greenTheme}>
         <div className="save-button">
-          <Button color="primary" variant="contained">
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={this.props.saveHandler}
+          >
             Save
           </Button>
         </div>
