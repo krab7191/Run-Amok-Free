@@ -65,7 +65,6 @@ class EditableDataTable extends Component {
   // Given the change event of input fields, update state based on ObjectId and column name
   handleFieldChange = (e, col, _id) => {
     const { value } = e.target;
-    console.log(value);
     this.state.data.forEach((n, i) => {
       if (n._id === _id) {
         let newState = [...this.state.data];
@@ -120,6 +119,10 @@ class EditableDataTable extends Component {
           console.log(
             `Update beverage returned non-error status code: please debug`
           );
+          if (resp.status === 500) {
+            // Error: Request failed with status code 500
+            console.log(`500 error`);
+          }
           console.log(resp.status, resp.statusText);
         }
       })
@@ -132,7 +135,6 @@ class EditableDataTable extends Component {
           this.rollbackStateAfterAPIFail(id, changes);
         } else {
           console.log(`Non network-related error. Please debug: ${err}`);
-          // Error: Request failed with status code 500
         }
       });
   };

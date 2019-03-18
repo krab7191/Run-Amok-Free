@@ -16,7 +16,6 @@ class Provider extends Component {
 
   componentWillMount() {
     AUTH.getUser().then(res => {
-      console.log(res.data);
 			if (!!res.data.user) {
 				this.setState({
 					isLoggedIn: true,
@@ -56,7 +55,7 @@ class Provider extends Component {
           handleSignInSubmit: (userData) => {
             AUTH.login(userData)
               .then((res) => {
-                console.log(`Logged in: ${res.data.user.firstName}`);
+                // console.log(`Logged in: ${res.data.user.firstName}`);
                 if (res.status === 200) {
                   // update the state
                   this.setState({
@@ -67,10 +66,10 @@ class Provider extends Component {
                 }
               })
               .catch(err => {
-                console.log("Failure");
+                alert(`Username, email, or password incorrect. Please try again.`);
                   // alert("Incorrect User id or Password. Please try again.");
                   this.setState({loginAttempt:true});
-                  console.log(this.state);
+                  // console.log(this.state);
                });
           },
           handleRegisterSubmit: (userData) => {
@@ -91,7 +90,7 @@ class Provider extends Component {
               this.setState({
                 isLoggedIn: false,
               },()=>{
-                console.log(this.state)
+                // console.log(this.state)
               })
             })
             .catch((err) => {console.log(err)})

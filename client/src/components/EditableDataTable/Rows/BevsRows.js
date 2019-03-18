@@ -8,7 +8,6 @@ import Switch from "../../Switch";
 
 class BevTableRow extends React.Component {
   render() {
-    console.log(this.props);
     const {
       _id,
       name,

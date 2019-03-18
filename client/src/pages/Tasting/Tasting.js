@@ -31,7 +31,6 @@ class Tasting extends Component {
   getAllAvailBev = () => {
     API.getAvailBevData()
       .then(res => {
-        console.log(res);
         this.setState({
           // added .drinks because of initial seed data in getController
           allAvailBevs: res.data,
@@ -39,7 +38,7 @@ class Tasting extends Component {
           // bevComment:res.data.drinks.comment,
           // bevColor:res.data.drinks.color
         },() => {
-          console.log("state ",this.state);
+          // console.log("state ",this.state);
         })
       })
       .catch(err => console.log(err));
@@ -47,7 +46,7 @@ class Tasting extends Component {
 
   render() {
       const allAvailBevs = this.state.allAvailBevs;
-      console.log(allAvailBevs);
+      // console.log(allAvailBevs);
 
       return(
         <div>
