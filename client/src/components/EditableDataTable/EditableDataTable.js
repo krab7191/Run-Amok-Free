@@ -2,25 +2,34 @@
 
 // Display all the beverage data in a sortable, searchable table with editable name, desc, and availability fields
 
+// Boilerplate + utilities
 import React, { Component } from "react";
 import API from "../../utils/API";
 import AUTH from "../../utils/AUTH";
 import "./EditableDataTable.css";
 
-// Import the material UI table stuff
+// Import the material UI table comps
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
+import Paper from "@material-ui/core/Paper";
+
+// Import table header and row comps
 import BevTableHeader from "./Headers/BevsHeader";
 import BevTableRow from "./Rows/BevsRows";
 import UsersTableHeader from "./Headers/UsersHeader";
 import UsersTableRow from "./Rows/UsersRows";
-import Paper from "@material-ui/core/Paper";
+
+// Save button for beverage management
+import SaveButton from "../SaveButton";
 
 class EditableDataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: ["Loading..."],
+      // Put modified bevs here for easier DB PUT requests
+      edits: [],
+      // Data for a NEW beverage goes here
       newData: {},
       isAvailable: null,
       isAdmin: null
@@ -141,38 +150,43 @@ class EditableDataTable extends Component {
 
   render() {
     return (
-      <Paper className="overflow-table">
-        <Table>
-          {this.props.type === "bevs" ? (
-            <BevTableHeader />
-          ) : (
-            <UsersTableHeader />
-          )}
-          <TableBody>
-            {this.props.type === "bevs"
-              ? this.state.data[0] !== "Loading..." &&
-                this.state.data.map(row => (
-                  <BevTableRow
-                    key={row._id}
-                    handleFieldChange={this.handleFieldChange}
-                    handleSwitchToggle={this.handleSwitchToggle}
-                    readable={this.makeDateReadable}
-                    {...row}
-                  />
-                ))
-              : this.state.data[0] !== "Loading..." &&
-                this.state.data.map(row => (
-                  <UsersTableRow
-                    key={row._id}
-                    readable={this.makeDateReadable}
-                    // handleFieldChange={this.handleFieldChange}
-                    handleSwitchToggle={this.handleSwitchToggle}
-                    {...row}
-                  />
-                ))}
-          </TableBody>
-        </Table>
-      </Paper>
+      <>
+        <Paper className="overflow-table">
+          <Table>
+            {this.props.type === "bevs" ? (
+              <BevTableHeader />
+            ) : (
+              <UsersTableHeader />
+            )}
+            <TableBody>
+              {this.props.type === "bevs"
+                ? this.state.data[0] !== "Loading..." &&
+                  this.state.data.map(row => (
+                    <BevTableRow
+                      key={row._id}
+                      handleFieldChange={this.handleFieldChange}
+                      handleSwitchToggle={this.handleSwitchToggle}
+                      readable={this.makeDateReadable}
+                      {...row}
+                    />
+                  ))
+                : this.state.data[0] !== "Loading..." &&
+                  this.state.data.map(row => (
+                    <UsersTableRow
+                      key={row._id}
+                      readable={this.makeDateReadable}
+                      // handleFieldChange={this.handleFieldChange}
+                      handleSwitchToggle={this.handleSwitchToggle}
+                      {...row}
+                    />
+                  ))}
+            </TableBody>
+          </Table>
+        </Paper>
+        {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
+          <SaveButton />
+        )}
+      </>
     );
   }
 }
