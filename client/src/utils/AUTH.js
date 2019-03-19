@@ -15,5 +15,8 @@ export default {
     },
     getAllUsers: () => {
         return axios.get('/admin/users');
+    },
+    sendToken: (tokenData) => {
+        return axios.post('admin/send_token',tokenData);
     }
 }

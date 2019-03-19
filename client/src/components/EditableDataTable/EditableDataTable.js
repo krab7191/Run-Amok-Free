@@ -15,6 +15,7 @@ import BevTableRow from './Rows/BevsRows';
 import UsersTableHeader from './Headers/UsersHeader';
 import UsersTableRow from './Rows/UsersRows';
 import Paper from '@material-ui/core/Paper';
+import AddUser from '../AddUser/AddUser';
 
 
 class EditableDataTable extends Component {
@@ -139,8 +140,8 @@ class EditableDataTable extends Component {
 
 
     render() {
-
         return (
+            <div>
             <Paper>
                 <Table>
                     {this.props.type === "bevs" ? <BevTableHeader /> : <UsersTableHeader />}
@@ -164,6 +165,9 @@ class EditableDataTable extends Component {
                     </TableBody>
                 </Table>
             </Paper>
+            {this.props.type === "users" ? 
+            <AddUser /> : null}
+            </div>
         );
     }
 
