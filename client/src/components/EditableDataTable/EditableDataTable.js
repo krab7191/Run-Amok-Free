@@ -138,6 +138,7 @@ class EditableDataTable extends Component {
   };
 
   render() {
+    console.log(this.state.data);
     return (
       <Paper className="overflow-table">
         <Table>
@@ -170,6 +171,9 @@ class EditableDataTable extends Component {
                 ))}
           </TableBody>
         </Table>
+        {this.state.data.length === 0 && (
+          <p className="text-center">No beverages! Try creating some.</p>
+        )}
       </Paper>
     );
   }

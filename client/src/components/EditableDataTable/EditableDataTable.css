@@ -11,3 +11,7 @@
 .overflow-table {
   overflow-x: auto;
 }
+
+.text-center {
+  text-align: center;
+}
