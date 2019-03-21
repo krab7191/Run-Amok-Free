@@ -22,12 +22,22 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
+  appbar: {
+    backgroundColor: 'brown !important',
+  },
   grow: {
     flexGrow: 1,
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+  },
+  name: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+    padding: '10px',
   },
   title: {
     display: 'none',
@@ -106,7 +116,7 @@ class PrimarySearchAppBar extends React.Component {
                 onClose={this.handleMenuClose}
               >
                 {/* {isAdmin && isLoggedIn ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null} */}
-                <MenuItem onClick={this.handleMenuClose}>{isLoggedIn ? "My account" : <Link to="/sign-in">Login</Link>}</MenuItem>
+                <MenuItem onClick={this.handleMenuClose}>{isLoggedIn ? "Profile" : <Link to="/sign-in">Login</Link>}</MenuItem>
                 {isLoggedIn ? <MenuItem onClick={handleLogoutClose}>Logout</MenuItem> : null}
               </Menu>
             );
@@ -135,26 +145,33 @@ class PrimarySearchAppBar extends React.Component {
                 open={isMobileMenuOpen}
                 onClose={this.handleMenuClose}
               >
-                <MenuItem onClick={this.handleMobileMenuClose}>
+                {/* <MenuItem onClick={this.handleMobileMenuClose}>
                   <IconButton color="inherit">
                     <Badge badgeContent={11} color="secondary">
                       <NotificationsIcon />
                     </Badge>
                   </IconButton>
                   <p>Notifications</p>
-                </MenuItem>
-                <MenuItem onClick={this.handleProfileMenuOpen}>
-                  <IconButton color="inherit">
-                    <AccountCircle />
-                  </IconButton>
-                  <p>Profile</p>
-                </MenuItem>
+                </MenuItem> */}
+                {isLoggedIn ? 
+                  <MenuItem onClick={this.handleMenuClose}>
+                    <IconButton color="inherit">
+                      <AccountCircle />
+                    </IconButton>
+                    <p>Profile</p>
+                  </MenuItem> : 
+                  <MenuItem onClick={this.handleMenuClose}>
+                    <Link to="/sign-in">
+                      Login
+                    </Link>
+                  </MenuItem>}
+                {isLoggedIn ? <MenuItem onClick={handleLogoutClose}>Logout</MenuItem> : null}
               </Menu>
             );
 
             return (
               <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar className={classes.appbar} position="static">
                   <Toolbar>
                     <IconButton 
                       className={classes.menuButton} 
@@ -169,6 +186,9 @@ class PrimarySearchAppBar extends React.Component {
                     </Typography>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
+                      <Typography className={classes.name} variant="h5" color="inherit" noWrap>
+                        {isLoggedIn ? context.myState.user.firstName : null}
+                      </Typography>
                       <IconButton color="inherit">
                         <Badge badgeContent={17} color="secondary">
                           <NotificationsIcon />

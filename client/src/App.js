@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
+import Footer from './components/Footer';
 import ManageBevs from './pages/ManageBevs';
 import Notes from './pages/Notes';
 import ManageUsers from './pages/ManageUsers';
@@ -11,7 +12,6 @@ import Nav from './components/Nav';
 import { Provider, MyContext} from "./components/MyContext/MyContext";
 
 import './App.css';
-
 
 class App extends Component {
 
@@ -33,7 +33,7 @@ class App extends Component {
             console.log(context);
             return(
               <Router>
-                <div>
+                <div className='section'>
                   <Nav />
                     {isLoggedIn && (
                     <Switch>
@@ -53,6 +53,7 @@ class App extends Component {
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
                     )}
+                  <Footer />
                 </div>
               </Router> 
             )
