@@ -13,7 +13,8 @@ const styles = theme => ({
     width: '200px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    display: 'block'
+    display: 'block',
+    cursor: 'pointer'
   },
 });
 
