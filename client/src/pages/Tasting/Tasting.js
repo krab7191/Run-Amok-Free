@@ -1,30 +1,29 @@
 import React, { Component } from "react";
-import TastingCard from '../../components/TastingCard';
-
-import API from '../../utils/API';
+import TastingCard from "../../components/TastingCard";
+import { Link } from "react-router-dom";
+import { MyContext } from "../../components/MyContext/MyContext";
+import API from "../../utils/API";
 
 const styles = {
   tastingHeader: {
     textAlign: "center"
   },
-  tastingDiv : {
+  tastingDiv: {
     display: "flex",
     flexWrap: "wrap"
   }
-} 
+};
 
 class Tasting extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       allAvailBevs: []
     };
-   
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.getAllAvailBev();
   }
 
@@ -32,35 +31,58 @@ class Tasting extends Component {
     API.getAvailBevData()
       .then(res => {
         console.log(res);
-        this.setState({
-          // added .drinks because of initial seed data in getController
-          allAvailBevs: res.data,
-          // bevName: res.data.drinks.name,
-          // bevComment:res.data.drinks.comment,
-          // bevColor:res.data.drinks.color
-        },() => {
-          console.log("state ",this.state);
-        })
+        this.setState(
+          {
+            // added .drinks because of initial seed data in getController
+            allAvailBevs: res.data
+            // bevName: res.data.drinks.name,
+            // bevComment:res.data.drinks.comment,
+            // bevColor:res.data.drinks.color
+          },
+          () => {
+            console.log("state ", this.state);
+          }
+        );
       })
       .catch(err => console.log(err));
-  }
+  };
 
   render() {
-      const allAvailBevs = this.state.allAvailBevs;
-      console.log(allAvailBevs);
+    const allAvailBevs = this.state.allAvailBevs;
+    console.log(allAvailBevs);
 
-      return(
-        <div>
-          <h1 style={styles.tastingHeader}>Tasting</h1>
-          <div style={styles.tastingDiv}>
-            {allAvailBevs.map(bev=>(
-              <TastingCard 
-                key={bev._id} 
-                bev={bev} />
-            ))}
-          </div>
-        </div>
-      )
+    return (
+      <MyContext.Consumer>
+        {context => {
+          const { user } = context.myState;
+          console.log(user);
+
+          return (
+            <>
+              <h1 style={styles.tastingHeader}>Tasting</h1>
+              {allAvailBevs.length === 0 && (
+                <p>
+                  There aren't any beverages to taste! It's time to go brew
+                  some.
+                  {user.isAdmin && (
+                    <p>
+                      Manage beverages <Link to="/ManageBevs">here</Link>.
+                    </p>
+                  )}
+                </p>
+              )}
+              {/* If admin, link to bev mgmt and say create some. */}
+
+              <div style={styles.tastingDiv}>
+                {allAvailBevs.map(bev => (
+                  <TastingCard key={bev._id} bev={bev} />
+                ))}
+              </div>
+            </>
+          );
+        }}
+      </MyContext.Consumer>
+    );
   }
 }
 
