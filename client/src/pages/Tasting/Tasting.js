@@ -59,15 +59,15 @@ class Tasting extends Component {
 
           return (
             <>
-              <h1 style={styles.tastingHeader}>Tasting</h1>
+              {/* <h1 style={styles.tastingHeader}>Tasting</h1> */}
               {allAvailBevs.length === 0 && (
-                <p>
+                <p className="text-center">
                   There aren't any beverages to taste! It's time to go brew
-                  some.
+                  some.&nbsp;
                   {user.isAdmin && (
-                    <p>
+                    <>
                       Manage beverages <Link to="/ManageBevs">here</Link>.
-                    </p>
+                    </>
                   )}
                 </p>
               )}
