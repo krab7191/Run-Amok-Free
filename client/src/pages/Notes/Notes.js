@@ -74,7 +74,7 @@ class Notes extends Component {
         {context => {
             
             return(
-              <div>
+              <div className="main">
                 <h1 style={styles.header}>Notes</h1>
                 <NoteSort bevNames={this.state.bevNames} sort={this.handleNotesSort} />
                 {this.state.sortedNotes.map((comment,index)=> (

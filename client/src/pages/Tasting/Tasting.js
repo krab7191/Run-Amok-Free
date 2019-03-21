@@ -50,7 +50,7 @@ class Tasting extends Component {
       console.log(allAvailBevs);
 
       return(
-        <div>
+        <div className="main">
           <h1 style={styles.tastingHeader}>Tasting</h1>
           <div style={styles.tastingDiv}>
             {allAvailBevs.map(bev=>(

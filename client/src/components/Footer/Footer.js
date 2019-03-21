@@ -14,6 +14,7 @@ const styles = {
     backgroundColor: 'brown !important',
     position: 'fixed',
     bottom: 0,
+    height: '60px'
   },
   icon: {
     color: 'white !important'

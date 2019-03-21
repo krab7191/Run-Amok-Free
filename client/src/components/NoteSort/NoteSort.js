@@ -14,8 +14,10 @@ const styles = theme => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     display: 'block',
-    cursor: 'pointer'
   },
+  select: {
+    cursor: 'pointer'
+  }
 });
 
 class NativeSelects extends React.Component {
@@ -24,11 +26,16 @@ class NativeSelects extends React.Component {
   };
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value },console.log(this.state));
+    this.setState({ [name]: event.target.value },
+      () => {
+        console.log(this.state);
+        this.props.sort(this.state.bev);
+      }
+    )
   };
 
   render() {
-    const { classes, bevNames, sort } = this.props;
+    const { classes, bevNames } = this.props;
     console.log(this.props);
     return (
         <FormControl variant="filled" className={classes.formControl}>
@@ -38,7 +45,6 @@ class NativeSelects extends React.Component {
             value={this.state.bev}
             onChange={this.handleChange('bev')}
             input={<FilledInput name="bevs" id="filled-bevs" />}
-            onClick={this.state.bev ? () => sort(this.state.bev) : null}
           >
             {!this.state.bev ? <option value={""}></option> : null}
             <option value={"All"}>All</option>
