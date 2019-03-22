@@ -29,7 +29,6 @@ const styles = theme => ({
 class UserTableRow extends React.Component {
     
     render() {
-        // console.log(this.props);
         const { _id, 
                 firstName, 
                 lastName,

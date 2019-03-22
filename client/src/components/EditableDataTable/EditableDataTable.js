@@ -2,27 +2,34 @@
 
 // Display all the beverage data in a sortable, searchable table with editable name, desc, and availability fields
 
+// Boilerplate + utilities
 import React, { Component } from "react";
 import API from "../../utils/API";
 import AUTH from "../../utils/AUTH";
 import "./EditableDataTable.css";
 
-// Import the material UI table stuff
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import BevTableHeader from './Headers/BevsHeader';
-import BevTableRow from './Rows/BevsRows';
-import UsersTableHeader from './Headers/UsersHeader';
-import UsersTableRow from './Rows/UsersRows';
-import Paper from '@material-ui/core/Paper';
-import AddUser from '../AddUser/AddUser';
+// Import the material UI table comps
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import Paper from "@material-ui/core/Paper";
 
+// Import table header and row comps
+import BevTableHeader from "./Headers/BevsHeader";
+import BevTableRow from "./Rows/BevsRows";
+import UsersTableHeader from "./Headers/UsersHeader";
+import UsersTableRow from "./Rows/UsersRows";
+
+// Save button for beverage management
+import SaveButton from "../SaveButton";
+
+import AddUser from '../AddUser/AddUser';
 
 class EditableDataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: ["Loading..."],
+      // Data for a NEW beverage goes here
       newData: {},
       isAvailable: null,
       isAdmin: null
@@ -67,11 +74,11 @@ class EditableDataTable extends Component {
   // Given the change event of input fields, update state based on ObjectId and column name
   handleFieldChange = (e, col, _id) => {
     const { value } = e.target;
-    console.log(value);
     this.state.data.forEach((n, i) => {
       if (n._id === _id) {
         let newState = [...this.state.data];
         newState[i][col] = value;
+        newState[i].edited = true;
         this.setState({
           data: newState
         });
@@ -91,7 +98,7 @@ class EditableDataTable extends Component {
         this.setState({
           data: newState
         });
-        this.sendUpdateBeverage(_id, { isAvailable: checked });
+        this.sendUpdateBeverage(n);
       }
     });
   };
@@ -113,8 +120,8 @@ class EditableDataTable extends Component {
   };
 
   // Handle updating database when a beverage is changed
-  sendUpdateBeverage = (id, changes) => {
-    API.changeBeverage(id, changes)
+  sendUpdateBeverage = bevObj => {
+    API.changeBeverage(bevObj)
       .then(resp => {
         if (resp.status === 200 && resp.statusText === "OK") {
           console.log(`All good. Fire save related modal to let user know.`);
@@ -122,6 +129,10 @@ class EditableDataTable extends Component {
           console.log(
             `Update beverage returned non-error status code: please debug`
           );
+          if (resp.status === 500) {
+            // Error: Request failed with status code 500
+            console.log(`500 error`);
+          }
           console.log(resp.status, resp.statusText);
         }
       })
@@ -131,15 +142,45 @@ class EditableDataTable extends Component {
           console.log(
             `Internet disconnected, undo state changes and fire modal to let user know`
           );
-          this.rollbackStateAfterAPIFail(id, changes);
+          this.rollbackStateAfterAPIFail(bevObj);
         } else {
           console.log(`Non network-related error. Please debug: ${err}`);
-          // Error: Request failed with status code 500
         }
       });
   };
 
+  // Save handler for editing the beverages
+  saveHandler = () => {
+    this.state.data.forEach(bev => {
+      if (bev.edited) {
+        API.changeBeverage(bev)
+          .then(res => {
+            console.log(res);
+            this.updateStateWithModifiedBeverage(
+              res.data._id,
+              res.data.dateUpdated
+            );
+          })
+          .catch(err => console.log(`Error changing bev: ${err}`));
+      }
+    });
+  };
+
+  updateStateWithModifiedBeverage = (_id, dateMod) => {
+    let newState = [...this.state.data];
+    console.log(newState);
+    newState.forEach((bev, i) => {
+      if (bev._id === _id) {
+        newState[i].dateUpdated = dateMod;
+      }
+    });
+    this.setState({
+      data: newState
+    });
+  };
+
   render() {
+    console.log(this.state.data);
     return (
       <div>
         <Paper className="overflow-table">
@@ -173,9 +214,15 @@ class EditableDataTable extends Component {
                   ))}
             </TableBody>
           </Table>
+          {this.state.data.length === 0 && (
+            <p className="text-center">No beverages! Try creating some.</p>
+          )}
         </Paper>
         {this.props.type === "users" ? 
         <AddUser /> : null}
+        {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
+            <SaveButton saveHandler={this.saveHandler} />
+          )}
       </div>
     );
   }

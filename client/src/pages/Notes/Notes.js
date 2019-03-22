@@ -3,16 +3,14 @@ import { MyContext } from "../../components/MyContext/MyContext";
 import CommentCard from "../../components/CommentCard";
 import NoteSort from '../../components/NoteSort';
 
-import API from '../../utils/API';
-
+import API from "../../utils/API";
 
 const styles = {
   header: {
-    textAlign:"-webkit-center"
+    textAlign: "-webkit-center"
   }
-}
+};
 class Notes extends Component {
-
   state = {
     allNotes: [],
     bevNames: [],
@@ -57,13 +55,17 @@ class Notes extends Component {
   getNoteData = (cb) => {
     API.getNoteData()
       .then((res) => {
-        this.setState({
-          allNotes: res.data,
-          sortedNotes: res.data,        
-        },() => {
-          console.log("state ",this.state);
-          cb();
-        })
+        this.setState(
+          {
+            allNotes: res.data,
+            sortedNotes: res.data,        
+          },
+          () => 
+          {
+            console.log("state ",this.state);
+            cb();
+          }
+        );
       })
       .catch(err => console.log(err));
   }
@@ -72,7 +74,7 @@ class Notes extends Component {
     return(
       <MyContext.Consumer>
         {context => {
-            
+            const sortedNotes = this.state.sortedNotes;
             return(
               <div className="main">
                 <h1 style={styles.header}>Notes</h1>
@@ -84,10 +86,14 @@ class Notes extends Component {
                     name={comment.beverages.name} 
                     comment={comment.body} />
                 ))}
+                {sortedNotes.length === 0 && (
+                <p className="text-center">No one has left any notes yet! Time to have a tasting.</p>
+              )}
               </div>
         )}}
       </MyContext.Consumer>
-    )
-  }}
+    );
+  }
+}
 
-  export default Notes;
+export default Notes;

@@ -3,12 +3,10 @@ import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import InputBase from "@material-ui/core/InputBase";
-// import Switch from '@material-ui/core/Switch';
 import Switch from "../../Switch";
 
 class BevTableRow extends React.Component {
   render() {
-    console.log(this.props);
     const {
       _id,
       name,
@@ -24,7 +22,7 @@ class BevTableRow extends React.Component {
     return (
       <TableRow key={_id}>
         <TableCell component="th" scope="row">
-          <form noValidate autoComplete="off">
+          <form autoComplete="off">
             <InputBase
               className="beverage-name editable"
               value={name}
@@ -34,7 +32,7 @@ class BevTableRow extends React.Component {
           </form>
         </TableCell>
         <TableCell align="left">
-          <form noValidate autoComplete="off">
+          <form autoComplete="off">
             <InputBase
               className="beverage-description editable"
               value={description}
