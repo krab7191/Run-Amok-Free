@@ -13,6 +13,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+// import SideLeftMenu from '../SideMenu/SideLeftMenu';
+import SideRightMenu from '../SideMenu/SideRightMenu';
 
 import {MyContext} from '../MyContext/MyContext';
 
@@ -63,7 +65,15 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     anchorPageEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    left: false,
+    right: false,
+  };
+
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
   };
 
   handleProfileMenuOpen = event => {
@@ -155,10 +165,10 @@ class PrimarySearchAppBar extends React.Component {
                 </MenuItem> */}
                 {isLoggedIn ? 
                   <MenuItem onClick={this.handleMenuClose}>
-                    <IconButton color="inherit">
-                      <AccountCircle />
-                    </IconButton>
                     <p>Profile</p>
+                    {/* <IconButton color="inherit">
+                      <AccountCircle />
+                    </IconButton> */}
                   </MenuItem> : 
                   <MenuItem onClick={this.handleMenuClose}>
                     <Link to="/sign-in">
@@ -204,10 +214,11 @@ class PrimarySearchAppBar extends React.Component {
                       </IconButton>
                     </div>
                     <div className={classes.sectionMobile}>
-                      <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                      <IconButton aria-haspopup="true" onClick={this.toggleDrawer('right',true)} color="inherit">
                         <MoreIcon />
                       </IconButton>
                     </div>
+                    <SideRightMenu open={this.state.right} toggle={this.toggleDrawer} />
                   </Toolbar>
                 </AppBar>
                 {renderMenu}
