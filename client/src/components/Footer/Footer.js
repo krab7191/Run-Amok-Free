@@ -29,21 +29,21 @@ class SimpleBottomNavigation extends React.Component {
 
   renderLink = () => {
       console.log(this.state);
-    switch (this.state.value) {
-        case 0: 
-        console.log('Got here!');
-            return (
-                <Redirect to={'/Tasting'} />
-            )
-        case 1: 
-            return (
-                <Redirect to={'/ManageMeads'} />
-            )
-        default :
-            return (
-                <Redirect to='/' />
-            )
-    }  
+    // switch (this.state.value) {
+    //     case 0: 
+    //     console.log('Got here!');
+    //         return (
+    //             <Redirect to={'/Tasting'} />
+    //         )
+    //     case 1: 
+    //         return (
+    //             <Redirect to={'/ManageMeads'} />
+    //         )
+    //     default :
+    //         return (
+    //             <Redirect to='/' />
+    //         )
+    // }  
   }
 
   handleChange = (event, value) => {
