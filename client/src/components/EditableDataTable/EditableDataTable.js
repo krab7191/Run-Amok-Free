@@ -178,41 +178,44 @@ class EditableDataTable extends Component {
   };
 
   render() {
+    console.log(this.state.data);
     return (
-      <>
-        <Paper className="overflow-table">
-          <Table>
-            {this.props.type === "bevs" ? (
-              <BevTableHeader />
-            ) : (
-              <UsersTableHeader />
-            )}
-            <TableBody>
-              {this.props.type === "bevs"
-                ? this.state.data[0] !== "Loading..." &&
-                  this.state.data.map((row, i) => (
-                    <BevTableRow
-                      key={row._id}
-                      handleFieldChange={this.handleFieldChange}
-                      handleSwitchToggle={this.handleSwitchToggle}
-                      readable={this.makeDateReadable}
-                      {...row}
-                    />
-                  ))
-                : this.state.data[0] !== "Loading..." &&
-                  this.state.data.map(row => (
-                    <UsersTableRow
-                      key={row._id}
-                      readable={this.makeDateReadable}
-                      // handleFieldChange={this.handleFieldChange}
-                      handleSwitchToggle={this.handleSwitchToggle}
-                      {...row}
-                    />
-                  ))}
-            </TableBody>
-          </Table>
-        </Paper>
-        {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
+      <Paper className="overflow-table">
+        <Table>
+          {this.props.type === "bevs" ? (
+            <BevTableHeader />
+          ) : (
+            <UsersTableHeader />
+          )}
+          <TableBody>
+            {this.props.type === "bevs"
+              ? this.state.data[0] !== "Loading..." &&
+                this.state.data.map(row => (
+                  <BevTableRow
+                    key={row._id}
+                    handleFieldChange={this.handleFieldChange}
+                    handleSwitchToggle={this.handleSwitchToggle}
+                    readable={this.makeDateReadable}
+                    {...row}
+                  />
+                ))
+              : this.state.data[0] !== "Loading..." &&
+                this.state.data.map(row => (
+                  <UsersTableRow
+                    key={row._id}
+                    readable={this.makeDateReadable}
+                    // handleFieldChange={this.handleFieldChange}
+                    handleSwitchToggle={this.handleSwitchToggle}
+                    {...row}
+                  />
+                ))}
+          </TableBody>
+        </Table>
+        {this.state.data.length === 0 && (
+          <p className="text-center">No beverages! Try creating some.</p>
+        )}
+      </Paper>
+      {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
           <SaveButton saveHandler={this.saveHandler} />
         )}
       </>

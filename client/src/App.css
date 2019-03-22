@@ -1,3 +1,7 @@
 body {
-    background: aliceblue;
+  background: aliceblue;
+}
+
+.text-center {
+  text-align: center;
 }
