@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -7,41 +8,48 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import DrinkIcon from '@material-ui/icons/LocalDrink';
+import UpdateIcon from '@material-ui/icons/Update';
+import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
+import NotesIcon from '@material-ui/icons/Notes';
 
 const styles = {
   list: {
     width: 250,
-  },
-  fullList: {
-    width: 'auto',
   },
 };
 
 class LeftDrawer extends React.Component {
   
   render() {
-    const { classes } = this.props;
+    
+    const { classes,open,toggle,isAdmin } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+            <ListItem button>
+              <ListItemText primary="Run-Amok" />
             </ListItem>
-          ))}
-        </List>
+          </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+            <ListItem button>
+              <ListItemIcon><DrinkIcon /></ListItemIcon>
+              <Link to="/Tasting">Tasting</Link>
             </ListItem>
-          ))}
+            { isAdmin ? <ListItem button>
+              <ListItemIcon><UpdateIcon /></ListItemIcon>
+              <Link to="/ManageBevs">ManageMeads</Link>
+            </ListItem> : null }
+            { isAdmin ? <ListItem button>
+              <ListItemIcon><UsersIcon /></ListItemIcon>
+              <Link to="/ManageUsers">ManageUsers</Link>
+            </ListItem> : null}
+            <ListItem button>
+              <ListItemIcon><NotesIcon /></ListItemIcon>
+              <Link to="/Notes">Notes</Link>
+            </ListItem>
         </List>
       </div>
     );
@@ -51,15 +59,15 @@ class LeftDrawer extends React.Component {
         {/* <Button onClick={this.toggleDrawer('left', true)}>Open Left</Button> */}
 
         <SwipeableDrawer
-          open={this.state.left}
-          onClose={this.toggleDrawer('left', false)}
-          onOpen={this.toggleDrawer('left', true)}
+          open={open}
+          onClose={toggle('left', false)}
+          onOpen={toggle('left', true)}
         >
           <div
             tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
+            onClick={toggle('left', false)}
+            onKeyDown={toggle('left', false)}
           >
             {sideList}
           </div>

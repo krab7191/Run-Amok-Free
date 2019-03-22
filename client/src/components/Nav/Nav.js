@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-// import SideLeftMenu from '../SideMenu/SideLeftMenu';
+import SideLeftMenu from '../SideMenu/SideLeftMenu';
 import SideRightMenu from '../SideMenu/SideRightMenu';
 
 import {MyContext} from '../MyContext/MyContext';
@@ -33,6 +33,9 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   name: {
     display: 'none',
@@ -53,12 +56,19 @@ const styles = theme => ({
       display: 'flex',
     },
   },
-  sectionMobile: {
+  sectionLeftMobile: {
     display: 'flex',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
+  sectionRightMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+
 });
 
 class PrimarySearchAppBar extends React.Component {
@@ -108,13 +118,13 @@ class PrimarySearchAppBar extends React.Component {
             const { anchorEl, anchorPageEl, mobileMoreAnchorEl} = this.state;
             const { classes } = this.props;
             const isMenuOpen = Boolean(anchorEl);
-            const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+            // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
             const isPageMenuOpen = Boolean(anchorPageEl);
             const { isAdmin,isLoggedIn } = context.myState;
             const handleLogout = context.handleLogout;
 
             const handleLogoutClose = () => {
-              this.handleMenuClose();
+              // this.handleMenuClose();
               handleLogout();
             }
             const renderMenu = (
@@ -147,37 +157,15 @@ class PrimarySearchAppBar extends React.Component {
               </Menu>
             );
 
-            const renderMobileMenu = (
-              <Menu
-                anchorEl={mobileMoreAnchorEl}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={isMobileMenuOpen}
-                onClose={this.handleMenuClose}
-              >
-                {/* <MenuItem onClick={this.handleMobileMenuClose}>
-                  <IconButton color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
-                  <p>Notifications</p>
-                </MenuItem> */}
-                {isLoggedIn ? 
-                  <MenuItem onClick={this.handleMenuClose}>
-                    <p>Profile</p>
-                    {/* <IconButton color="inherit">
-                      <AccountCircle />
-                    </IconButton> */}
-                  </MenuItem> : 
-                  <MenuItem onClick={this.handleMenuClose}>
-                    <Link to="/sign-in">
-                      Login
-                    </Link>
-                  </MenuItem>}
-                {isLoggedIn ? <MenuItem onClick={handleLogoutClose}>Logout</MenuItem> : null}
-              </Menu>
-            );
+            // const renderMobileMenu = (
+            //   <Menu
+            //     anchorEl={mobileMoreAnchorEl}
+            //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            //     open={isMobileMenuOpen}
+            //     onClose={this.handleMenuClose} >
+            //   </Menu>
+            // );
 
             return (
               <div className={classes.root}>
@@ -191,6 +179,16 @@ class PrimarySearchAppBar extends React.Component {
                       aria-label="Open drawer">
                         <MenuIcon />
                     </IconButton>
+                    <div className={classes.sectionLeftMobile}>
+                      <IconButton aria-haspopup="true" onClick={this.toggleDrawer('left',true)} color="inherit">
+                        <MenuIcon />
+                      </IconButton>
+                    </div>
+                    <SideLeftMenu 
+                      open={this.state.left} 
+                      toggle={this.toggleDrawer}
+                      isAdmin = {isAdmin}
+                    />
                     <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                       Run-Amok
                     </Typography>
@@ -213,17 +211,21 @@ class PrimarySearchAppBar extends React.Component {
                         <AccountCircle />
                       </IconButton>
                     </div>
-                    <div className={classes.sectionMobile}>
+                    <div className={classes.sectionRightMobile}>
                       <IconButton aria-haspopup="true" onClick={this.toggleDrawer('right',true)} color="inherit">
                         <MoreIcon />
                       </IconButton>
                     </div>
-                    <SideRightMenu open={this.state.right} toggle={this.toggleDrawer} />
+                    <SideRightMenu 
+                      open={this.state.right} 
+                      toggle={this.toggleDrawer} 
+                      loggedIn = {isLoggedIn}
+                      logout={handleLogoutClose} />
                   </Toolbar>
                 </AppBar>
                 {renderMenu}
                 {renderPageMenu}
-                {renderMobileMenu}
+                {/* {renderMobileMenu} */}
               </div>
             );
           }}
