@@ -4,9 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import DrinkIcon from '@material-ui/icons/LocalDrink';
+import UpdateIcon from '@material-ui/icons/Update';
+import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
+import NotesIcon from '@material-ui/icons/Notes';
 
 const styles = {
   root: {
@@ -62,10 +63,10 @@ class SimpleBottomNavigation extends React.Component {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction className={classes.icon} label="Tasting" icon={<RestoreIcon />} />
-        <BottomNavigationAction className={classes.icon} label="Manage Meads" icon={<FavoriteIcon />} />
-        <BottomNavigationAction className={classes.icon} label="Manage Users" icon={<FavoriteIcon />} />
-        <BottomNavigationAction className={classes.icon} label="Notes" icon={<LocationOnIcon />} />
+        <BottomNavigationAction className={classes.icon} label="Tasting" icon={<DrinkIcon />} />
+        <BottomNavigationAction className={classes.icon} label="Manage Meads" icon={<UpdateIcon />} />
+        <BottomNavigationAction className={classes.icon} label="Manage Users" icon={<UsersIcon />} />
+        <BottomNavigationAction className={classes.icon} label="Notes" icon={<NotesIcon />} />
       </BottomNavigation>
     );
   }

@@ -222,7 +222,7 @@ class EditableDataTable extends Component {
         <AddUser /> : null}
         {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
             <SaveButton saveHandler={this.saveHandler} />
-          )}
+        )}
       </div>
     );
   }
