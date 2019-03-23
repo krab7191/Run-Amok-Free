@@ -180,6 +180,7 @@ class EditableDataTable extends Component {
   render() {
     console.log(this.state.data);
     return (
+      <>
       <Paper className="overflow-table">
         <Table>
           {this.props.type === "bevs" ? (
