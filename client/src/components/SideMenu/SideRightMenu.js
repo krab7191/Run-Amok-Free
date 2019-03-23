@@ -15,7 +15,7 @@ import Sync from '@material-ui/icons/Sync';
 
 const styles = {
   list: {
-    width: 250,
+    width: 200,
   },
 };
 
@@ -71,8 +71,6 @@ class RightDrawer extends React.Component {
     
     return (
       <div>
-        {/* <Button onClick={this.toggleDrawer('right', true)}>Open Right</Button> */}
-
         <SwipeableDrawer
           anchor="right"
           open={open}

@@ -75,7 +75,6 @@ class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
     anchorPageEl: null,
-    mobileMoreAnchorEl: null,
     left: false,
     right: false,
   };
@@ -103,28 +102,18 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({ anchorPageEl: null });
   };
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
   render() {
     return (
       <MyContext.Consumer>
           {context => {
-            const { anchorEl, anchorPageEl, mobileMoreAnchorEl} = this.state;
+            const { anchorEl, anchorPageEl } = this.state;
             const { classes } = this.props;
             const isMenuOpen = Boolean(anchorEl);
-            // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
             const isPageMenuOpen = Boolean(anchorPageEl);
             const { isAdmin,isLoggedIn } = context.myState;
             const handleLogout = context.handleLogout;
 
             const handleLogoutClose = () => {
-              // this.handleMenuClose();
               handleLogout();
             }
             const renderMenu = (
@@ -156,16 +145,6 @@ class PrimarySearchAppBar extends React.Component {
                 <MenuItem onClick={this.handlePageMenuClose}><Link to="/Notes">Notes</Link></MenuItem>
               </Menu>
             );
-
-            // const renderMobileMenu = (
-            //   <Menu
-            //     anchorEl={mobileMoreAnchorEl}
-            //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            //     open={isMobileMenuOpen}
-            //     onClose={this.handleMenuClose} >
-            //   </Menu>
-            // );
 
             return (
               <div className={classes.root}>
@@ -225,7 +204,6 @@ class PrimarySearchAppBar extends React.Component {
                 </AppBar>
                 {renderMenu}
                 {renderPageMenu}
-                {/* {renderMobileMenu} */}
               </div>
             );
           }}

@@ -15,7 +15,7 @@ import NotesIcon from '@material-ui/icons/Notes';
 
 const styles = {
   list: {
-    width: 250,
+    width: 200,
   },
 };
 
@@ -56,8 +56,6 @@ class LeftDrawer extends React.Component {
 
     return (
       <div>
-        {/* <Button onClick={this.toggleDrawer('left', true)}>Open Left</Button> */}
-
         <SwipeableDrawer
           open={open}
           onClose={toggle('left', false)}
