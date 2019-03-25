@@ -52,7 +52,7 @@ class App extends Component {
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
                     )}
-                  <Footer />
+                  <Footer {...this.props} />
                 </div>
               </Router> 
             )

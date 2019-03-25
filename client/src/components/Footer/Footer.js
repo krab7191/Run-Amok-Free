@@ -8,6 +8,7 @@ import DrinkIcon from '@material-ui/icons/LocalDrink';
 import UpdateIcon from '@material-ui/icons/Update';
 import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
 import NotesIcon from '@material-ui/icons/Notes';
+// import { MyContext } from '../MyContext/MyContext';
 
 const styles = {
   root: {
@@ -29,21 +30,23 @@ class SimpleBottomNavigation extends React.Component {
 
   renderLink = () => {
       console.log(this.state);
-    // switch (this.state.value) {
-    //     case 0: 
-    //     console.log('Got here!');
-    //         return (
-    //             <Redirect to={'/Tasting'} />
-    //         )
-    //     case 1: 
-    //         return (
-    //             <Redirect to={'/ManageMeads'} />
-    //         )
-    //     default :
-    //         return (
-    //             <Redirect to='/' />
-    //         )
-    // }  
+      let result = "";
+      switch (this.state.value) {
+          case 0: 
+            console.log('Got here!');
+            result = '/Tasting';
+            break;
+          case 1: 
+            console.log('Got here!');
+            result = '/ManageMeads';    
+            break;
+          default:
+            console.log("Nowhere!");
+      }
+      console.log(result);
+      return (
+        <Redirect to={result} />
+      )
   }
 
   handleChange = (event, value) => {
@@ -55,6 +58,7 @@ class SimpleBottomNavigation extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
+    console.log(this.props);
 
     return (
       <BottomNavigation
@@ -68,7 +72,7 @@ class SimpleBottomNavigation extends React.Component {
         <BottomNavigationAction className={classes.icon} label="Manage Users" icon={<UsersIcon />} />
         <BottomNavigationAction className={classes.icon} label="Notes" icon={<NotesIcon />} />
       </BottomNavigation>
-    );
+    )
   }
 }
 
