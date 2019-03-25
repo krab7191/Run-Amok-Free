@@ -2,20 +2,23 @@ import axios from "axios";
 
 export default {
   getAllBeverages: () => {
-    return axios.get('/api/get/allBeverages');
+    return axios.get("/api/get/allBeverages");
   },
   getAvailBevData: () => {
-    return axios.get('/api/get/bevs/avail')
+    return axios.get("/api/get/bevs/avail");
   },
   getNoteData: () => {
-    return axios.get('/api/get/notes');
+    return axios.get("/api/get/notes");
   },
-  addNoteData: (noteData) => {
+  addNoteData: noteData => {
     console.log(noteData);
-    return axios.post('/api/post/note', noteData);
+    return axios.post("/api/post/note", noteData);
   },
   changeBeverage: bevObj => {
     console.log(`Sending beverage changes...`);
-    return axios.put('/api/put/beverageChanges', bevObj);
+    return axios.put("/api/put/beverageChanges", bevObj);
+  },
+  checkUsername: username => {
+    return axios.post("/api/post/unameCheck", { username });
   }
 };
