@@ -66,9 +66,7 @@ class RightDrawer extends React.Component {
         {/* <Divider /> */}
       </div>
     );
-    
-    console.log(this.props);
-    
+        
     return (
       <div>
         <SwipeableDrawer
