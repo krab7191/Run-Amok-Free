@@ -14,6 +14,8 @@ import FormFeedback from "../../components/Form/FormFeedback";
 
 import { MyContext } from "../../components/MyContext/MyContext";
 
+import API from "../../utils/API";
+
 const styles = theme => ({
   form: {
     marginTop: theme.spacing.unit * 6
@@ -30,11 +32,18 @@ const styles = theme => ({
 
 class SignUp extends React.Component {
   state = {
-    sent: false
+    sent: false,
+    usernameValid: null
   };
 
   validate = values => {
-    console.log("validate firing...");
+    const { username } = values;
+    if (username === undefined) {
+      this.setState({ usernameValid: false });
+    } else {
+      this.validateUsernameUnique(username);
+    }
+
     const errors = required(
       ["firstName", "lastName", "email", "username", "password"],
       values,
@@ -48,9 +57,26 @@ class SignUp extends React.Component {
       }
     }
 
-    console.log(`Errors: `, errors);
-
     return errors;
+  };
+
+  validateUsernameUnique = uname => {
+    if (uname) {
+      API.checkUsername(uname)
+        .then(resp => {
+          const { unique } = resp.data;
+          if (unique) {
+            this.setState({
+              usernameValid: true
+            });
+          } else {
+            this.setState({
+              usernameValid: false
+            });
+          }
+        })
+        .catch(err => console.error(`Error checking username: `, err));
+    }
   };
 
   render() {
@@ -131,6 +157,7 @@ class SignUp extends React.Component {
                         margin="normal"
                         name="username"
                         type="username"
+                        unamevalid={this.state.usernameValid}
                         required
                       />
                       <Field
