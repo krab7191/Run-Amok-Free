@@ -48,7 +48,7 @@ class SignUp extends React.Component {
       }
     }
 
-    console.log(`Errors = ${errors}`);
+    console.log(`Errors: `, errors);
 
     return errors;
   };
