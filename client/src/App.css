@@ -1,7 +1,16 @@
-body {
-  background: aliceblue;
+html,body {
+    margin: 0;
+    padding: 0;
+    background: aliceblue;
+    height: 100%
 }
-
+section {
+    min-height: calc(100vh - 70px);
+    position:relative;
+}
+.main {
+    margin-bottom: 90px;
+}
 .text-center {
   text-align: center;
 }

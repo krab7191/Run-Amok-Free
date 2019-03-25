@@ -97,7 +97,7 @@ class TastingCard extends React.Component {
           /> */}
           <CardContent>
             <Typography component="p">
-              {this.props.bev.desc}
+              {this.props.bev.description}
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>

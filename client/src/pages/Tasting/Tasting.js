@@ -58,7 +58,7 @@ class Tasting extends Component {
           console.log(user);
 
           return (
-            <>
+            <div className='main'>
               {/* <h1 style={styles.tastingHeader}>Tasting</h1> */}
               {allAvailBevs.length === 0 && (
                 <p className="text-center">
@@ -73,12 +73,15 @@ class Tasting extends Component {
               )}
               {/* If admin, link to bev mgmt and say create some. */}
 
-              <div style={styles.tastingDiv}>
-                {allAvailBevs.map(bev => (
-                  <TastingCard key={bev._id} bev={bev} />
-                ))}
+              <div className="main">
+                <h1 style={styles.tastingHeader}>Tasting</h1>
+                <div style={styles.tastingDiv}>
+                  {allAvailBevs.map(bev=>(
+                    <TastingCard key={bev._id} bev={bev} />
+                  ))}
+                </div>
               </div>
-            </>
+            </div>
           );
         }}
       </MyContext.Consumer>
