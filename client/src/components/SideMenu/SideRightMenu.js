@@ -50,7 +50,7 @@ class RightDrawer extends React.Component {
               </ListItemIcon>
               <Link to="/sign-in">
                 <ListItemText primary='Login' />
-              </Link> />
+              </Link>
             </ListItem> }
         </List>
         {/* <Divider /> */}

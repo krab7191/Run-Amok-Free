@@ -86,13 +86,14 @@ class Notes extends Component {
           return (
             <div className="main">
               <h1 style={styles.header}>Notes</h1>
-              {this.state.bevNames && (
-                <NoteSort
-                  bevNames={this.state.bevNames}
-                  sort={this.handleNotesSort}
-                />
-              )}
-
+              {this.state.allNotes.length > 0 && 
+                this.state.bevNames && (
+                  <NoteSort
+                    bevNames={this.state.bevNames}
+                    sort={this.handleNotesSort}
+                  />
+                )
+              }
               {this.state.sortedNotes.length > 0 &&
                 this.state.sortedNotes.map((comment, index) => (
                   <CommentCard
