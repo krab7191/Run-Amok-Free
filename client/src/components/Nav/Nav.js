@@ -62,6 +62,10 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
+  },
+  navLink: {
+    textDecoration: "none",
+    color: "black"
   }
 });
 
@@ -136,20 +140,14 @@ class PrimarySearchAppBar extends React.Component {
               onClose={this.handlePageMenuClose}
             >
               <MenuItem onClick={this.handlePageMenuClose}>
-                <Link to="/Tasting">Tasting</Link>
+                <Link to="/Tasting" className={classes.navLink}>
+                  Tasting
+                </Link>
               </MenuItem>
-              {isAdmin ? (
-                <MenuItem onClick={this.handlePageMenuClose}>
-                  <Link to="/ManageBevs">Manage Meads</Link>
-                </MenuItem>
-              ) : null}
-              {isAdmin ? (
-                <MenuItem onClick={this.handlePageMenuClose}>
-                  <Link to="/ManageUsers">Manage Users</Link>
-                </MenuItem>
-              ) : null}
               <MenuItem onClick={this.handlePageMenuClose}>
-                <Link to="/Notes">Notes</Link>
+                <Link to="/Notes" className={classes.navLink}>
+                  Notes
+                </Link>
               </MenuItem>
             </Menu>
           );
