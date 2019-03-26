@@ -23,7 +23,8 @@ const styles = theme => ({
     padding: 0
   },
   actions: {
-    display: "flex"
+    display: "flex",
+    padding: 0
   },
   expand: {
     transform: "rotate(0deg)",
@@ -37,6 +38,9 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: "grey"
+  },
+  content: {
+    padding: "0 10px"
   }
 });
 
@@ -78,7 +82,7 @@ class TastingCard extends React.Component {
               />
             }
           />
-          <CardContent>
+          <CardContent className={classes.content}>
             <Typography component="p">{this.props.bev.description}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
