@@ -42,7 +42,7 @@ const styles = theme => ({
     padding: "10px"
   },
   title: {
-    display: "none",
+    // display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }
