@@ -5,13 +5,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-// import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-// import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SideLeftMenu from "../SideMenu/SideLeftMenu";
 import SideRightMenu from "../SideMenu/SideRightMenu";
@@ -160,7 +158,7 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.root}>
               <AppBar position="static">
                 <Toolbar>
-                  {!isAdmin && (
+                  {isLoggedIn && !isAdmin && (
                     <>
                       <IconButton
                         className={classes.menuButton}

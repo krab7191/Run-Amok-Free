@@ -8,7 +8,6 @@ module.exports = {
       .then(data => res.json(data))
       .catch(err => res.status(422).json(err));
   },
-  // return axios.post('/api/post/unameCheck', uname);
   checkUname: function(req, res) {
     const { username } = req.body;
 

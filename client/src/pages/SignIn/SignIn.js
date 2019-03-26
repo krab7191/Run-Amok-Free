@@ -1,38 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from '../../components/Form/components/Typography';
-import AppForm from '../../components/AppForm/AppForm';
-import { email, required } from '../../components/Form/validation';
-import RFTextField from '../../components/Form/RFTextField';
-import FormButton from '../../components/Form/FormButton';
-import FormFeedback from '../../components/Form/FormFeedback';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Link from "@material-ui/core/Link";
+import { Field, Form, FormSpy } from "react-final-form";
+import Typography from "../../components/Form/components/Typography";
+import AppForm from "../../components/AppForm/AppForm";
+import { email, required } from "../../components/Form/validation";
+import RFTextField from "../../components/Form/RFTextField";
+import FormButton from "../../components/Form/FormButton";
+import FormFeedback from "../../components/Form/FormFeedback";
 
-import { MyContext } from '../../components/MyContext/MyContext';
+import { MyContext } from "../../components/MyContext/MyContext";
 
 const styles = theme => ({
   form: {
-    marginTop: theme.spacing.unit * 6,
+    marginTop: theme.spacing.unit * 6
   },
   button: {
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 2,
-    backgroundColor: "blue",
+    backgroundColor: "blue"
   },
   feedback: {
-    marginTop: theme.spacing.unit * 2,
-  },
+    marginTop: theme.spacing.unit * 2
+  }
 });
 
 class SignIn extends React.Component {
   state = {
-    sent: false,
+    sent: false
   };
 
   validate = values => {
-    const errors = required(['email', 'password'], values, this.props);
+    const errors = required(["email", "password"], values, this.props);
 
     if (!errors.email) {
       const emailError = email(values.email, values, this.props);
@@ -45,7 +45,6 @@ class SignIn extends React.Component {
   };
 
   render() {
-  
     const { classes } = this.props;
     const { sent } = this.state;
 
@@ -56,11 +55,15 @@ class SignIn extends React.Component {
             <React.Fragment>
               <AppForm>
                 <React.Fragment>
-                  <Typography variant="h3" gutterBottom marked="center" align="center">
+                  <Typography
+                    variant="h3"
+                    gutterBottom
+                    marked="center"
+                    align="center"
+                  >
                     Sign In
                   </Typography>
                   <Typography variant="body2" align="center">
-                    {'Not a member yet? '}
                     <Link href="/sign-up" align="center" underline="always">
                       Sign Up here
                     </Link>
@@ -72,14 +75,18 @@ class SignIn extends React.Component {
                   validate={this.validate}
                 >
                   {({ handleSubmit, submitting }) => (
-                    <form onSubmit={handleSubmit} className={classes.form} noValidate>
+                    <form
+                      onSubmit={handleSubmit}
+                      className={classes.form}
+                      noValidate
+                    >
                       <Field
                         autoComplete="email"
                         autoFocus
                         component={RFTextField}
                         disabled={submitting || sent}
                         fullWidth
-                        label="Email"
+                        label="Email / Username"
                         margin="normal"
                         name="email"
                         required
@@ -112,7 +119,7 @@ class SignIn extends React.Component {
                         size="large"
                         fullWidth
                       >
-                        {submitting || sent ? 'In progress…' : 'Sign In'}
+                        {submitting || sent ? "In progress…" : "Sign In"}
                       </FormButton>
                     </form>
                   )}
@@ -127,12 +134,12 @@ class SignIn extends React.Component {
           );
         }}
       </MyContext.Consumer>
-    )
+    );
   }
 }
 
 SignIn.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SignIn);

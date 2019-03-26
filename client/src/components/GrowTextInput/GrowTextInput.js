@@ -27,7 +27,7 @@ const styles = theme => ({
   },
   button: {
     marginTop: "5px",
-    left: "80%",
+    left: "70%",
     bottom: "0"
   }
 });
