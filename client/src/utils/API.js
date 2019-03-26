@@ -7,8 +7,8 @@ export default {
   getAvailBevData: () => {
     return axios.get("/api/get/bevs/avail");
   },
-  getNoteData: () => {
-    return axios.get("/api/get/notes");
+  getNoteData: userid => {
+    return axios.get("/api/get/notes/" + userid);
   },
   addNoteData: noteData => {
     console.log(noteData);

@@ -19,6 +19,3 @@ class UsersList extends Component {
   }}
 
   export default UsersList;
-
-  // {ratingMean}
-  // const ratingMean = (allBevs[0].ratings.reduce((a,b) => a + b, 0) / allBevs[0].ratings.length).toFixed(1);

@@ -71,12 +71,15 @@ const styles = theme => ({
 });
 
 class PrimarySearchAppBar extends React.Component {
-  state = {
-    anchorEl: null,
-    anchorPageEl: null,
-    left: false,
-    right: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      anchorEl: null,
+      anchorPageEl: null,
+      left: false,
+      right: false
+    };
+  }
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -112,6 +115,9 @@ class PrimarySearchAppBar extends React.Component {
           const handleLogout = context.handleLogout;
 
           const handleLogoutClose = () => {
+            this.setState({
+              anchorEl: null
+            });
             handleLogout();
           };
           const renderMenu = (
@@ -122,10 +128,6 @@ class PrimarySearchAppBar extends React.Component {
               open={isMenuOpen}
               onClose={this.handleMenuClose}
             >
-              {/* {isAdmin && isLoggedIn ? <MenuItem onClick={this.handleMenuClose}>Admin</MenuItem> : null} */}
-              {/* <MenuItem onClick={this.handleMenuClose}>
-                {isLoggedIn ? "Profile" : <Link to="/sign-in">Login</Link>}
-              </MenuItem> */}
               <MenuItem onClick={handleLogoutClose}>Logout</MenuItem>
             </Menu>
           );
