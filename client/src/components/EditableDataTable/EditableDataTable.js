@@ -131,6 +131,10 @@ class EditableDataTable extends Component {
       .then(resp => {
         if (resp.status === 200 && resp.statusText === "OK") {
           console.log(`All good. Fire save related modal to let user know.`);
+          this.updateStateWithModifiedBeverage(
+            resp.data._id,
+            resp.data.dateUpdated
+          );
         } else {
           console.log(
             `Update beverage returned non-error status code: please debug`
