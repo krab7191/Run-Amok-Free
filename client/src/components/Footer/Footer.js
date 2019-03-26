@@ -8,24 +8,23 @@ import DrinkIcon from '@material-ui/icons/LocalDrink';
 import UpdateIcon from '@material-ui/icons/Update';
 import UsersIcon from '@material-ui/icons/SupervisedUserCircle';
 import NotesIcon from '@material-ui/icons/Notes';
-// import { MyContext } from '../MyContext/MyContext';
 
 const styles = {
   root: {
-    width: '100%',
-    backgroundColor: 'brown !important',
-    position: 'fixed',
+    width: "100%",
+    backgroundColor: "brown !important",
+    position: "fixed",
     bottom: 0,
-    height: '60px'
+    height: "60px"
   },
   icon: {
-    color: 'white !important'
+    color: "white !important"
   }
 };
 
 class SimpleBottomNavigation extends React.Component {
   state = {
-    value: 0,
+    value: 0
   };
 
   handleChange = (event, value) => {
@@ -36,7 +35,7 @@ class SimpleBottomNavigation extends React.Component {
         )
       }
     )
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -79,7 +78,7 @@ class SimpleBottomNavigation extends React.Component {
 }
 
 SimpleBottomNavigation.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withRouter(withStyles(styles)(SimpleBottomNavigation));

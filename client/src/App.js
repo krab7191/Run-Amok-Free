@@ -25,7 +25,7 @@ class App extends Component {
       <Provider>
         <MyContext.Consumer>
           {context => {
-            const { isLoggedIn, isRegistered } = context.myState;
+            const { isLoggedIn, isRegistered, user } = context.myState;
 
             return (
               <Router>
@@ -54,8 +54,8 @@ class App extends Component {
                       )}
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
-                    )}
-                  <Footer {...this.props} />
+                  )}
+                  {user && user.isAdmin && <Footer {...this.props} />}
                 </div>
               </Router>
             );
