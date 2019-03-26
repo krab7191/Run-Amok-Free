@@ -35,15 +35,6 @@ class RightDrawer extends React.Component {
         <Divider />
         <List>
           {loggedIn ? 
-            <ListItem button>
-              <ListItemIcon>
-                <IconButton color="inherit">
-                  <AccountCircle />
-                </IconButton>
-              </ListItemIcon>
-              <ListItemText primary='Profile' />
-            </ListItem>: null }
-          {loggedIn ? 
             <ListItem button onClick={logout}>
               <ListItemIcon>
                 <IconButton color="inherit">
