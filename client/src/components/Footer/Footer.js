@@ -46,7 +46,6 @@ class SimpleBottomNavigation extends React.Component {
           default: 
             result = '/';
       }
-      console.log(result);
       return (
         this.props.history.push(result)
       )
@@ -61,7 +60,6 @@ class SimpleBottomNavigation extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    console.log(this.props);
 
     return (
       <BottomNavigation
