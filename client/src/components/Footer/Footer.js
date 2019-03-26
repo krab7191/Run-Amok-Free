@@ -28,32 +28,13 @@ class SimpleBottomNavigation extends React.Component {
     value: 0,
   };
 
-  renderLink = () => {
-      let result = "";
-      switch (this.state.value) {
-          case 0: 
-            result = '/Tasting';
-            break;
-          case 1: 
-            result = '/ManageBevs';    
-            break;
-          case 2: 
-            result = '/ManageUsers';    
-            break;
-          case 3: 
-            result = '/Notes';    
-            break;
-          default: 
-            result = '/';
-      }
-      return (
-        this.props.history.push(result)
-      )
-  }
-
   handleChange = (event, value) => {
     this.setState({ value }, 
-        () => this.renderLink()
+      () => {
+        return (
+          this.props.history.push(this.state.value)
+        )
+      }
     )
   };
 
@@ -68,10 +49,30 @@ class SimpleBottomNavigation extends React.Component {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction className={classes.icon} label="Tasting" icon={<DrinkIcon />} />
-        <BottomNavigationAction className={classes.icon} label="Manage Meads" icon={<UpdateIcon />} />
-        <BottomNavigationAction className={classes.icon} label="Manage Users" icon={<UsersIcon />} />
-        <BottomNavigationAction className={classes.icon} label="Notes" icon={<NotesIcon />} />
+        <BottomNavigationAction 
+          className={classes.icon} 
+          label="Tasting" 
+          icon={<DrinkIcon />} 
+          value="/Tasting" 
+        />
+        <BottomNavigationAction 
+          className={classes.icon} 
+          label="Manage Meads" 
+          icon={<UpdateIcon />}
+          value="/ManageBevs"  
+        />
+        <BottomNavigationAction 
+          className={classes.icon} 
+          label="Manage Users" 
+          icon={<UsersIcon />} 
+          value="/ManageUsers"  
+        />
+        <BottomNavigationAction 
+          className={classes.icon} 
+          label="Notes" 
+          icon={<NotesIcon />} 
+          value="/Notes"
+        />
       </BottomNavigation>
     )
   }
