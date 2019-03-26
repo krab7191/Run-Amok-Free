@@ -34,7 +34,7 @@ class SimpleBottomNavigation extends React.Component {
           this.props.history.push(this.state.value)
         )
       }
-    )
+    );
   }
 
   render() {
