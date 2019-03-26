@@ -21,12 +21,13 @@ const styles = theme => ({
     padding: theme.spacing.unit * 1,
     outline: "none",
     marginTop: 0,
+    paddingTop: 0,
     boxShadow: "none",
     borderRadius: "none"
   },
   button: {
     marginTop: "5px",
-    left: "67%",
+    left: "80%",
     bottom: "0"
   }
 });
