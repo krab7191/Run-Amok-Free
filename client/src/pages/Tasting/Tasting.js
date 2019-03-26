@@ -33,11 +33,7 @@ class Tasting extends Component {
         console.log(res);
         this.setState(
           {
-            // added .drinks because of initial seed data in getController
             allAvailBevs: res.data
-            // bevName: res.data.drinks.name,
-            // bevComment:res.data.drinks.comment,
-            // bevColor:res.data.drinks.color
           },
           () => {
             console.log("state ", this.state);

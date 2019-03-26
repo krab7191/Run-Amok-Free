@@ -1,7 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// import { Redirect } from 'react-router-dom';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import DrinkIcon from '@material-ui/icons/LocalDrink';
@@ -29,29 +29,32 @@ class SimpleBottomNavigation extends React.Component {
   };
 
   renderLink = () => {
-      console.log(this.state);
       let result = "";
       switch (this.state.value) {
           case 0: 
-            console.log('Got here!');
             result = '/Tasting';
             break;
           case 1: 
-            console.log('Got here!');
-            result = '/ManageMeads';    
+            result = '/ManageBevs';    
             break;
-          default:
-            console.log("Nowhere!");
+          case 2: 
+            result = '/ManageUsers';    
+            break;
+          case 3: 
+            result = '/Notes';    
+            break;
+          default: 
+            result = '/';
       }
       console.log(result);
       return (
-        <Redirect to={result} />
+        this.props.history.push(result)
       )
   }
 
   handleChange = (event, value) => {
-    this.setState({ value }, () => 
-        this.renderLink()
+    this.setState({ value }, 
+        () => this.renderLink()
     )
   };
 
@@ -80,4 +83,4 @@ SimpleBottomNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleBottomNavigation);
+export default withRouter(withStyles(styles)(SimpleBottomNavigation));
