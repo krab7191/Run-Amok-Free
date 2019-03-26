@@ -3,28 +3,28 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import DrinkIcon from "@material-ui/icons/LocalDrink";
-import UpdateIcon from "@material-ui/icons/Update";
 import UsersIcon from "@material-ui/icons/SupervisedUserCircle";
 import NotesIcon from "@material-ui/icons/Notes";
 import { Link } from "react-router-dom";
+import Icon from "@material-ui/core/Icon";
+import classNames from "classnames";
 
 const styles = {
   root: {
     width: "100%",
-    backgroundColor: "brown !important",
     position: "fixed",
     bottom: 0,
-    height: "60px"
+    height: "60px",
+    borderTop: "2px solid #3E50B5"
   },
   icon: {
-    color: "white !important"
+    paddingRight: "10px"
   }
 };
 
 class SimpleBottomNavigation extends React.Component {
   state = {
-    value: 0
+    value: "Tasting"
   };
 
   handleChange = (event, value) => {
@@ -41,37 +41,37 @@ class SimpleBottomNavigation extends React.Component {
       <BottomNavigation
         value={value}
         onChange={this.handleChange}
-        showLabels
+        // showLabels
         className={classes.root}
       >
         <BottomNavigationAction
           component={Link}
           to="/Tasting"
-          className={classes.icon}
           label="Tasting"
-          icon={<DrinkIcon />}
+          icon={
+            <Icon className={classNames(classes.icon, "fas fa-glass-cheers")} />
+          }
           value="Tasting"
         />
         <BottomNavigationAction
           component={Link}
           to="/ManageBevs"
-          className={classes.icon}
-          label="Manage Meads"
-          icon={<UpdateIcon />}
+          label="Meads"
+          icon={
+            <Icon className={classNames(classes.icon, "fas fa-wine-bottle")} />
+          }
           value="ManageBevs"
         />
         <BottomNavigationAction
           component={Link}
           to="/ManageUsers"
-          className={classes.icon}
-          label="Manage Users"
+          label="Users"
           icon={<UsersIcon />}
           value="ManageUsers"
         />
         <BottomNavigationAction
           component={Link}
           to="/Notes"
-          className={classes.icon}
           label="Notes"
           icon={<NotesIcon />}
           value="Notes"
