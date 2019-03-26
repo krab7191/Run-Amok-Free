@@ -27,13 +27,12 @@ class Tasting extends Component {
   getAllAvailBev = () => {
     API.getAvailBevData()
       .then(res => {
-        console.log(res);
         this.setState(
           {
             allAvailBevs: res.data
           },
           () => {
-            console.log("state ", this.state);
+            // console.log("state ", this.state);
           }
         );
       })
@@ -42,13 +41,11 @@ class Tasting extends Component {
 
   render() {
     const allAvailBevs = this.state.allAvailBevs;
-    console.log(allAvailBevs);
 
     return (
       <MyContext.Consumer>
         {context => {
           const { user } = context.myState;
-          console.log(user);
 
           return (
             <div className="main">

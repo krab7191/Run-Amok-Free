@@ -22,7 +22,7 @@ import UsersTableRow from "./Rows/UsersRows";
 // Save button for beverage management
 import SaveButton from "../SaveButton";
 
-import AddUser from '../AddUser/AddUser';
+import AddUser from "../AddUser/AddUser";
 
 class EditableDataTable extends Component {
   constructor(props) {
@@ -95,29 +95,35 @@ class EditableDataTable extends Component {
         this.props.type === "bevs"
           ? (newState[i].isAvailable = checked)
           : (newState[i].isAdmin = checked);
-        this.setState({
-          data: newState
-        });
-        this.sendUpdateBeverage(n);
+        this.setState(
+          {
+            data: newState
+          },
+          () => {
+            console.log("State updated");
+            this.props.type === "bevs"
+              ? this.sendUpdateBeverage(n)
+              : this.sendUpdateUser(n);
+          }
+        );
       }
     });
   };
 
   // After an api call to change the database fails, rollback the state so it's in sync
-  // !! ** ASSUME changes is an object which contains one beverage property / value pair
-  rollbackStateAfterAPIFail = (id, changes) => {
-    const k = Object.keys(changes)[0];
-    const v = Object.values(changes)[0];
-    this.state.data.forEach((n, i) => {
-      if (n._id === id) {
-        let newState = [...this.state.allBevs];
-        newState[i][k] = v;
-        this.setState({
-          data: newState
-        });
-      }
-    });
-  };
+  // rollbackStateAfterAPIFail = (obj) => {
+  //   const k = Object.keys(changes)[0];
+  //   const v = Object.values(changes)[0];
+  //   this.state.data.forEach((n, i) => {
+  //     if (n._id === id) {
+  //       let newState = [...this.state.allBevs];
+  //       newState[i][k] = v;
+  //       this.setState({
+  //         data: newState
+  //       });
+  //     }
+  //   });
+  // };
 
   // Handle updating database when a beverage is changed
   sendUpdateBeverage = bevObj => {
@@ -142,7 +148,37 @@ class EditableDataTable extends Component {
           console.log(
             `Internet disconnected, undo state changes and fire modal to let user know`
           );
-          this.rollbackStateAfterAPIFail(bevObj);
+          // this.rollbackStateAfterAPIFail(bevObj);
+        } else {
+          console.log(`Non network-related error. Please debug: ${err}`);
+        }
+      });
+  };
+
+  sendUpdateUser = userObj => {
+    API.updateUserPermissions(userObj)
+      .then(resp => {
+        if (resp.status === 200 && resp.statusText === "OK") {
+          console.log(`User permissions changed, fire modal`);
+          console.log(resp.data);
+        } else {
+          console.log(
+            `Change user permissions returned non-error status code: please debug`
+          );
+          if (resp.status === 500) {
+            // Error: Request failed with status code 500
+            console.log(`500 error`);
+          }
+          console.log(resp.status, resp.statusText);
+        }
+      })
+      .catch(err => {
+        console.log(`Error updating beverage: ${err}`);
+        if (err.Error === "Network Error") {
+          console.log(
+            `Internet disconnected, undo state changes and fire modal to let user know`
+          );
+          // this.rollbackStateAfterAPIFail(userObj);
         } else {
           console.log(`Non network-related error. Please debug: ${err}`);
         }
@@ -155,7 +191,6 @@ class EditableDataTable extends Component {
       if (bev.edited) {
         API.changeBeverage(bev)
           .then(res => {
-            console.log(res);
             this.updateStateWithModifiedBeverage(
               res.data._id,
               res.data.dateUpdated
@@ -168,7 +203,6 @@ class EditableDataTable extends Component {
 
   updateStateWithModifiedBeverage = (_id, dateMod) => {
     let newState = [...this.state.data];
-    console.log(newState);
     newState.forEach((bev, i) => {
       if (bev._id === _id) {
         newState[i].dateUpdated = dateMod;
@@ -180,7 +214,6 @@ class EditableDataTable extends Component {
   };
 
   render() {
-    console.log(this.state.data);
     return (
       <>
         <Paper className="overflow-table">
@@ -207,7 +240,6 @@ class EditableDataTable extends Component {
                     <UsersTableRow
                       key={row._id}
                       readable={this.makeDateReadable}
-                      // handleFieldChange={this.handleFieldChange}
                       handleSwitchToggle={this.handleSwitchToggle}
                       {...row}
                     />
@@ -218,10 +250,9 @@ class EditableDataTable extends Component {
             <p className="text-center">No beverages! Try creating some.</p>
           )}
         </Paper>
-        {this.props.type === "users" ? 
-        <AddUser /> : null}
+        {this.props.type === "users" ? <AddUser /> : null}
         {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
-            <SaveButton saveHandler={this.saveHandler} />
+          <SaveButton saveHandler={this.saveHandler} />
         )}
       </>
     );
