@@ -1,11 +1,11 @@
 import React from "react";
+import { withRouter } from 'react-router';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import UsersIcon from "@material-ui/icons/SupervisedUserCircle";
 import NotesIcon from "@material-ui/icons/Notes";
-import { Link } from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
 import classNames from "classnames";
 
@@ -28,10 +28,14 @@ class SimpleBottomNavigation extends React.Component {
   };
 
   handleChange = (event, value) => {
-    this.setState({
-      value
-    });
-  };
+    this.setState({ value }, 
+      () => {
+        return (
+          this.props.history.push("/"+this.state.value)
+        )
+      }
+    );
+  }
 
   render() {
     const { classes } = this.props;
@@ -45,8 +49,6 @@ class SimpleBottomNavigation extends React.Component {
         className={classes.root}
       >
         <BottomNavigationAction
-          component={Link}
-          to="/Tasting"
           label="Tasting"
           icon={
             <Icon className={classNames(classes.icon, "fas fa-glass-cheers")} />
@@ -54,8 +56,6 @@ class SimpleBottomNavigation extends React.Component {
           value="Tasting"
         />
         <BottomNavigationAction
-          component={Link}
-          to="/ManageBevs"
           label="Meads"
           icon={
             <Icon className={classNames(classes.icon, "fas fa-wine-bottle")} />
@@ -63,21 +63,17 @@ class SimpleBottomNavigation extends React.Component {
           value="ManageBevs"
         />
         <BottomNavigationAction
-          component={Link}
-          to="/ManageUsers"
           label="Users"
           icon={<UsersIcon />}
           value="ManageUsers"
         />
         <BottomNavigationAction
-          component={Link}
-          to="/Notes"
           label="Notes"
           icon={<NotesIcon />}
           value="Notes"
         />
       </BottomNavigation>
-    );
+    )
   }
 }
 
@@ -85,4 +81,4 @@ SimpleBottomNavigation.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleBottomNavigation);
+export default withRouter(withStyles(styles)(SimpleBottomNavigation));
