@@ -1,9 +1,8 @@
-const db = require('../models');
+const db = require("../models");
 
 // Define methods for UPDATING various data from the Users, Wines, etc collections
 module.exports = {
   changeBeverage(req, res) {
-    console.log(`Beverage change request incoming...`);
     const { body } = req;
     const { _id } = body;
     // Remove the un-editable keys
@@ -16,8 +15,7 @@ module.exports = {
         const bev = { ...resp._doc };
         delete bev.notes;
         delete bev.__v;
-        bev.message = 'Beverage updated successfully.';
-        console.log(bev);
+        bev.message = "Beverage updated successfully.";
         // Return the updated Object to the frontend
         res.json(bev);
       })
@@ -26,4 +24,23 @@ module.exports = {
         res.json(err);
       });
   },
+  updateUser(req, res) {
+    const { _id, isAdmin } = req.body;
+    db.Users.findOneAndUpdate(
+      { _id },
+      { $set: { isAdmin: isAdmin } },
+      { new: true }
+    )
+      .then(resp => {
+        const user = { ...resp._doc };
+        delete user.notes;
+        delete user.password;
+        delete user.__v;
+        res.json(user);
+      })
+      .catch(err => {
+        console.log(err);
+        res.json(err);
+      });
+  }
 };

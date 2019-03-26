@@ -67,7 +67,6 @@ class UserTableRow extends React.Component {
             onChange={e => handleSwitchToggle(e, _id)}
             _id={_id}
           />
-          {/* {isAdmin===true ? "Yes" : "No"} */}
         </TableCell>
         <TableCell align="right">{readable(createdOn)}</TableCell>
       </TableRow>

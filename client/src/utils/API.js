@@ -18,6 +18,10 @@ export default {
     console.log(`Sending beverage changes...`);
     return axios.put("/api/put/beverageChanges", bevObj);
   },
+  updateUserPermissions: userObj => {
+    console.log("Sending user permissions changes");
+    return axios.put("/api/put/user", userObj);
+  },
   checkUsername: username => {
     return axios.post("/api/post/unameCheck", { username });
   }
