@@ -24,9 +24,6 @@ const styles = theme => ({
   root: {
     width: "100%"
   },
-  appbar: {
-    backgroundColor: "brown !important"
-  },
   grow: {
     flexGrow: 1
   },
@@ -140,7 +137,6 @@ class PrimarySearchAppBar extends React.Component {
               open={isPageMenuOpen}
               onClose={this.handlePageMenuClose}
             >
-              {/* <MenuItem onClick={this.handlePageMenuClose}><Link to="/ListOrder">List</Link></MenuItem> */}
               <MenuItem onClick={this.handlePageMenuClose}>
                 <Link to="/Tasting">Tasting</Link>
               </MenuItem>
@@ -162,31 +158,35 @@ class PrimarySearchAppBar extends React.Component {
 
           return (
             <div className={classes.root}>
-              <AppBar className={classes.appbar} position="static">
+              <AppBar position="static">
                 <Toolbar>
-                  <IconButton
-                    className={classes.menuButton}
-                    aria-haspopup="true"
-                    onClick={this.handlePageMenuOpen}
-                    color="inherit"
-                    aria-label="Open drawer"
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                  <div className={classes.sectionLeftMobile}>
-                    <IconButton
-                      aria-haspopup="true"
-                      onClick={this.toggleDrawer("left", true)}
-                      color="inherit"
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                  </div>
-                  <SideLeftMenu
-                    open={this.state.left}
-                    toggle={this.toggleDrawer}
-                    isAdmin={isAdmin}
-                  />
+                  {!isAdmin && (
+                    <>
+                      <IconButton
+                        className={classes.menuButton}
+                        aria-haspopup="true"
+                        onClick={this.handlePageMenuOpen}
+                        color="inherit"
+                        aria-label="Open drawer"
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                      <div className={classes.sectionLeftMobile}>
+                        <IconButton
+                          aria-haspopup="true"
+                          onClick={this.toggleDrawer("left", true)}
+                          color="inherit"
+                        >
+                          <MenuIcon />
+                        </IconButton>
+                      </div>
+                      <SideLeftMenu
+                        open={this.state.left}
+                        toggle={this.toggleDrawer}
+                        isAdmin={isAdmin}
+                      />
+                    </>
+                  )}
                   <Typography
                     className={classes.title}
                     variant="h6"
@@ -207,11 +207,6 @@ class PrimarySearchAppBar extends React.Component {
                         ? `Welcome, ${context.myState.user.firstName}`
                         : null}
                     </Typography>
-                    {/* <IconButton color="inherit">
-                        <Badge badgeContent={17} color="secondary">
-                          <NotificationsIcon />
-                        </Badge>
-                      </IconButton> */}
                     {isLoggedIn && (
                       <IconButton
                         aria-owns={isMenuOpen ? "material-appbar" : undefined}
@@ -255,60 +250,3 @@ PrimarySearchAppBar.propTypes = {
 };
 
 export default withStyles(styles)(PrimarySearchAppBar);
-
-// import { fade } from '@material-ui/core/styles/colorManipulator';
-// import InputBase from '@material-ui/core/InputBase';
-// import SearchIcon from '@material-ui/icons/Search';
-// <div className={classes.search}>
-//   <div className={classes.searchIcon}>
-//     <SearchIcon />
-//   </div>
-//   <InputBase
-//     placeholder="Search…"
-//     classes={{
-//       root: classes.inputRoot,
-//       input: classes.inputInput,
-//     }}
-//   />
-// </div>
-
-// search: {
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: fade(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: fade(theme.palette.common.white, 0.25),
-//   },
-//   marginRight: theme.spacing.unit * 2,
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing.unit * 3,
-//     width: 'auto',
-//   },
-// },
-// searchIcon: {
-//   width: theme.spacing.unit * 9,
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// },
-// inputRoot: {
-//   color: 'inherit',
-//   width: '100%',
-// },
-// inputInput: {
-//   paddingTop: theme.spacing.unit * 1.5,
-//   paddingRight: theme.spacing.unit,
-//   paddingBottom: theme.spacing.unit,
-//   paddingLeft: theme.spacing.unit * 10,
-//   fontSize:'1.25rem',
-//   transition: theme.transitions.create('width'),
-//   width: '100%',
-//   [theme.breakpoints.up('md')]: {
-//     width: 200,
-//   },
-// },
