@@ -11,7 +11,6 @@ export default {
     return axios.get("/api/get/notes/" + userid);
   },
   addNoteData: noteData => {
-    console.log(noteData);
     return axios.post("/api/post/note", noteData);
   },
   changeBeverage: bevObj => {

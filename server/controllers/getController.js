@@ -8,12 +8,11 @@ module.exports = {
       .then(resp => {
         db.Notes.find({})
           .select(["body", "beverages", "user"])
-          .populate("beverages", ["name", "description"])
           .populate("user", "firstName")
           .then(data => {
             if (resp.isAdmin) {
               res.json(data);
-            } else { 
+            } else {
               const usersNotes = data.filter(note => {
                 return _id == note.user._id;
               });
@@ -48,3 +47,4 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   }
 };
+
