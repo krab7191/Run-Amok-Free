@@ -55,7 +55,7 @@ class App extends Component {
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
                   )}
-                  {user && user.isAdmin && <Footer />}
+                  {user && user.isAdmin && <Footer {...this.props} />}
                 </div>
               </Router>
             );
