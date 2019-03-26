@@ -8,7 +8,8 @@ module.exports = {
     // Remove the un-editable keys
     delete body.edited;
     delete body.dateCreated;
-    delete body.dateUpdated;
+    body.dateUpdated = new Date();
+    console.log(body.dateUpdated);
     delete body._id;
     db.Beverages.findOneAndUpdate({ _id }, { $set: body }, { new: true })
       .then(resp => {
@@ -28,7 +29,7 @@ module.exports = {
     const { _id, isAdmin } = req.body;
     db.Users.findOneAndUpdate(
       { _id },
-      { $set: { isAdmin: isAdmin } },
+      { $set: { isAdmin: isAdmin, updatedOn: new Date() } },
       { new: true }
     )
       .then(resp => {
@@ -44,3 +45,4 @@ module.exports = {
       });
   }
 };
+
