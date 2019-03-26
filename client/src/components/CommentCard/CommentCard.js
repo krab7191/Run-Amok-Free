@@ -1,21 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const styles = {
   card: {
     maxWidth: "70%",
-    margin: "20px auto",
+    margin: "20px auto"
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)"
   },
   title: {
     fontSize: 18,
@@ -30,18 +30,21 @@ const styles = {
     fontWeight: "bolder"
   },
   content: {
-    position: "relative",
+    position: "relative"
   }
 };
 
 function CommentCard(props) {
-
   const { classes } = props;
 
   return (
     <Card raised={true} className={classes.card}>
       <CardContent className={classes.content}>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
           {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
@@ -50,19 +53,14 @@ function CommentCard(props) {
         <Typography variant="h5" component="h2">
           {props.comment}
         </Typography>
-        <Typography component="p">
-         
-        </Typography>
+        <Typography component="p" />
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }
 
 CommentCard.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(CommentCard);
