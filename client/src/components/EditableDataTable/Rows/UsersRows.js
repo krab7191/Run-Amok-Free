@@ -64,6 +64,7 @@ class UserTableRow extends React.Component {
               checked: classes.colorChecked
             }}
             checked={isAdmin}
+            disabled={this.props.userId === _id}
             onChange={e => handleSwitchToggle(e, _id)}
             _id={_id}
           />

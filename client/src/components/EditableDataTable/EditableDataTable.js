@@ -246,6 +246,7 @@ class EditableDataTable extends Component {
                       readable={this.makeDateReadable}
                       handleSwitchToggle={this.handleSwitchToggle}
                       {...row}
+                      userId={this.props.userId}
                     />
                   ))}
             </TableBody>

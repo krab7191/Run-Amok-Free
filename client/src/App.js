@@ -26,7 +26,6 @@ class App extends Component {
         <MyContext.Consumer>
           {context => {
             const { isLoggedIn, isRegistered, user } = context.myState;
-
             return (
               <Router>
                 <div className="section">
