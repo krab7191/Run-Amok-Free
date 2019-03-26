@@ -38,11 +38,11 @@ class Provider extends Component {
       <MyContext.Provider
         value={{
           myState: this.state,
-          postNote: (e, id, noteData) => {
+          postNote: (e, beverageName, noteData) => {
             e.preventDefault();
             API.addNoteData({
               body: noteData,
-              beverages: id,
+              beverages: beverageName,
               user: this.state.user._id
             })
               .then(res => {

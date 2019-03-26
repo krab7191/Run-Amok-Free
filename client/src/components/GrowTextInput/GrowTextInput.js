@@ -63,8 +63,8 @@ class GrowTextInput extends React.Component {
             this.setState({ open: false });
             closeInput();
           };
-          const handleNoteInput = (e, id) => {
-            context.postNote(e, id, this.state.note);
+          const handleNoteInput = (e, beverageName) => {
+            context.postNote(e, beverageName, this.state.note);
             this.setState({ modalOpen: true });
           };
 
@@ -86,7 +86,7 @@ class GrowTextInput extends React.Component {
               <Button
                 onClick={
                   this.state.note.trim()
-                    ? e => handleNoteInput(e, bev._id)
+                    ? e => handleNoteInput(e, bev.name)
                     : this.showErr
                 }
                 className={classes.button}
