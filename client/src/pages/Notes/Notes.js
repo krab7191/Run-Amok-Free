@@ -35,7 +35,6 @@ class Notes extends Component {
 
   getBevNames = () => {
     const bevArr = this.filterBevNames();
-    console.log(bevArr);
     this.setState({ bevNames: bevArr });
   };
 
@@ -64,7 +63,6 @@ class Notes extends Component {
             fetched: true
           },
           () => {
-            console.log("state ", this.state);
             cb();
           }
         );
