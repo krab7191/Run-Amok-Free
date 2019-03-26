@@ -34,12 +34,12 @@ class SignIn extends React.Component {
   validate = values => {
     const errors = required(['email', 'password'], values, this.props);
 
-    if (!errors.email) {
-      const emailError = email(values.email, values, this.props);
-      if (emailError) {
-        errors.email = email(values.email, values, this.props);
-      }
-    }
+    // if (!errors.email) {
+    //   const emailError = email(values.email, values, this.props);
+    //   if (emailError) {
+    //     errors.email = email(values.email, values, this.props);
+    //   }
+    // }
 
     return errors;
   };
@@ -79,7 +79,7 @@ class SignIn extends React.Component {
                         component={RFTextField}
                         disabled={submitting || sent}
                         fullWidth
-                        label="Email"
+                        label="Email or Username"
                         margin="normal"
                         name="email"
                         required

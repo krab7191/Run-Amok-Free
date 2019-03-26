@@ -7,7 +7,7 @@ const strategy = new LocalStrategy(
 		usernameField: 'email' // tell passport to look for email instead of username
 	},
 	function (username, password, done) {
-		db.Users.findOne({ 'email': username }, (err, user) => {
+		db.Users.findOne({$or:[{'email': username}, {'username': username}]}, (err, user) => {
 			if (err) { return done(err); }
 			if (!user) { return done(null, false); }
 			if (!bcrypt.compareSync(password, user.password)) { return done(null, false); }
