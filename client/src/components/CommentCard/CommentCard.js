@@ -7,8 +7,8 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = {
   card: {
-    maxWidth: "70%",
-    margin: "20px auto"
+    maxWidth: "90%",
+    margin: "15px auto"
   },
   bullet: {
     display: "inline-block",
@@ -16,7 +16,7 @@ const styles = {
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bolder"
   },
   pos: {
@@ -24,7 +24,7 @@ const styles = {
     position: "absolute",
     top: "15px",
     right: "30px",
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bolder"
   },
   content: {
@@ -48,9 +48,7 @@ function CommentCard(props) {
         <Typography className={classes.pos} color="textSecondary">
           {props.leftBy}
         </Typography>
-        <Typography variant="h5" component="h2">
-          {props.comment}
-        </Typography>
+        <Typography component="p">{props.comment}</Typography>
         <Typography component="p" />
       </CardContent>
     </Card>
