@@ -80,7 +80,7 @@ class SignUp extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, email, token } = this.props;
     const { sent } = this.state;
 
     return (

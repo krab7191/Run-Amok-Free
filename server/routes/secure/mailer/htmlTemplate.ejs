@@ -79,14 +79,16 @@
         <section>
                 <nav>
                     <ul>
-                        <li><a href="http://www.google.com">Home</a></li>
+                        <li><a href="https://run-amok-free.herokuapp.com/">Home</a></li>
                     </ul>
                 </nav>
                 <article>   
                     <% if (token) { %>
-                        <h1>Your Token is <%= token %></h1>
+                        <p><a 
+                            href='https://run-amok-free.herokuapp.com/sign-up/<%= token %>/<% if (email) { %><%= email %><% } %>'>
+                                Click Here to Sign Up! </a>
+                       </p>
                     <% } %>
-                    <p><a href="http://www.run-amok.com">Click Here to Sign Up!</a></p>
                 </article>
         </section>
         <footer>
