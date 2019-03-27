@@ -13,6 +13,9 @@ export default {
   addNoteData: noteData => {
     return axios.post("/api/post/note", noteData);
   },
+  saveNewBeverage: bevObj => {
+    return axios.post("/api/post/beverage", bevObj);
+  },
   changeBeverage: bevObj => {
     console.log(`Sending beverage changes...`);
     return axios.put("/api/put/beverageChanges", bevObj);

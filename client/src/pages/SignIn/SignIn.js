@@ -5,7 +5,7 @@ import Link from "@material-ui/core/Link";
 import { Field, Form, FormSpy } from "react-final-form";
 import Typography from "../../components/Form/components/Typography";
 import AppForm from "../../components/AppForm/AppForm";
-import { email, required } from "../../components/Form/validation";
+import { required } from "../../components/Form/validation";
 import RFTextField from "../../components/Form/RFTextField";
 import FormButton from "../../components/Form/FormButton";
 import FormFeedback from "../../components/Form/FormFeedback";

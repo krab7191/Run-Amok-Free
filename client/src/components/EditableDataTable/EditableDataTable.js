@@ -218,6 +218,16 @@ class EditableDataTable extends Component {
     });
   };
 
+  updateStateWithNewBeverage = obj => {
+    delete obj.notes;
+    delete obj.__v;
+    const newState = [...this.state.data];
+    newState.push(obj);
+    this.setState({
+      data: newState
+    });
+  };
+
   render() {
     return (
       <>
@@ -250,7 +260,11 @@ class EditableDataTable extends Component {
                       userId={this.props.userId}
                     />
                   ))}
-              {this.props.type === "bevs" && <NewBevRow saveBeverage={this.saveBeverage} />}
+              {this.props.type === "bevs" && (
+                <NewBevRow
+                  updateStateWithNewBeverage={this.updateStateWithNewBeverage}
+                />
+              )}
             </TableBody>
           </Table>
           {this.state.data.length === 0 && (

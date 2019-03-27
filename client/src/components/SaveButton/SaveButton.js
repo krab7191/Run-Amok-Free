@@ -25,11 +25,12 @@ class SaveButton extends Component {
       <MuiThemeProvider theme={greenTheme}>
         <div className="save-button">
           <Button
+            type="button"
             color="primary"
             variant="contained"
             onClick={this.props.saveHandler}
           >
-            Save
+            Update
           </Button>
         </div>
       </MuiThemeProvider>

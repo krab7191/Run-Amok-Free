@@ -16,7 +16,7 @@ const Beverages = new Schema({
   ],
   isAvailable: {
     type: Boolean,
-    default: false
+    default: true
   },
   dateCreated: {
     type: Date,

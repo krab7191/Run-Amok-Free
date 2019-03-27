@@ -32,7 +32,6 @@ module.exports = {
       // The beverage mgmt page doesn't need the notes or mongoose __v
       .select(["-notes", "-__v"])
       .then(data => {
-        console.log(data);
         res.json(data);
       })
       .catch(err => res.status(422).json(err));
