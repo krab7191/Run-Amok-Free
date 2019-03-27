@@ -23,5 +23,14 @@ module.exports = {
         console.log(err);
         res.json({ err });
       });
+  },
+  createBeverage: function(req, res) {
+    const { body } = req;
+    body.dateCreated = new Date();
+    db.Beverages.create(body)
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => res.status(422).json(err));
   }
 };

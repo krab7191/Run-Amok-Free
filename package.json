@@ -16,6 +16,10 @@
     "seed-beverages": "node server/scripts/seedBeverages.js",
     "seed-notes": "node server/scripts/seedNotes.js"
   },
+  "engines": {
+    "node": "11.9.0",
+    "npm": "6.9.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:krab7191/Run-Amok-Free.git"
