@@ -39,7 +39,7 @@ class Provider extends Component {
 
   // type one of 'success', 'error', 'info', duration in MS
   notify = (text, type, duration) => {
-    toast[type](text, { autoClose: duration || 2500 });
+    toast[type || "success"](text, { autoClose: duration || 2500 });
   };
 
   render() {
@@ -63,7 +63,7 @@ class Provider extends Component {
               });
           },
           handleSignInSubmit: userData => {
-            this.notify("Logging in...", 'info', 1500);
+            this.notify("Logging in...", "info", 800);
             AUTH.login(userData)
               .then(res => {
                 if (res.status === 200) {
@@ -89,6 +89,7 @@ class Provider extends Component {
               ...userData
             })
               .then(res => {
+                this.notify("Success!");
                 this.setState({
                   isRegistered: true
                 });
@@ -103,7 +104,7 @@ class Provider extends Component {
               });
           },
           handleLogout: () => {
-            this.notify("Logging you out...", 'info', 1500);
+            this.notify("Logging you out...", "info", 1500);
             AUTH.logout()
               .then(value => {
                 this.setState({
@@ -113,7 +114,7 @@ class Provider extends Component {
                 });
               })
               .catch(err => {
-                this.notify("Error logging out", 'error', 2000);
+                this.notify("Error logging out", "error", 2000);
                 console.log(err);
               });
           }
