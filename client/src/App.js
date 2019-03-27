@@ -52,7 +52,7 @@ class App extends Component {
                         <Route exact path="/sign-up" component={SignUp} />
                       )}
                       {!isRegistered && (
-                        <Route exact path="/sign-up/:token/:email" component={({match}) => <SignIn token={match.params.token} email={match.params.email} />} />
+                        <Route exact path="/sign-up/:token/:email" component={({match}) => <SignUp token={match.params.token} email={match.params.email} />} />
                       )}
                       <Route component={() => <Redirect to="/" />} />
                     </Switch>
