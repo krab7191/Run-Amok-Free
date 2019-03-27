@@ -45,7 +45,7 @@ class SignUp extends React.Component {
     }
 
     const errors = required(
-      ["firstName", "lastName", "email", "username", "password"],
+      ["firstName", "lastName", "email", "username", "password", "token"],
       values,
       this.props
     );
@@ -146,6 +146,7 @@ class SignUp extends React.Component {
                         label="Email"
                         margin="normal"
                         name="email"
+                        initialValue={email}
                         required
                       />
                       <Field
@@ -171,6 +172,20 @@ class SignUp extends React.Component {
                         type="password"
                         margin="normal"
                       />
+                      <Grid container spacing={16}>
+                        <Grid item xs={12} sm={6}>
+                          <Field
+                            fullWidth
+                            component={RFTextField}
+                            disabled={submitting || sent}
+                            required
+                            name="token"
+                            label="Token"
+                            initialValue={token}
+                            margin="normal"
+                          />
+                        </Grid>
+                      </Grid>
                       <FormSpy subscription={{ submitError: true }}>
                         {({ submitError }) =>
                           submitError ? (
