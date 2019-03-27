@@ -21,15 +21,9 @@ module.exports = {
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err))
   },
-  searchUserByEmail: (req, res) => {
-
-  },
-  searchUserByFirstName: (req, res) => {
-
-  },
-  searchUserByLastName: (req, res) => {
-
-  },
+  searchUserByEmail: (req, res) => {},
+  searchUserByFirstName: (req, res) => {},
+  searchUserByLastName: (req, res) => {},
   createToken: (req,res,next) => {
     console.log(req.body);
     db.Tokens.create(req.body)
