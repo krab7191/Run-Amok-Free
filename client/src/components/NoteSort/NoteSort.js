@@ -27,14 +27,12 @@ class NativeSelects extends React.Component {
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value }, () => {
-      console.log(this.state);
       this.props.sort(this.state.bev);
     });
   };
 
   render() {
     const { classes, bevNames } = this.props;
-    console.log(this.props);
     return (
       <FormControl variant="filled" className={classes.formControl}>
         <InputLabel htmlFor="filled-bevs">Filter</InputLabel>

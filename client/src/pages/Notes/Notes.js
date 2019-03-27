@@ -26,8 +26,8 @@ class Notes extends Component {
     let arr = [];
     this.state.allNotes.length > 0 &&
       this.state.allNotes.forEach(note => {
-        if (arr.indexOf(note.beverages.name) === -1) {
-          arr.push(note.beverages.name);
+        if (arr.indexOf(note.beverages) === -1) {
+          arr.push(note.beverages);
         }
       });
     return arr;
@@ -35,15 +35,12 @@ class Notes extends Component {
 
   getBevNames = () => {
     const bevArr = this.filterBevNames();
-    console.log(bevArr);
     this.setState({ bevNames: bevArr });
   };
 
   handleNotesSort = sel => {
     if (sel !== "All") {
-      let sortArr = this.state.allNotes.filter(
-        note => note.beverages.name === sel
-      );
+      let sortArr = this.state.allNotes.filter(note => note.beverages === sel);
       this.setState({
         sortedNotes: sortArr
       });
@@ -64,7 +61,6 @@ class Notes extends Component {
             fetched: true
           },
           () => {
-            console.log("state ", this.state);
             cb();
           }
         );
@@ -86,20 +82,18 @@ class Notes extends Component {
           return (
             <div className="main">
               <h1 style={styles.header}>Notes</h1>
-              {this.state.allNotes.length > 0 && 
-                this.state.bevNames && (
-                  <NoteSort
-                    bevNames={this.state.bevNames}
-                    sort={this.handleNotesSort}
-                  />
-                )
-              }
+              {this.state.allNotes.length > 0 && this.state.bevNames && (
+                <NoteSort
+                  bevNames={this.state.bevNames}
+                  sort={this.handleNotesSort}
+                />
+              )}
               {this.state.sortedNotes.length > 0 &&
                 this.state.sortedNotes.map((comment, index) => (
                   <CommentCard
                     key={index}
                     leftBy={comment.user ? comment.user.firstName : ""}
-                    name={comment.beverages.name}
+                    name={comment.beverages}
                     comment={comment.body}
                   />
                 ))}

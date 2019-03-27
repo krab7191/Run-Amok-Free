@@ -1,61 +1,61 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import nanoid from 'nanoid';
-import AUTH from '../../utils/AUTH';
+import React from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { withStyles } from "@material-ui/core/styles";
+import nanoid from "nanoid";
+import AUTH from "../../utils/AUTH";
 
-import Fab from '@material-ui/core/Fab';
-import TextField from '@material-ui/core/TextField';
-import TextSMS from '@material-ui/icons/Textsms';
-import lightBlue from '@material-ui/core/colors/lightBlue';
+import Fab from "@material-ui/core/Fab";
+import TextField from "@material-ui/core/TextField";
+import TextSMS from "@material-ui/icons/Textsms";
+import lightBlue from "@material-ui/core/colors/lightBlue";
+
+import './AddUser.css';
 
 const styles = theme => ({
   fab: {
-    margin: theme.spacing.unit*1.8,
+    margin: theme.spacing.unit * 1.8,
     background: lightBlue[300]
   },
   extendedIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
   dense: {
-    marginTop: 16,
-  },
+    marginTop: 16
+  }
 });
 
 class AddUser extends React.Component {
-  
   state = {
     email: ""
-  }
+  };
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { value } = e.target;
     console.log(value);
     this.setState({
       email: value
     });
-  }
+  };
 
-  sendToken = (email) => {
+  sendToken = email => {
     const tokenid = nanoid(8);
     console.log(tokenid);
-    AUTH.sendToken({email: email, token: tokenid})
-      .then((value) => {
-        console.log(value);
-        this.setState({email: ""})
-      })
-  }
+    AUTH.sendToken({ email: email, token: tokenid }).then(value => {
+      console.log(value);
+      this.setState({ email: "" });
+    });
+  };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
-    return(
-      <div>
+    return (
+      <div id="mailer-row">
         <TextField
           id="email"
           label="Email"
@@ -65,17 +65,22 @@ class AddUser extends React.Component {
           value={this.state.email}
           onChange={this.handleChange}
         />
-        <Fab onClick={()=>this.sendToken(this.state.email)} variant="extended" aria-label="Token" className={classes.fab}>
+        <Fab
+          onClick={() => this.sendToken(this.state.email)}
+          variant="extended"
+          aria-label="Token"
+          className={classes.fab}
+        >
           <TextSMS className={classes.extendedIcon} />
           Send Token
         </Fab>
       </div>
-    )
+    );
   }
 }
 
 AddUser.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(AddUser);
