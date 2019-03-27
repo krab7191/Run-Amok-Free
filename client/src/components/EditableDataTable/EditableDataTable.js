@@ -90,25 +90,32 @@ class EditableDataTable extends Component {
   // Search state for the event target id, set isAvalable value equal to the new switch value
   handleSwitchToggle = (e, _id) => {
     const { checked } = e.target;
-    this.state.data.forEach((n, i) => {
-      if (n._id === _id) {
-        let newState = [...this.state.data];
-        this.props.type === "bevs"
-          ? (newState[i].isAvailable = checked)
-          : (newState[i].isAdmin = checked);
-        this.setState(
-          {
-            data: newState
-          },
-          () => {
-            console.log("State updated");
-            this.props.type === "bevs"
-              ? this.sendUpdateBeverage(n)
-              : this.sendUpdateUser(n);
-          }
-        );
-      }
-    });
+    let verify = true;
+    if (checked === false) {
+      verify = window.confirm(
+        "You're about to revoke admin privileges, are you sure?"
+      );
+    }
+    verify === true &&
+      this.state.data.forEach((n, i) => {
+        if (n._id === _id) {
+          let newState = [...this.state.data];
+          this.props.type === "bevs"
+            ? (newState[i].isAvailable = checked)
+            : (newState[i].isAdmin = checked);
+          this.setState(
+            {
+              data: newState
+            },
+            () => {
+              console.log("State updated");
+              this.props.type === "bevs"
+                ? this.sendUpdateBeverage(n)
+                : this.sendUpdateUser(n);
+            }
+          );
+        }
+      });
   };
 
   // After an api call to change the database fails, rollback the state so it's in sync
