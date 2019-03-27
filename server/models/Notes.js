@@ -2,7 +2,7 @@
 
 // This model describes the way tasting notes are stored and associated with Users and Beverages
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const Note = new Schema({
@@ -13,15 +13,15 @@ const Note = new Schema({
   },
   dateCreated: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'Users'
+    ref: "Users"
   },
   beverages: {
-    type: Schema.Types.ObjectId,
-    ref: 'Beverages'
+    type: String,
+    required: "The name of the mead is required when submitting a note!"
   }
 });
 
