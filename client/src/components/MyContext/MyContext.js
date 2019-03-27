@@ -67,9 +67,7 @@ class Provider extends Component {
                 alert(
                   `Username, email, or password incorrect. Please try again.`
                 );
-                // alert("Incorrect User id or Password. Please try again.");
                 this.setState({ loginAttempt: true });
-                // console.log(this.state);
               });
           },
           handleRegisterSubmit: userData => {
