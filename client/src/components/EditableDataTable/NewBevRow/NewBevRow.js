@@ -11,23 +11,41 @@ import TableCell from "@material-ui/core/TableCell";
 import InputBase from "@material-ui/core/InputBase";
 import Button from "@material-ui/core/Button/Button";
 
+// Material UI theming
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
+const greenTheme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  },
+  palette: {
+    primary: {
+      main: green[300]
+    }
+  }
+});
+
 class NewBevRow extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: "",
+      description: ""
+    };
   }
 
-  handleNameChange = e => {
-    console.log("Changing the name");
-  };
-  handleDescChange = e => {
-    console.log("Changing the desc");
+  fieldChangeHandler = (e, which) => {
+    this.setState({
+      [which]: e.target.value
+    });
   };
   saveHandler = () => {
-    console.log("I'm the save handler!!");
+    console.log(`Going to save new bev! `, this.state);
   };
 
   render() {
+    const { name, description } = this.state;
+
     return (
       <TableRow>
         <TableCell align="left">
@@ -35,8 +53,9 @@ class NewBevRow extends Component {
             <InputBase
               className="editable"
               placeholder="Name"
-              onChange={e => this.handleNameChange(e)}
+              onChange={e => this.fieldChangeHandler(e, "name")}
               margin="dense"
+              value={name}
             />
           </form>
         </TableCell>
@@ -45,19 +64,22 @@ class NewBevRow extends Component {
             <InputBase
               className="editable"
               placeholder="Description"
-              onChange={e => this.handleDescChange(e)}
+              onChange={e => this.fieldChangeHandler(e, "description")}
               margin="dense"
+              value={description}
             />
           </form>
         </TableCell>
         <TableCell align="right">
-          <Button
-            variant="contained"
-            color="primary"
-            saveHandler={this.saveHandler}
-          >
-            Save new
-          </Button>
+          <MuiThemeProvider theme={greenTheme}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.saveHandler}
+            >
+              Save New!
+            </Button>
+          </MuiThemeProvider>
         </TableCell>
       </TableRow>
     );
