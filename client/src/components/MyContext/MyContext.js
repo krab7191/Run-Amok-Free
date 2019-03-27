@@ -63,6 +63,7 @@ class Provider extends Component {
               });
           },
           handleSignInSubmit: userData => {
+            this.notify("Logging in...", 'info', 1500);
             AUTH.login(userData)
               .then(res => {
                 if (res.status === 200) {
@@ -82,7 +83,7 @@ class Provider extends Component {
               });
           },
           handleRegisterSubmit: userData => {
-            this.notify("Signin up...", "info", 1500);
+            this.notify("Signing up...", "info", 1500);
             AUTH.register({
               createdOn: Date.now(),
               ...userData
@@ -112,7 +113,7 @@ class Provider extends Component {
                 });
               })
               .catch(err => {
-                this.notify("Erro logging out", 'error', 2000);
+                this.notify("Error logging out", 'error', 2000);
                 console.log(err);
               });
           }
