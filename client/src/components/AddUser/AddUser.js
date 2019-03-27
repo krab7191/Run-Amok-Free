@@ -43,8 +43,7 @@ class AddUser extends React.Component {
   };
 
   sendToken = email => {
-    const tokenid = nanoid(8);
-    console.log(tokenid);
+    const tokenid = nanoid(8);  
     AUTH.sendToken({ email: email, token: tokenid }).then(value => {
       console.log(value);
       this.setState({ email: "" });

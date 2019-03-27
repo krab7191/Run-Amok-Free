@@ -30,6 +30,13 @@ module.exports = {
   searchUserByLastName: (req, res) => {
 
   },
+  createToken: (req,res,next) => {
+    console.log(req.body);
+    db.Tokens.create(req.body)
+      .then(data => res.json(data))
+      .catch(err => res.status(422).json(err));
+    next();
+  },
   registerUser: (req, res) => {
     console.log(req.body);
     db.Users.create(req.body)

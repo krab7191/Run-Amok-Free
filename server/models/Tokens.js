@@ -11,7 +11,6 @@ const Token = new Schema({
     email: {
         type: String,
         trim: true,
-        unique: true,
         validate: [helpers.email, "Please enter a valid email address."]
     },
     deleteOnRead: {
@@ -20,7 +19,7 @@ const Token = new Schema({
     },
     validUntil: {
         type: Date,
-        default: Date().now + 30*60*1000
+        default: +new Date() + 30*60*1000
     }
 
 });
