@@ -21,6 +21,7 @@ import UsersTableRow from "./Rows/UsersRows";
 
 // Save button for beverage management
 import SaveButton from "../SaveButton";
+import NewBevRow from "./NewBevRow";
 
 import AddUser from "../AddUser/AddUser";
 
@@ -249,6 +250,7 @@ class EditableDataTable extends Component {
                       userId={this.props.userId}
                     />
                   ))}
+              {this.props.type === "bevs" && <NewBevRow saveBeverage={this.saveBeverage} />}
             </TableBody>
           </Table>
           {this.state.data.length === 0 && (
