@@ -15,32 +15,57 @@ class Notes extends Component {
     super(props);
     this.state = {
       allNotes: [],
-      bevNames: [],
-      sort: "",
+      sortNames: [],
+      sortType: "Date Left",
       sortedNotes: [],
       fetched: false
     };
   }
 
-  filterBevNames = () => {
+  filterSortData = () => {
     let arr = [];
     this.state.allNotes.length > 0 &&
       this.state.allNotes.forEach(note => {
-        if (arr.indexOf(note.beverages) === -1) {
-          arr.push(note.beverages);
+        if (this.state.sortType === 'Date Left') {
+          if (arr.indexOf(note.dateCreated) === -1) {
+            arr.push(note.dateCreated);
+          }
+        } 
+        else {
+          if (arr.indexOf(note.beverages) === -1) {
+            arr.push(note.beverages);
+          }
         }
       });
     return arr;
   };
 
-  getBevNames = () => {
-    const bevArr = this.filterBevNames();
-    this.setState({ bevNames: bevArr });
+  getSortNames = () => {
+    const sortArr = this.filterSortData();
+    this.setState({ sortNames: sortArr });
   };
+
+  handleSortType = () => {
+    this.setState({
+      sortType: this.state.sortType === "Date Left" ? "Mead Name" : "Date Left"
+    },
+    () => {
+      this.setState(
+        {
+          sortedNotes: this.state.allNotes
+        },
+        () => this.getSortNames()
+      );
+    });
+  }
 
   handleNotesSort = sel => {
     if (sel !== "All") {
-      let sortArr = this.state.allNotes.filter(note => note.beverages === sel);
+      let sortArr = this.state.allNotes.filter(note => 
+        this.state.sortType === 'Date Left' ? 
+          note.dateCreated === sel :
+          note.beverages === sel
+      );
       this.setState({
         sortedNotes: sortArr
       });
@@ -77,14 +102,16 @@ class Notes extends Component {
 
           this.state.allNotes.length === 0 &&
             this.state.fetched === false &&
-            this.getNoteData(this.getBevNames, _id);
+            this.getNoteData(this.getSortNames, _id);
 
           return (
             <div className="main">
               <h1 style={styles.header}>Notes</h1>
-              {this.state.allNotes.length > 0 && this.state.bevNames && (
+              {this.state.allNotes.length > 0 && this.state.sortNames && (
                 <NoteSort
-                  bevNames={this.state.bevNames}
+                  changeType={this.handleSortType}
+                  sortType={this.state.sortType}
+                  sortData={this.state.sortNames}
                   sort={this.handleNotesSort}
                 />
               )}
