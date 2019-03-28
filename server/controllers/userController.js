@@ -32,8 +32,32 @@ module.exports = {
     next();
   },
   registerUser: (req, res) => {
-    db.Users.create(req.body)
-      .then(data => res.json(data))
+    db.Tokens.findOne(
+      {
+        token: req.body.token
+      })
+      .then((data) => {
+        if(data) {
+          delete req.body.token;
+          db.Users.create(req.body)
+            .then(data => {
+              db.Tokens.deleteOne(
+                {
+                  token: req.body.token
+                }
+              )
+              .then((value) => {
+                console.log(`Deleted ${value._id}`);
+              })
+              .catch(err=> console.log(err));
+              res.json(data);
+            })
+            .catch(err => res.status(422).json(err));
+        }
+        else {
+          res.json('Token not valid!');
+        }
+      })
       .catch(err => res.status(422).json(err));
   },
   logout: (req, res) => {
