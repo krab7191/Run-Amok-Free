@@ -92,7 +92,7 @@ class Notes extends Component {
                 this.state.sortedNotes.map((comment, index) => (
                   <CommentCard
                     key={index}
-                    leftBy={comment.user ? comment.user.firstName : ""}
+                    date={comment.dateCreated}
                     name={comment.beverages}
                     comment={comment.body}
                   />
