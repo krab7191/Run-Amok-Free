@@ -65,7 +65,7 @@ class UserTableRow extends React.Component {
             }}
             checked={isAdmin}
             disabled={this.props.userId === _id}
-            onChange={e => handleSwitchToggle(e, _id)}
+            onChange={e => handleSwitchToggle(e, _id, 'users')}
             _id={_id}
           />
         </TableCell>

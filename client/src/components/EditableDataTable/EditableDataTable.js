@@ -88,10 +88,10 @@ class EditableDataTable extends Component {
   };
 
   // Search state for the event target id, set isAvalable value equal to the new switch value
-  handleSwitchToggle = (e, _id) => {
+  handleSwitchToggle = (e, _id, page) => {
     const { checked } = e.target;
     let verify = true;
-    if (checked === false) {
+    if (checked === false && page === "users") {
       verify = window.confirm(
         "You're about to revoke admin privileges, are you sure?"
       );
