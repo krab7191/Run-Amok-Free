@@ -42,7 +42,7 @@ class AddUser extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, token: null });
   };
 
   handleChange = e => {
@@ -55,10 +55,10 @@ class AddUser extends React.Component {
 
   sendToken = email => {
     const tokenid = nanoid(8);  
-    this.handleClickOpen(tokenid);
     AUTH.sendToken({ email: email, token: tokenid })
       .then(value => {
         console.log(value);
+        this.handleClickOpen(tokenid);
         this.setState({ email: "" });
       })
       .catch(err => {
