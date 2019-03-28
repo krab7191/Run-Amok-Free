@@ -11,37 +11,32 @@ router.route('/users')
 router.route('/send_token')
     .post(userController.createToken, function(req,res) {
         console.log(req.body);
-        console.log(req.wasCreated);
-        if (req.wasCreated) {
-            // Send the message.
-            ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
-                {
-                    token: req.body.token,
-                    email: req.body.email
-                }, 
-                function(err,data) {
-                    var mailOptions = {
-                        name: "Jon",
-                        from: "jrjackso0310@gmail.com",
-                        subject: "Run-Amok Signup Token",
-                        to: req.body.email,
-                        html: data
-                    }
-                    
-                    mailer.sendMail(mailOptions, function (error, response) {
-                    if (error) {
-                        console.log(error);
-                        res.end("error");
-                    } else {
-                        console.log("Message sent: " + response.response);
-                        res.end("sent");
-                    }
-                    });
+        // Send the message.
+        ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
+            {
+                token: req.body.token,
+                email: req.body.email
+            }, 
+            function(err,data) {
+                var mailOptions = {
+                    name: "Jon",
+                    from: "jrjackso0310@gmail.com",
+                    subject: "Run-Amok Signup Token",
+                    to: req.body.email,
+                    html: data
                 }
-            );
-        } else {
-            res.end("Couldnt email token!");
-        }
+                
+                mailer.sendMail(mailOptions, function (error, response) {
+                if (error) {
+                    console.log(error);
+                    res.end("error");
+                } else {
+                    console.log("Message sent: " + response.response);
+                    res.end("sent");
+                }
+                });
+            }
+        );
     });
 
 module.exports = router;

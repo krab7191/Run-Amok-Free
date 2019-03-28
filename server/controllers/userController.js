@@ -23,14 +23,16 @@ module.exports = {
   searchUserByFirstName: (req, res) => {},
   searchUserByLastName: (req, res) => {},
   createToken: (req, res, next) => {
-    req.wasCreated = true;
-    console.log(req.body);
     db.Tokens.create(req.body)
-      .then(data => res.json(data))
-      .catch(err => {
-        res.status(422).json(err);
-        req.wasCreated = false;
-      });
+      .then(data => {
+        res.json(data);
+        next();
+      })
+      .catch(err =>
+        res
+          .status(422)
+          .json({ Error: "Couldnt create a secure token!" })
+      );
     next();
   },
   searchUserByEmail: (req, res) => {},
