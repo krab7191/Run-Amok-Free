@@ -44,7 +44,7 @@ module.exports = {
       })
       .then((data) => {
         if(data) {
-          let token = req.body.token;
+          const token = req.body.token;
           delete req.body.token;
           db.Users.create(req.body)
             .then(data => {
@@ -53,16 +53,15 @@ module.exports = {
             })
             .catch(err => {
               if (err.name === "MongoError" && err.code === 11000) {
-                res
-                  .status(422)
-                  .json({ Error: "A user with that email alreay exists." });
-              } else {
-                res.status(422).json(err);
+                sendErrMsg( res, "A user with that email already exists." );
+              } 
+              else {
+                sendErrMsg( res, 'A problem occurred ask for a new token!' );
               }
             });
         }
         else {
-          res.json('Token not valid!');
+          sendErrMsg( res, 'Token not valid!' );
         }
       })
       .catch(err => res.status(422).json(err));
@@ -93,7 +92,7 @@ module.exports = {
   }
 };
 
-function deleteToken(t) {
+function deleteToken (t) {
   db.Tokens.deleteOne({
     token: t
   })
@@ -101,5 +100,11 @@ function deleteToken(t) {
       console.log(`Deleted ${response._id}`);
     })
     .catch(err => console.log(err));
+}
+
+function sendErrMsg (res,msg) {
+  res
+    .status(422)
+    .json({ Error: msg });
 }
 
