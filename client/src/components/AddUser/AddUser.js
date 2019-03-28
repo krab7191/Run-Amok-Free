@@ -8,6 +8,7 @@ import AUTH from "../../utils/AUTH";
 import Fab from "@material-ui/core/Fab";
 import TextField from "@material-ui/core/TextField";
 import TextSMS from "@material-ui/icons/Textsms";
+import SlideInToken from '../SlideInToken';
 import lightBlue from "@material-ui/core/colors/lightBlue";
 
 import './AddUser.css';
@@ -31,7 +32,17 @@ const styles = theme => ({
 
 class AddUser extends React.Component {
   state = {
-    email: ""
+    email: "",
+    open: false,
+    token: null
+  };
+
+  handleClickOpen = (token) => {
+    this.setState({ open: true, token: token });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false, token: null });
   };
 
   handleChange = e => {
@@ -43,12 +54,16 @@ class AddUser extends React.Component {
   };
 
   sendToken = email => {
-    const tokenid = nanoid(8);
-    console.log(tokenid);
-    AUTH.sendToken({ email: email, token: tokenid }).then(value => {
-      console.log(value);
-      this.setState({ email: "" });
-    });
+    const tokenid = nanoid(8);  
+    AUTH.sendToken({ email: email, token: tokenid })
+      .then(value => {
+        console.log(value);
+        this.handleClickOpen(tokenid);
+        this.setState({ email: "" });
+      })
+      .catch(err => {
+        console.log(err.response.data.Error);
+      });
   };
 
   render() {
@@ -74,6 +89,7 @@ class AddUser extends React.Component {
           <TextSMS className={classes.extendedIcon} />
           Send Token
         </Fab>
+        <SlideInToken close={this.handleClose} open={this.state.open} token={this.state.token} />
       </div>
     );
   }

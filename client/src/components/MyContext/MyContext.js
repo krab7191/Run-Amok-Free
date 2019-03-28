@@ -89,10 +89,14 @@ class Provider extends Component {
               ...userData
             })
               .then(res => {
-                this.notify("Success!");
-                this.setState({
-                  isRegistered: true
-                });
+                if (res.status === 200) {
+                  this.notify("Success!");
+                  this.setState({
+                    isRegistered: true
+                  });
+                } else {
+                  this.notify(res.response.data.error);
+                }
               })
               .catch(err => {
                 if (err.response.data.Error) {

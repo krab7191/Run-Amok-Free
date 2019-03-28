@@ -1,96 +1,49 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>A Simple Responsive HTML Email</title>
-        <style type="text/css">
-            * {
-                box-sizing: border-box;
-            }
-            /* Style the header */
-            header {
-                background-color: #666;
-                padding: 30px;
-                text-align: center;
-                font-size: 35px;
-                color: white;
-            }
+<!DOCTYPE html>
+<html lang="en-us">
 
-            /* Create two columns/boxes that floats next to each other */
-            nav {
-                float: left;
-                width: 30%;
-                height: 300px; /* only for demonstration, should be removed */
-                background: #ccc;
-                padding: 20px;
-            }
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>A Simple Responsive HTML Email</title>
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css/">
+    <style type="text/css">
+        .my-card-content {
+            padding: 16px;
+        }
 
-            /* Style the list inside the menu */
-            nav ul {
-                list-style-type: none;
-                padding: 0;
-            }
+        .my-card {
+            height: 270px;
+            width: 350px;
+        }
 
-            article {
-                float: left;
-                padding: 20px;
-                width: 70%;
-                background-color: #f1f1f1;
-                height: 300px; /* only for demonstration, should be removed */
-            }
+        .my-title {
+            text-align: center
+        }
+    </style>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+</head>
 
-            /* Clear floats after the columns */
-            section:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
+<body>
+    <header>
+        <div style="margin: 0 auto" class="mdc-card demo-card my-card">
+            <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                <div class="mdc-card__media mdc-card__media--16-9 demo-card__media"
+                    style='background-image: url("https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg");'>
+                </div>
+                <div class="demo-card__primary">
+                    <h2 class="demo-card__title mdc-typography mdc-typography--headline6 my-title">
+                        <a href="https://run-amok-free.herokuapp.com/">Run-Amok</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section>
+            <% if (token) { %>
+            <p style="text-align:center"><a href='https://run-amok-free.herokuapp.com/sign-up/<%= token %>/<% if (email) { %><%= email %><% } %>'>
+                    Click Here to Sign Up! </a>
+            </p>
+            <% } %>
+    </section>
+</body>
 
-            /* Style the footer */
-            footer {
-                background-color: #777;
-                padding: 10px;
-                text-align: center;
-                color: white;
-            }
-
-            /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-            @media (max-width: 600px) {
-                nav, article {
-                    width: 100%;
-                    height: auto;
-                }
-                }
-            body {
-                margin: 0; 
-                padding: 0; 
-                min-width: 100% !important;
-            }
-            .content {
-                width: 100%; 
-                max-width: 600px;
-            }  
-        </style>
-    </head>
-    <body yahoo bgcolor="#f6f8f1">
-        <header>
-            <h2>Run-Amok</h2>
-        </header>
-        <section>
-                <nav>
-                    <ul>
-                        <li><a href="http://www.google.com">Home</a></li>
-                    </ul>
-                </nav>
-                <article>   
-                    <% if (token) { %>
-                        <h1>Your Token is <%= token %></h1>
-                    <% } %>
-                    <p><a href="http://www.run-amok.com">Click Here to Sign Up!</a></p>
-                </article>
-        </section>
-        <footer>
-            <p>Footer</p>
-        </footer>                            
-    </body>
 </html>

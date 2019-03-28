@@ -9,11 +9,15 @@ router.route('/users')
     .get(userController.getAllUsers);
 
 router.route('/send_token')
-    .post(function(req,res) {
+    .post(userController.createToken, function(req,res) {
         console.log(req.body);
         // Send the message.
         ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
-            {token: req.body.token}, function(err,data) {
+            {
+                token: req.body.token,
+                email: req.body.email
+            }, 
+            function(err,data) {
                 var mailOptions = {
                     name: "Jon",
                     from: "jrjackso0310@gmail.com",
@@ -31,7 +35,8 @@ router.route('/send_token')
                     res.end("sent");
                 }
                 });
-            })
+            }
+        );
     });
 
 module.exports = router;

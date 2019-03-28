@@ -22,18 +22,49 @@ module.exports = {
   searchUserByEmail: (req, res) => {},
   searchUserByFirstName: (req, res) => {},
   searchUserByLastName: (req, res) => {},
+  createToken: (req, res, next) => {
+    db.Tokens.create(req.body)
+      .then(data => {
+        res.json(data);
+        next();
+      })
+      .catch(err =>
+        res
+          .status(422)
+          .json({ Error: "Couldnt create a secure token!" })
+      );
+  },
+  searchUserByEmail: (req, res) => {},
+  searchUserByFirstName: (req, res) => {},
+  searchUserByLastName: (req, res) => {},
   registerUser: (req, res) => {
-    db.Users.create(req.body)
-      .then(data => res.json(data))
-      .catch(err => {
-        if (err.name === "MongoError" && err.code === 11000) {
-          res
-            .status(422)
-            .json({ Error: "A user with that email alreay exists." });
-        } else {
-          res.status(422).json(err);
+    db.Tokens.findOne(
+      {
+        token: req.body.token
+      })
+      .then((data) => {
+        if(data) {
+          const token = req.body.token;
+          delete req.body.token;
+          db.Users.create(req.body)
+            .then(data => {
+              deleteToken(token);
+              res.json(data);
+            })
+            .catch(err => {
+              if (err.name === "MongoError" && err.code === 11000) {
+                sendErrMsg( res, "A user with that email already exists." );
+              } 
+              else {
+                sendErrMsg( res, 'A problem occurred ask for a new token!' );
+              }
+            });
         }
-      });
+        else {
+          sendErrMsg( res, 'Token not valid!' );
+        }
+      })
+      .catch(err => res.status(422).json(err));
   },
   logout: (req, res) => {
     if (req.user) {
@@ -60,3 +91,20 @@ module.exports = {
     res.json({ user: cleanUser });
   }
 };
+
+function deleteToken (t) {
+  db.Tokens.deleteOne({
+    token: t
+  })
+    .then((response) => {
+      console.log(`Deleted ${response._id}`);
+    })
+    .catch(err => console.log(err));
+}
+
+function sendErrMsg (res,msg) {
+  res
+    .status(422)
+    .json({ Error: msg });
+}
+

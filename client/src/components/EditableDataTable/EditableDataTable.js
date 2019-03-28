@@ -6,6 +6,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import AUTH from "../../utils/AUTH";
+import dateTime from "../../utils/dateTime";
 import "./EditableDataTable.css";
 
 // Import the material UI table comps
@@ -61,15 +62,6 @@ class EditableDataTable extends Component {
         });
       })
       .catch(err => console.log(`Error getting all users: ${err}`));
-  };
-
-  // Convert mongoose datestamp to human friendly date
-  makeDateReadable = jsDate => {
-    const d = new Date(jsDate);
-    const month = d.toLocaleString("en-us", { month: "long" });
-    const day = d.toLocaleString("en-us", { day: "numeric" });
-    const year = d.toLocaleString("en-us", { year: "numeric" });
-    return `${month} ${day}, ${year}`;
   };
 
   // Given the change event of input fields, update state based on ObjectId and column name
@@ -253,7 +245,7 @@ class EditableDataTable extends Component {
                       key={row._id}
                       handleFieldChange={this.handleFieldChange}
                       handleSwitchToggle={this.handleSwitchToggle}
-                      readable={this.makeDateReadable}
+                      readable={dateTime.makeDateReadable}
                       {...row}
                     />
                   ))
@@ -261,7 +253,7 @@ class EditableDataTable extends Component {
                   this.state.data.map(row => (
                     <UsersTableRow
                       key={row._id}
-                      readable={this.makeDateReadable}
+                      readable={dateTime.makeDateReadable}
                       handleSwitchToggle={this.handleSwitchToggle}
                       {...row}
                       userId={this.props.userId}

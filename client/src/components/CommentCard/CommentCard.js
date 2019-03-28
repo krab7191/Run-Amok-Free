@@ -5,6 +5,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
+import Moment from "react-moment";
+
 const styles = {
   card: {
     maxWidth: "90%",
@@ -32,7 +34,7 @@ const styles = {
   }
 };
 
-function CommentCard(props) {
+function CommentCard( props ) {
   const { classes } = props;
 
   return (
@@ -46,7 +48,10 @@ function CommentCard(props) {
           {props.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {props.leftBy}
+          {<Moment
+                date={props.date}
+                format="MMMM Do YYYY"
+          />}
         </Typography>
         <Typography component="p">{props.comment}</Typography>
         <Typography component="p" />
