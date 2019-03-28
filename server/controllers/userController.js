@@ -22,7 +22,7 @@ module.exports = {
   searchUserByEmail: (req, res) => {},
   searchUserByFirstName: (req, res) => {},
   searchUserByLastName: (req, res) => {},
-  createToken: (req,res,next) => {
+  createToken: (req, res, next) => {
     console.log(req.body);
     db.Tokens.create(req.body)
       .then(data => res.json(data))
