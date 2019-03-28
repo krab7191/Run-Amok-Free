@@ -17,14 +17,14 @@ module.exports = {
   },
   getAllUsers: (req, res) => {
     db.Users.find({})
-        .select(["-password","-notes","-updatedOn"])
-        .then(data => res.json(data))
-        .catch(err => res.status(422).json(err))
+      .select(["-password", "-notes", "-updatedOn"])
+      .then(data => res.json(data))
+      .catch(err => res.status(422).json(err));
   },
   searchUserByEmail: (req, res) => {},
   searchUserByFirstName: (req, res) => {},
   searchUserByLastName: (req, res) => {},
-  createToken: (req,res,next) => {
+  createToken: (req, res, next) => {
     console.log(req.body);
     db.Tokens.create(req.body)
       .then(data => res.json(data))
