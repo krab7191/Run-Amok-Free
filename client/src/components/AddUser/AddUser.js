@@ -56,10 +56,14 @@ class AddUser extends React.Component {
   sendToken = email => {
     const tokenid = nanoid(8);  
     this.handleClickOpen(tokenid);
-    AUTH.sendToken({ email: email, token: tokenid }).then(value => {
-      console.log(value);
-      this.setState({ email: "" });
-    });
+    AUTH.sendToken({ email: email, token: tokenid })
+      .then(value => {
+        console.log(value);
+        this.setState({ email: "" });
+      })
+      .catch(err => {
+        console.log(err.response.data.Error);
+      });
   };
 
   render() {

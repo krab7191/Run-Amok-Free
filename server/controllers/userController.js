@@ -33,7 +33,6 @@ module.exports = {
           .status(422)
           .json({ Error: "Couldnt create a secure token!" })
       );
-    next();
   },
   searchUserByEmail: (req, res) => {},
   searchUserByFirstName: (req, res) => {},
