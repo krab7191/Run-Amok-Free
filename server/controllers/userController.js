@@ -39,18 +39,11 @@ module.exports = {
       })
       .then((data) => {
         if(data) {
+          let token = req.body.token;
           delete req.body.token;
           db.Users.create(req.body)
             .then(data => {
-              db.Tokens.deleteOne(
-                {
-                  token: req.body.token
-                }
-              )
-              .then((value) => {
-                console.log(`Deleted ${value._id}`);
-              })
-              .catch(err=> console.log(err));
+              deleteToken(token);
               res.json(data);
             })
             .catch(err => {
@@ -94,3 +87,14 @@ module.exports = {
     res.json({ user: cleanUser });
   }
 };
+
+function deleteToken(t) {
+  db.Tokens.deleteOne({
+    token: t
+  })
+    .then((response) => {
+      console.log(`Deleted ${response._id}`);
+    })
+    .catch(err => console.log(err));
+}
+

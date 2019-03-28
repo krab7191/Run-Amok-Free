@@ -146,7 +146,7 @@ class SignUp extends React.Component {
                         label="Email"
                         margin="normal"
                         name="email"
-                        initialValue={email}
+                        initialvalue={email}
                         required
                       />
                       <Field
@@ -181,7 +181,7 @@ class SignUp extends React.Component {
                             required
                             name="token"
                             label="Token"
-                            initialValue={token}
+                            initialvalue={token}
                             margin="normal"
                           />
                         </Grid>
