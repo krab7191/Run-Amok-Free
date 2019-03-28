@@ -6,14 +6,16 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
+import dateTime from "../../utils/dateTime";
+
 const styles = theme => ({
   filterHeader: {
-    display: 'flex',
+    display: "flex",
     justifyContent: "center",
     flexWrap: "wrap"
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   select: {
     cursor: "pointer"
@@ -22,7 +24,7 @@ const styles = theme => ({
 
 class NativeSelects extends React.Component {
   state = {
-    sortData: "All",
+    sortData: "All"
   };
 
   handleChange = name => event => {
@@ -58,7 +60,8 @@ class NativeSelects extends React.Component {
             <option value={"All"}>All</option>
             {sortData.map((n, i) => (
               <option key={i} value={n}>
-                {n}
+                {sortType === "Date Left" && dateTime.makeDateReadable(n)}
+                {sortType === "Mead Name" && n}
               </option>
             ))}
           </Select>
