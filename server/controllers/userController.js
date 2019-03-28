@@ -23,15 +23,15 @@ module.exports = {
   searchUserByFirstName: (req, res) => {},
   searchUserByLastName: (req, res) => {},
   createToken: (req, res, next) => {
-    let tokenCreated = true;
+    req.wasCreated = true;
     console.log(req.body);
     db.Tokens.create(req.body)
       .then(data => res.json(data))
       .catch(err => {
         res.status(422).json(err);
-        tokenSuccess = false;
+        req.wasCreated = false;
       });
-    next(tokenCreated);
+    next();
   },
   searchUserByEmail: (req, res) => {},
   searchUserByFirstName: (req, res) => {},

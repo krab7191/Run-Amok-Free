@@ -9,10 +9,10 @@ router.route('/users')
     .get(userController.getAllUsers);
 
 router.route('/send_token')
-    .post(userController.createToken, function(req,res,wasCreated) {
+    .post(userController.createToken, function(req,res) {
         console.log(req.body);
-        console.log(wasCreated);
-        if (wasCreated) {
+        console.log(req.wasCreated);
+        if (req.wasCreated) {
             // Send the message.
             ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
                 {
