@@ -9,34 +9,39 @@ router.route('/users')
     .get(userController.getAllUsers);
 
 router.route('/send_token')
-    .post(userController.createToken, function(req,res) {
+    .post(userController.createToken, function(req,res,wasCreated) {
         console.log(req.body);
-        // Send the message.
-        ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
-            {
-                token: req.body.token,
-                email: req.body.email
-            }, 
-            function(err,data) {
-                var mailOptions = {
-                    name: "Jon",
-                    from: "jrjackso0310@gmail.com",
-                    subject: "Run-Amok Signup Token",
-                    to: req.body.email,
-                    html: data
+        console.log(wasCreated);
+        if (wasCreated) {
+            // Send the message.
+            ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
+                {
+                    token: req.body.token,
+                    email: req.body.email
+                }, 
+                function(err,data) {
+                    var mailOptions = {
+                        name: "Jon",
+                        from: "jrjackso0310@gmail.com",
+                        subject: "Run-Amok Signup Token",
+                        to: req.body.email,
+                        html: data
+                    }
+                    
+                    mailer.sendMail(mailOptions, function (error, response) {
+                    if (error) {
+                        console.log(error);
+                        res.end("error");
+                    } else {
+                        console.log("Message sent: " + response.response);
+                        res.end("sent");
+                    }
+                    });
                 }
-                
-                mailer.sendMail(mailOptions, function (error, response) {
-                if (error) {
-                    console.log(error);
-                    res.end("error");
-                } else {
-                    console.log("Message sent: " + response.response);
-                    res.end("sent");
-                }
-                });
-            }
-        )
+            );
+        } else {
+            res.end("Couldnt email token!");
+        }
     });
 
 module.exports = router;
