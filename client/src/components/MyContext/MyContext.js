@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import AUTH from "../../utils/AUTH";
 
+// Toast notification
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
 const MyContext = React.createContext();
 
 class Provider extends Component {
@@ -33,6 +37,11 @@ class Provider extends Component {
     });
   }
 
+  // type one of 'success', 'error', 'info', duration in MS
+  notify = (text, type, duration) => {
+    toast[type || "success"](text, { autoClose: duration || 2500 });
+  };
+
   render() {
     return (
       <MyContext.Provider
@@ -46,16 +55,18 @@ class Provider extends Component {
               user: this.state.user._id
             })
               .then(res => {
-                console.log(`Added! ${res.data.body}`);
+                this.notify("Note added successfully!", "success");
               })
-              .catch(err => console.log(err));
+              .catch(err => {
+                console.log(err);
+                this.notify("Error adding note... Please try again.", "error");
+              });
           },
           handleSignInSubmit: userData => {
+            this.notify("Logging in...", "info", 800);
             AUTH.login(userData)
               .then(res => {
-                // console.log(`Logged in: ${res.data.user.firstName}`);
                 if (res.status === 200) {
-                  // update the state
                   this.setState({
                     isLoggedIn: true,
                     isAdmin: res.data.user.isAdmin,
@@ -64,29 +75,38 @@ class Provider extends Component {
                 }
               })
               .catch(err => {
-                alert(
-                  `Username, email, or password incorrect. Please try again.`
+                this.notify(
+                  `Username, email, or password incorrect. Please try again.`,
+                  "error"
                 );
                 this.setState({ loginAttempt: true });
               });
           },
           handleRegisterSubmit: userData => {
+            this.notify("Signing up...", "info", 1500);
             AUTH.register({
               createdOn: Date.now(),
               ...userData
             })
               .then(res => {
-                console.log(`Added user: ${res.data._id}`);
+                this.notify("Success!");
                 this.setState({
                   isRegistered: true
                 });
               })
-              .catch(err => console.log(err));
+              .catch(err => {
+                if (err.response.data.Error) {
+                  this.notify(err.response.data.Error, "error", 3500);
+                } else {
+                  this.notify("An error ocurred...", "error", 1500);
+                  console.log(err);
+                }
+              });
           },
           handleLogout: () => {
+            this.notify("Logging you out...", "info", 1500);
             AUTH.logout()
               .then(value => {
-                console.log(value);
                 this.setState({
                   isLoggedIn: false,
                   isAdmin: false,
@@ -94,12 +114,14 @@ class Provider extends Component {
                 });
               })
               .catch(err => {
+                this.notify("Error logging out", "error", 2000);
                 console.log(err);
               });
           }
         }}
       >
         {!this.state.isLoading && this.props.children}
+        <ToastContainer />
       </MyContext.Provider>
     );
   }
