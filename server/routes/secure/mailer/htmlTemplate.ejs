@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
     <title>A Simple Responsive HTML Email</title>
     <style type="text/css">
         .my-card-content {
@@ -40,6 +40,12 @@
             background-repeat: no-repeat;
             background-position: 50%;
             background-size: cover;
+            background-image: url("https://www.runamokmead.com/uploads/1/1/8/2/118211037/editor/ra-logo-r4-b-blackbkg.png?1542302515");
+        }
+        .cardMedia:before {
+            margin-top: 56.25%;
+            display: block;
+            content: "";
         }
         .cardContent {
             padding: 1rem;
@@ -55,15 +61,13 @@
             margin: 0;
         }
     </style>
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 </head>
 
 <body>
     <header>
         <div style="margin: 0 auto" class="my-card">
             <div class="cardDiv" tabindex="0">
-                <div class="cardMedia"
-                    style='background-image: url("https://material-components.github.io/material-components-web-catalog/static/media/photos/3x2/2.jpg");'>
+                <div class="cardMedia">
                 </div>
                 <div class="cardContent">
                     <h2 class="my-title">
