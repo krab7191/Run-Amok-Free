@@ -10,7 +10,6 @@ router.route('/users')
 
 router.route('/send_token')
     .post(userController.createToken, function(req,res) {
-        console.log(req.body);
         // Send the message.
         ejs.renderFile(__dirname + '/mailer/htmlTemplate.ejs',
             {
@@ -18,6 +17,7 @@ router.route('/send_token')
                 email: req.body.email
             }, 
             function(err,data) {
+                if (err) {console.log(err)};
                 var mailOptions = {
                     name: "Jon",
                     from: "jrjackso0310@gmail.com",

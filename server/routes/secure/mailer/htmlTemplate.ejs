@@ -1,30 +1,24 @@
-<!DOCTYPE html>
-<html lang="en-us">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Simple Responsive HTML Email</title>
     <style type="text/css">
-        .my-card-content {
-            padding: 16px;
-        }
-        .my-card {
-            height: 270px;
-            width: 350px;
-            margin: 48px 0;
+        .cardDiv {
+            width: 65%;
+            margin: 48px auto;
             border-radius: 4px;
-            background-color: #fff;
-            box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-            display: flex;
-            flex-direction: column;
+            background-color: rgb(248, 246, 246);
+            box-shadow: 0 0 24px 10px rgb(200, 155, 64);
             box-sizing: border-box;
         }
-        .cardDiv {
+        .cardPrimary {
             border-top-left-radius: inherit;
             border-top-right-radius: inherit;
-            will-change: transform,opacity;
-            display: flex;
-            flex-direction: column;
             position: relative;
             outline: none;
             color: inherit;
@@ -33,24 +27,17 @@
             overflow: hidden;
         }
         .cardMedia {
+            height: 200px;
             border-top-left-radius: inherit;
             border-top-right-radius: inherit;
             position: relative;
             box-sizing: border-box;
-            background-repeat: no-repeat;
-            background-position: 50%;
-            background-size: cover;
-            background-image: url("https://www.runamokmead.com/uploads/1/1/8/2/118211037/editor/ra-logo-r4-b-blackbkg.png?1542302515");
         }
-        .cardMedia:before {
-            margin-top: 56.25%;
-            display: block;
-            content: "";
+        .myImg {
+            height: 100%;
+            width: 100%;
         }
-        .cardContent {
-            padding: 1rem;
-        }
-        .my-title {
+        .cardTitle {
             text-align: center;
             font-size: 1.25rem;
             font-weight: 500;
@@ -62,15 +49,15 @@
         }
     </style>
 </head>
-
 <body>
     <header>
-        <div style="margin: 0 auto" class="my-card">
-            <div class="cardDiv" tabindex="0">
-                <div class="cardMedia">
+        <div class="cardDiv" style="width: 65%;margin: 48px auto;border-radius: 4px;background-color: rgb(248, 246, 246);box-shadow: 0 0 24px 10px rgb(200, 155, 64);box-sizing: border-box;">
+            <div class="cardPrimary" style="border-top-left-radius: inherit;border-top-right-radius: inherit;position: relative;outline: none;color: inherit;text-decoration: none;cursor: pointer;overflow: hidden;">   
+                <div class="cardMedia" style="height: 200px;border-top-left-radius: inherit;border-top-right-radius: inherit;position: relative;box-sizing: border-box;">
+                    <img class="myImg" src="http://www.runamokmead.com/uploads/1/1/8/2/118211037/editor/ra-logo-r4-b-blackbkg.png?1542302515" style="height: 100%;width: 100%;">
                 </div>
-                <div class="cardContent">
-                    <h2 class="my-title">
+                <div style="padding: 1rem;">
+                    <h2 class="cardTitle" style="text-align: center;font-size: 1.25rem;font-weight: 500;letter-spacing: .0125em;line-height: 2rem;text-decoration: inherit;text-transform: inherit;margin: 0;">
                         <a href="https://run-amok-free.herokuapp.com/">Run-Amok</a>
                     </h2>
                 </div>
@@ -79,8 +66,10 @@
     </header>
     <section>
             <% if (token) { %>
-            <p style="text-align:center"><a href='https://run-amok-free.herokuapp.com/sign-up/<%= token %>/<% if (email) { %><%= email %><% } %>'>
-                    Click Here to Sign Up! </a>
+            <p style="text-align:center">
+                <a href="https://run-amok-free.herokuapp.com/sign-up/<%= token %>/<% if (email) { %><%= email %><% } %>">
+                    Click Here to Sign Up! 
+                </a>
             </p>
             <% } %>
     </section>
