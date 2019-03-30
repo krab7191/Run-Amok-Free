@@ -4,20 +4,19 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
-    "@material-ui/core": "^3.9.0",
+    "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "final-form": "^4.12.0",
     "immutability-helper": "^3.0.0",
     "moment": "^2.24.0",
     "nanoid": "^2.0.1",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-final-form": "^4.1.0",
     "react-moment": "^0.8.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
-    "react-table": "^6.9.2",
     "react-toastify": "^4.5.2",
     "validator": "^10.11.0"
   },
@@ -36,8 +35,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "devDependencies": {
-    "enzyme": "^3.8.0",
-    "jest": "^23.6.0"
-  }
+  "devDependencies": {}
 }
