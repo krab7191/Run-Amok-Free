@@ -297,12 +297,15 @@ class EditableDataTable extends Component {
         <Paper className="overflow-table">
           <Table>
             {this.props.type === "bevs" ? (
-              <BevTableHeader />
+              <BevTableHeader 
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={this.handleRequestSort}
+              />
             ) : (
               <UsersTableHeader 
                 order={order}
                 orderBy={orderBy}
-                createSortHandler={this.createSortHandler}
                 onRequestSort={this.handleRequestSort}/>
             )}
             <TableBody>
