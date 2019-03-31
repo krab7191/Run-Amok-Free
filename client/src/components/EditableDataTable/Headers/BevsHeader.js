@@ -14,7 +14,7 @@ class BevTableHeader extends React.Component {
             heads: [
                 { id: 'name', numeric: false, disablePadding: true, label: 'Name' }, 
                 { id: 'description', numeric: false, disablePadding: true, label: "Description" }, 
-                { id: 'isAvail', numeric: false, disablePadding: false, label: "Is Available?" },
+                { id: 'isAvailable', numeric: false, disablePadding: false, label: "Is Available?" },
                 { id: 'dateCreated', numeric: false, disablePadding: false, label: "Date Created" },
                 { id: 'dateUpdated', numeric: false, disablePadding: false, label: "Last Updated" }]
         };
