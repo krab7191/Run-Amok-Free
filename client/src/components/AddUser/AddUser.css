@@ -1,3 +1,8 @@
 #mailer-row {
   margin-bottom: 60px;
 }
+
+#mailer-row > div:nth-child(2) {
+  top: 13px;
+  left: 5px;
+}

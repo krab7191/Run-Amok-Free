@@ -10,4 +10,6 @@ router.route('/allBeverages')
 router.route('/bevs/avail')
     .get(getController.getAvailBevs);
 
+router.get("/tokens", getController.getValidTokens);
+
 module.exports = router;

@@ -15,7 +15,7 @@ const Token = new Schema({
   },
   deleteOnRead: {
     type: Boolean,
-    default: false
+    default: true
   },
   validUntil: Date
 });
