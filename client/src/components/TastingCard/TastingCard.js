@@ -40,7 +40,8 @@ const styles = theme => ({
     backgroundColor: "grey"
   },
   content: {
-    padding: "0 10px"
+    padding: "0 10px",
+    height: "60px"
   }
 });
 

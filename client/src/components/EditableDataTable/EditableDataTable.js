@@ -26,6 +26,30 @@ import NewBevRow from "./NewBevRow";
 
 import AddUser from "../AddUser/AddUser";
 
+function desc(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function stableSort(array, cmp) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = cmp(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+}
+
+function getSorting(order, orderBy) {
+  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+}
+
 class EditableDataTable extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +58,10 @@ class EditableDataTable extends Component {
       // Data for a NEW beverage goes here
       newData: {},
       isAvailable: null,
-      isAdmin: null
+      isAdmin: null,
+      order: 'asc',
+      orderBy: 'firstName',
+      // selected: []
     };
   }
 
@@ -63,6 +90,40 @@ class EditableDataTable extends Component {
       })
       .catch(err => console.log(`Error getting all users: ${err}`));
   };
+
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc';
+    }
+
+    this.setState({ order, orderBy },()=>console.log(this.state));
+  };
+
+  // handleClick = (event, id) => {
+  //   const { selected } = this.state;
+  //   const selectedIndex = selected.indexOf(id);
+  //   let newSelected = [];
+
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, id);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1),
+  //     );
+  //   }
+
+  //   this.setState({ selected: newSelected });
+  // };
+
+  // isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   // Given the change event of input fields, update state based on ObjectId and column name
   handleFieldChange = (e, col, _id) => {
@@ -228,6 +289,9 @@ class EditableDataTable extends Component {
   };
 
   render() {
+
+    const { data, order, orderBy } = this.state;
+
     return (
       <>
         <Paper className="overflow-table">
@@ -235,30 +299,46 @@ class EditableDataTable extends Component {
             {this.props.type === "bevs" ? (
               <BevTableHeader />
             ) : (
-              <UsersTableHeader />
+              <UsersTableHeader 
+                order={order}
+                orderBy={orderBy}
+                createSortHandler={this.createSortHandler}
+                onRequestSort={this.handleRequestSort}/>
             )}
             <TableBody>
-              {this.props.type === "bevs"
-                ? this.state.data[0] !== "Loading..." &&
-                  this.state.data.map(row => (
-                    <BevTableRow
-                      key={row._id}
-                      handleFieldChange={this.handleFieldChange}
-                      handleSwitchToggle={this.handleSwitchToggle}
-                      readable={dateTime.makeDateReadable}
-                      {...row}
-                    />
-                  ))
-                : this.state.data[0] !== "Loading..." &&
-                  this.state.data.map(row => (
-                    <UsersTableRow
-                      key={row._id}
-                      readable={dateTime.makeDateReadable}
-                      handleSwitchToggle={this.handleSwitchToggle}
-                      {...row}
-                      userId={this.props.userId}
-                    />
-                  ))}
+              {this.props.type === "bevs" ? 
+                this.state.data[0] !== "Loading..." &&
+                  stableSort(data, getSorting(order, orderBy))
+                    .map(row => {
+                      // const isSelected = this.isSelected(row.id);
+                      return (<BevTableRow
+                        key={row._id}
+                        handleFieldChange={this.handleFieldChange}
+                        handleSwitchToggle={this.handleSwitchToggle}
+                        readable={dateTime.makeDateReadable}
+                        // selected={isSelected}
+                        // onClick={event => this.handleClick(event, row.id)}
+                        {...row}
+                      />
+                      );
+                    })
+                : 
+                this.state.data[0] !== "Loading..." &&
+                  stableSort(data, getSorting(order, orderBy))
+                    .map(row => {
+                      // const isSelected = this.isSelected(row.id);
+                      return (<UsersTableRow
+                        key={row._id}
+                        readable={dateTime.makeDateReadable}
+                        handleSwitchToggle={this.handleSwitchToggle}
+                        {...row}
+                        userId={this.props.userId}
+                        // selected={isSelected}
+                        // onClick={event => this.handleClick(event, row.id)}
+                      />
+                      );
+                    })
+              }
               {this.props.type === "bevs" && (
                 <NewBevRow
                   updateStateWithNewBeverage={this.updateStateWithNewBeverage}
