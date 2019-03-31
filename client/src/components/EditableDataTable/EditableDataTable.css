@@ -6,9 +6,23 @@
   padding: 3px;
   border-radius: 4px;
   background-color: #eee;
+  width: 100%;
 }
 
 .overflow-table {
   overflow-x: auto;
   margin-bottom: 75px;
+}
+
+.tableForm1, .tableForm2 {
+  width: 100%;
+}
+
+@media only screen and (max-width : 1156px) {
+  .tableForm1 {
+    width: 180px;
+  }
+  .tableForm2 {
+    width: 280px;
+  }
 }

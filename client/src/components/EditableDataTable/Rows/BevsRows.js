@@ -22,7 +22,7 @@ class BevTableRow extends React.Component {
     return (
       <TableRow key={_id}>
         <TableCell component="th" scope="row">
-          <form autoComplete="off">
+          <form autoComplete="off" className="tableForm1">
             <InputBase
               className="beverage-name editable"
               value={name}
@@ -32,7 +32,7 @@ class BevTableRow extends React.Component {
           </form>
         </TableCell>
         <TableCell align="left">
-          <form autoComplete="off">
+          <form autoComplete="off" className="tableForm2">
             <InputBase
               className="beverage-description editable"
               value={description}
