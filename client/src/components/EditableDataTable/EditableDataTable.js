@@ -126,6 +126,7 @@ class EditableDataTable extends Component {
   // isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   // Given the change event of input fields, update state based on ObjectId and column name
+  
   handleFieldChange = (e, col, _id) => {
     const { value } = e.target;
     this.state.data.forEach((n, i) => {
