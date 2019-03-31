@@ -10,18 +10,16 @@ import Fab from "@material-ui/core/Fab";
 import TextField from "@material-ui/core/TextField";
 import TextSMS from "@material-ui/icons/Textsms";
 import SlideInToken from "../SlideInToken";
-import lightBlue from "@material-ui/core/colors/lightBlue";
 import Switch from "../Switch";
 import Button from "@material-ui/core/Button";
 
-import { CopyToClipboard } from "react-copy-to-clipboard";
-
 import "./AddUser.css";
+import { green } from "@material-ui/core/colors";
 
 const styles = theme => ({
   fab: {
     margin: theme.spacing.unit * 1.8,
-    background: lightBlue[300]
+    background: green[300]
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
@@ -35,6 +33,10 @@ const styles = theme => ({
   },
   normalCase: {
     textTransform: "none"
+  },
+  hidden: {
+    display: "none"
+    // visibility: "hidden"
   }
 });
 
@@ -45,6 +47,7 @@ class AddUser extends React.Component {
     token: null,
     oneTimeToken: true,
     validTokens: []
+    // clipboardValue: ""
   };
 
   handleClickOpen = token => {
@@ -82,6 +85,7 @@ class AddUser extends React.Component {
         this.setState({ email: "" });
       })
       .catch(err => {
+        this.setState({ email: "" });
         console.log(err.response.data.Error);
       });
   };
@@ -103,8 +107,15 @@ class AddUser extends React.Component {
       });
   };
 
-  copyToClipboard = ({ target: { innerHTML } }) => {
-    alert(`${innerHTML} copied to clipboard`);
+  // Hacky way of getting button value into clipboard
+  copyToClipboard = val => {
+    const clippy = document.createElement("input");
+    document.body.appendChild(clippy);
+    clippy.setAttribute("value", val);
+    clippy.select();
+    document.execCommand("copy");
+    document.body.removeChild(clippy);
+    console.log(`${val} copied to clipboard`);
   };
 
   componentWillMount() {
@@ -144,16 +155,14 @@ class AddUser extends React.Component {
           Valid tokens:{" "}
           {this.state.validTokens.map((token, i) => (
             <span key={i}>
-              <CopyToClipboard text={token}>
-                <Button
-                  className={classes.normalCase}
-                  variant="contained"
-                  color="primary"
-                  onClick={this.copyToClipboard}
-                >
-                  {token}
-                </Button>
-              </CopyToClipboard>
+              <Button
+                className={classes.normalCase}
+                variant="contained"
+                color="primary"
+                onClick={() => this.copyToClipboard(token)}
+              >
+                {token}
+              </Button>
               &nbsp;
             </span>
           ))}
