@@ -124,11 +124,11 @@ class SignIn extends React.Component {
                     </form>
                   )}
                 </Form>
-                <Typography align="center">
+                {/* <Typography align="center">
                   <Link underline="always" href="/forgot-password">
                     Forgot password?
                   </Link>
-                </Typography>
+                </Typography> */}
               </AppForm>
             </React.Fragment>
           );

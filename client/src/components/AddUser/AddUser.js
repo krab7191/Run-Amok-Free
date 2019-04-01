@@ -16,6 +16,13 @@ import Button from "@material-ui/core/Button";
 import "./AddUser.css";
 import { green } from "@material-ui/core/colors";
 
+// Tooltip
+import ReactTooltip from "react-tooltip";
+
+// Toast notifications
+import { toast } from "react-toastify";
+import toastNotifier from "../../utils/toast";
+
 const styles = theme => ({
   fab: {
     margin: theme.spacing.unit * 1.8,
@@ -86,7 +93,12 @@ class AddUser extends React.Component {
       })
       .catch(err => {
         this.setState({ email: "" });
-        console.log(err.response.data.Error);
+        toastNotifier.notify(
+          `Please enter a valid email`,
+          "error",
+          2200,
+          toast
+        );
       });
   };
 
@@ -115,7 +127,8 @@ class AddUser extends React.Component {
     clippy.select();
     document.execCommand("copy");
     document.body.removeChild(clippy);
-    console.log(`${val} copied to clipboard`);
+    // function notify (text, type, duration, toast)
+    toastNotifier.notify(`${val} copied to clipboard.`, "info", 1500, toast);
   };
 
   componentWillMount() {
@@ -151,8 +164,24 @@ class AddUser extends React.Component {
           <TextSMS className={classes.extendedIcon} />
           Send Token
         </Fab>
-        <div>
-          Valid tokens:{" "}
+        <ReactTooltip
+          globalEventOff="click"
+          type="info"
+          id="global-tooltip"
+          aria-haspopup="true"
+        >
+          <p>Click a token to copy it to your clipboard.</p>
+          <p>
+            These tokens are valid for any bearer, and expire 5 days from
+            creation.
+          </p>
+          <p>
+            One time tokens are deleted after someone with the associated email
+            address signs up.
+          </p>
+        </ReactTooltip>
+        <div id="valid-tokens-container" data-tip data-for="global-tooltip">
+          Sign-up Tokens:{" "}
           {this.state.validTokens.map((token, i) => (
             <span key={i}>
               <Button

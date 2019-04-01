@@ -1,4 +1,5 @@
 const db = require("../models");
+const dateTime = require("../general-helpers/dateTime");
 
 // Functions for getting public data
 module.exports = {
@@ -50,11 +51,13 @@ module.exports = {
       deleteOnRead: false
     })
       .then(resp => {
-        console.log(`valid tokens: ${resp}`);
-        res.json(resp);
+        const stillValid = resp.filter(tok => {
+          return dateTime.determineDatePassed(tok.validUntil) === true;
+        });
+        res.json(stillValid);
       })
       .catch(err => {
-        console.log(`Error finding valid tokens`);
+        console.log(`Error finding valid tokens: ${err}`);
         res.status(422).json(err);
       });
   }

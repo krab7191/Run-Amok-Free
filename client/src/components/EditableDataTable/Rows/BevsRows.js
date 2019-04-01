@@ -28,24 +28,20 @@ class BevTableRow extends React.Component {
           <Checkbox onClick={e => handleClick(e,_id)} checked={isSelected} />
         </TableCell>
         <TableCell component="th" scope="row">
-          <form autoComplete="off" className="tableForm1">
-            <InputBase
-              className="beverage-name editable"
-              value={name}
-              onChange={e => handleFieldChange(e, "name", _id)}
-              margin="dense"
-            />
-          </form>
+          <InputBase
+            className="beverage-name editable"
+            value={name}
+            onChange={e => handleFieldChange(e, "name", _id)}
+            margin="dense"
+          />
         </TableCell>
         <TableCell align="left">
-          <form autoComplete="off" className="tableForm2">
-            <InputBase
-              className="beverage-description editable"
-              value={description}
-              onChange={e => handleFieldChange(e, "description", _id)}
-              margin="dense"
-            />
-          </form>
+          <InputBase
+            className="beverage-description editable"
+            value={description}
+            onChange={e => handleFieldChange(e, "description", _id)}
+            margin="dense"
+          />
         </TableCell>
         <TableCell align="center">
           {/* Default MUI switch */}

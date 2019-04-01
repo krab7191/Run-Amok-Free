@@ -19,9 +19,6 @@ module.exports = {
       .then(data => res.json(data))
       .catch(err => res.status(422).json(err));
   },
-  searchUserByEmail: (req, res) => {},
-  searchUserByFirstName: (req, res) => {},
-  searchUserByLastName: (req, res) => {},
   createToken: (req, res, next) => {
     db.Tokens.create(req.body)
       .then(data => {
@@ -32,9 +29,6 @@ module.exports = {
         res.status(422).json({ Error: "Couldnt create a secure token!" })
       );
   },
-  searchUserByEmail: (req, res) => {},
-  searchUserByFirstName: (req, res) => {},
-  searchUserByLastName: (req, res) => {},
   registerUser: (req, res) => {
     db.Tokens.findOne({
       token: req.body.token
@@ -52,6 +46,7 @@ module.exports = {
               res.json(data);
             })
             .catch(err => {
+              f;
               if (err.name === "MongoError" && err.code === 11000) {
                 sendErrMsg(res, "A user with that email already exists.");
               } else {
@@ -62,7 +57,10 @@ module.exports = {
           sendErrMsg(res, "Token not valid!");
         }
       })
-      .catch(err => res.status(422).json(err));
+      .catch(err => {
+        console.log(`Error: ${err}`);
+        res.status(422).json(err);
+      });
   },
   logout: (req, res) => {
     if (req.user) {
