@@ -17,7 +17,6 @@ export default {
     return axios.post("/api/post/beverage", bevObj);
   },
   changeBeverage: bevObj => {
-    console.log(`Sending beverage changes...`);
     return axios.put("/api/put/beverageChanges", bevObj);
   },
   updateUserPermissions: userObj => {

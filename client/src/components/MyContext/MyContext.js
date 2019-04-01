@@ -55,7 +55,7 @@ class Provider extends Component {
               user: this.state.user._id
             })
               .then(res => {
-                this.notify("Note added successfully!", "success");
+                this.notify("Note saved!", "success");
               })
               .catch(err => {
                 console.log(err);

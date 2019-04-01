@@ -152,7 +152,7 @@ class AddUser extends React.Component {
           Send Token
         </Fab>
         <div id="valid-tokens-container">
-          Valid tokens:{" "}
+          Tokens:{" "}
           {this.state.validTokens.map((token, i) => (
             <span key={i}>
               <Button
