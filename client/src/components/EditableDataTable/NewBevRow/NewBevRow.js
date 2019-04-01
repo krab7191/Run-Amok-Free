@@ -102,6 +102,7 @@ class NewBevRow extends Component {
 
     return (
       <TableRow>
+        <TableCell padding="checkbox"></TableCell>
         <TableCell
           align="center"
           className={classNames(classes.name, classes.textField)}

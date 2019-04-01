@@ -1,8 +1,11 @@
 html,body {
     margin: 0;
     padding: 0;
-    background: aliceblue;
-    height: 100%
+    background-color: aliceblue;
+    height: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 section {
     min-height: calc(100vh - 70px);
