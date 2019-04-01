@@ -54,7 +54,8 @@ class UserTableRow extends React.Component {
           </Button>
         </TableCell>
         <TableCell align="center">
-          <Button className={classes.button}>{username}</Button>
+          {/* <Button className={classes.button}></Button> */}
+          {username}
         </TableCell>
         <TableCell align="center">
           <Switch
