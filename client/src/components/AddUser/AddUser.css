@@ -27,3 +27,6 @@
   display: block;
 }
 
+#one-time-token > div {
+  margin-left: 8px;
+}
