@@ -151,7 +151,7 @@ class AddUser extends React.Component {
           <TextSMS className={classes.extendedIcon} />
           Send Token
         </Fab>
-        <div>
+        <div id="valid-tokens-container">
           Valid tokens:{" "}
           {this.state.validTokens.map((token, i) => (
             <span key={i}>
