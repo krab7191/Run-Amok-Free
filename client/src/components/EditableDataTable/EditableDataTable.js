@@ -410,9 +410,9 @@ class EditableDataTable extends Component {
             <p className="text-center">No beverages! Try creating some.</p>
           )}
         </Paper>
-        {this.props.type === "users" ? <AddUser /> : null}
+        {this.props.type === "users" ? <Paper><AddUser /></Paper> : null}
         {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
-          <SaveButton saveHandler={this.saveHandler} />
+            <SaveButton saveHandler={this.saveHandler} />
         )}
       </>
     );

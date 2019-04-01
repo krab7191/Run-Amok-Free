@@ -32,8 +32,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    margin: theme.spacing.unit * 1.8,
   },
   dense: {
     marginTop: 16
@@ -149,17 +148,19 @@ class AddUser extends React.Component {
           value={this.state.email}
           onChange={this.handleChange}
         />
-        One time token? &nbsp;&nbsp;
-        <Switch
-          className="token-switch"
-          isAvailable={this.state.oneTimeToken}
-          handleToggle={this.oneTimeToken}
-        />
+        <div id="one-time-token" className={classNames(classes.textField,classes.dense)}>
+          <p>One time token? &nbsp;&nbsp;</p>
+          <Switch
+            className="token-switch"
+            isAvailable={this.state.oneTimeToken}
+            handleToggle={this.oneTimeToken}
+          />
+        </div>
         <Fab
           onClick={() => this.sendToken(this.state.email)}
           variant="extended"
           aria-label="Token"
-          className={classes.fab}
+          className={classNames(classes.fab,classes.dense)}
         >
           <TextSMS className={classes.extendedIcon} />
           Send Token
@@ -180,8 +181,13 @@ class AddUser extends React.Component {
             address signs up.
           </p>
         </ReactTooltip>
-        <div id="valid-tokens-container" data-tip data-for="global-tooltip">
-          Sign-up Tokens:{" "}
+        <div 
+          id="valid-tokens-container" 
+          className={classNames(classes.textField,classes.dense)} 
+          data-tip 
+          data-for="global-tooltip"
+        >
+          <p className={classes.textField}>Sign-up Tokens:{" "}</p>
           {this.state.validTokens.map((token, i) => (
             <span key={i}>
               <Button

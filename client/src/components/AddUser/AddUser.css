@@ -1,12 +1,29 @@
 #mailer-row {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 #mailer-row > div:nth-child(2) {
   top: 13px;
   left: 5px;
 }
-
+#one-time-token {
+  display: flex;
+}
+#one-time-token p {
+  display: block;
+  width: max-content;
+}
 #valid-tokens-container {
   margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+#valid-tokens-container p {
+  display: block;
+}
+
