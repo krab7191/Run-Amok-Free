@@ -26,6 +26,10 @@ import NewBevRow from "./NewBevRow";
 
 import AddUser from "../AddUser/AddUser";
 
+// Toast notifications
+import { toast } from "react-toastify";
+import toastNotifier from "../../utils/toast";
+
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -47,7 +51,9 @@ function stableSort(array, cmp) {
 }
 
 function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+  return order === "desc"
+    ? (a, b) => desc(a, b, orderBy)
+    : (a, b) => -desc(a, b, orderBy);
 }
 
 class EditableDataTable extends Component {
@@ -93,13 +99,13 @@ class EditableDataTable extends Component {
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
-    let order = 'desc';
+    let order = "desc";
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
+    if (this.state.orderBy === property && this.state.order === "desc") {
+      order = "asc";
     }
 
-    this.setState({ order, orderBy },()=>console.log(this.state));
+    this.setState({ order, orderBy }, () => console.log(this.state));
   };
 
   handleClick = (event, id) => {
@@ -131,7 +137,7 @@ class EditableDataTable extends Component {
   isSelected = id => this.state.selected === id;
 
   // Given the change event of input fields, update state based on ObjectId and column name
-  
+
   handleFieldChange = (e, col, _id) => {
     const { value } = e.target;
     this.state.data.forEach((n, i) => {
@@ -293,12 +299,27 @@ class EditableDataTable extends Component {
       if (bev.edited) {
         API.changeBeverage(bev)
           .then(res => {
+            // function notify (text, type, duration, toast)
+            toastNotifier.notify(
+              `${bev.name} updated!`,
+              "success",
+              1500,
+              toast
+            );
             this.updateStateWithModifiedBeverage(
               res.data._id,
               res.data.dateUpdated
             );
           })
-          .catch(err => console.log(`Error changing bev: ${err}`));
+          .catch(err => {
+            toastNotifier.notify(
+              `Failed to update ${bev.name}`,
+              "error",
+              2000,
+              toast
+            );
+            console.log(`Error changing bev: ${err}`);
+          });
       }
     });
   };
@@ -326,7 +347,6 @@ class EditableDataTable extends Component {
   };
 
   render() {
-
     const { data, order, orderBy } = this.state;
 
     return (
@@ -342,10 +362,11 @@ class EditableDataTable extends Component {
                 onRequestSort={this.handleRequestSort}
               />
             ) : (
-              <UsersTableHeader 
+              <UsersTableHeader
                 order={order}
                 orderBy={orderBy}
-                onRequestSort={this.handleRequestSort}/>
+                onRequestSort={this.handleRequestSort}
+              />
             )}
             <TableBody>
               {this.props.type === "bevs" ? 
@@ -360,18 +381,15 @@ class EditableDataTable extends Component {
                         handleSwitchToggle={this.handleSwitchToggle}
                         isSelected={isSelected}
                         readable={dateTime.makeDateReadable}
-                        // selected={isSelected}
-                        // onClick={event => this.handleClick(event, row.id)}
                         {...row}
                       />
-                      );
-                    })
-                : 
-                this.state.data[0] !== "Loading..." &&
-                  stableSort(data, getSorting(order, orderBy))
-                    .map(row => {
-                      // const isSelected = this.isSelected(row.id);
-                      return (<UsersTableRow
+                    );
+                  })
+                : this.state.data[0] !== "Loading..." &&
+                  stableSort(data, getSorting(order, orderBy)).map(row => {
+                    // const isSelected = this.isSelected(row.id);
+                    return (
+                      <UsersTableRow
                         key={row._id}
                         readable={dateTime.makeDateReadable}
                         handleSwitchToggle={this.handleSwitchToggle}
@@ -380,9 +398,8 @@ class EditableDataTable extends Component {
                         // selected={isSelected}
                         // onClick={event => this.handleClick(event, row.id)}
                       />
-                      );
-                    })
-              }
+                    );
+                  })}
               {this.props.type === "bevs" && (
                 <NewBevRow
                   updateStateWithNewBeverage={this.updateStateWithNewBeverage}

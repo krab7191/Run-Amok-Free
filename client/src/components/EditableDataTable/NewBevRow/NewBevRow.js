@@ -13,6 +13,10 @@ import Button from "@material-ui/core/Button/Button";
 
 import Icon from "@material-ui/core/Icon";
 
+// Toast notifications
+import { toast } from "react-toastify";
+import toastNotifier from "../../../utils/toast";
+
 // Material UI theming
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -68,21 +72,44 @@ class NewBevRow extends Component {
   saveHandler = () => {
     const { name, description } = this.state;
     if (name.trim().length === 0 || description.trim().length === 0) {
-      alert("Fill out the name and the description!");
+      // function notify (text, type, duration, toast)
+      toastNotifier.notify(
+        `Please enter a name and a description`,
+        "info",
+        2500,
+        toast
+      );
       return;
     } else {
-      alert("Saving...");
+      // function notify (text, type, duration, toast)
+      toastNotifier.notify(
+        `Saving ${name}`,
+        "info",
+        800,
+        toast
+      );
       API.saveNewBeverage(this.state).then(resp => {
         if (resp.status === 200 && resp.statusText === "OK") {
-          alert("Created successfully!");
-          console.log(`Fire beverage save modal.`);
+          // function notify (text, type, duration, toast)
+          toastNotifier.notify(
+            `${name} saved!`,
+            "success",
+            1200,
+            toast
+          );
           this.setState({
             name: "",
             description: ""
           });
           this.props.updateStateWithNewBeverage(resp.data);
         } else {
-          alert("Error encountered, please try again.");
+          // function notify (text, type, duration, toast)
+          toastNotifier.notify(
+            `Error encountered, please try again`,
+            "error",
+            2000,
+            toast
+          );
           console.log(
             `Save beverage returned non-error status code: please debug`
           );
