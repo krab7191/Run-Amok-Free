@@ -149,9 +149,8 @@ class AddUser extends React.Component {
           onChange={this.handleChange}
         />
         <div id="one-time-token" className={classNames(classes.textField,classes.dense)}>
-          <p>One time token? &nbsp;&nbsp;</p>
+          <p>One time token?</p>
           <Switch
-            className="token-switch"
             isAvailable={this.state.oneTimeToken}
             handleToggle={this.oneTimeToken}
           />
