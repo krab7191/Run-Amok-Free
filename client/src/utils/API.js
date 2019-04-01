@@ -26,5 +26,8 @@ export default {
   },
   checkUsername: username => {
     return axios.post("/api/post/unameCheck", { username });
+  },
+  getValidTokens: () => {
+    return axios.get("/api/get/tokens");
   }
 };

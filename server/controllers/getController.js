@@ -8,7 +8,7 @@ module.exports = {
       .then(resp => {
         db.Notes.find({})
           .select(["body", "beverages", "user", "dateCreated"])
-          .populate("user","notes")
+          .populate("user", "notes")
           .then(data => {
             if (resp.isAdmin) {
               res.json(data);
@@ -44,6 +44,18 @@ module.exports = {
       .populate("notes", ["body", "beverages"])
       .then(data => res.json(data))
       .catch(err => res.status(422).json(err));
+  },
+  getValidTokens: function(req, res) {
+    db.Tokens.find({
+      deleteOnRead: false
+    })
+      .then(resp => {
+        console.log(`valid tokens: ${resp}`);
+        res.json(resp);
+      })
+      .catch(err => {
+        console.log(`Error finding valid tokens`);
+        res.status(422).json(err);
+      });
   }
 };
-
