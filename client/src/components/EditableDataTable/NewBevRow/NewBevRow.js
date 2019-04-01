@@ -135,7 +135,7 @@ class NewBevRow extends Component {
           className={classNames(classes.name, classes.textField)}
         >
           <InputBase
-            className={classNames("editable", classes.form)}
+            className={classNames("editable", "beverage-name", classes.form)}
             placeholder="Name"
             onChange={e => this.fieldChangeHandler(e, "name")}
             margin="dense"
@@ -148,7 +148,7 @@ class NewBevRow extends Component {
           className={classNames(classes.textField, classes.description)}
         >
           <InputBase
-            className={classNames("editable", classes.form)}
+            className={classNames("editable", "beverage-description", classes.form)}
             placeholder="Description"
             onChange={e => this.fieldChangeHandler(e, "description")}
             margin="dense"

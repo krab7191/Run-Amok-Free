@@ -1,4 +1,4 @@
-.beverage-description {
+.beverage-description, .beverage-name {
   width: 100%;
 }
 
@@ -14,15 +14,11 @@
   margin-bottom: 75px;
 }
 
-.tableForm1, .tableForm2 {
-  width: 100%;
-}
-
 @media only screen and (max-width : 1156px) {
-  .tableForm1 {
-    width: 180px;
+  .beverage-name {
+    width: 150px !important;
   }
-  .tableForm2 {
-    width: 280px;
+  .beverage-description {
+    width: 280px !important;
   }
 }
