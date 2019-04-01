@@ -19,8 +19,9 @@ router.route('/send_token')
             function(err,data) {
                 if (err) {console.log(err)};
                 var mailOptions = {
-                    name: "Jon",
-                    from: "jrjackso0310@gmail.com",
+                    name: "Run Amok Meadery",
+                    from: "Ravenseyesolutions@gmail.com",
+                    // cc: "runamokmead@gmail.com",
                     subject: "Run-Amok Signup Token",
                     to: req.body.email,
                     html: data

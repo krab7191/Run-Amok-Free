@@ -19,6 +19,10 @@ export default {
   changeBeverage: bevObj => {
     return axios.put("/api/put/beverageChanges", bevObj);
   },
+  deleteBeverage: (bevId) => {
+    console.log(`Deleting beverage...`);
+    return axios.delete("/api/delete/beverage/"+ bevId);
+  },
   updateUserPermissions: userObj => {
     console.log("Sending user permissions changes");
     return axios.put("/api/put/user", userObj);

@@ -65,9 +65,9 @@ class EditableDataTable extends Component {
       newData: {},
       isAvailable: null,
       isAdmin: null,
-      order: "asc",
-      orderBy: "firstName"
-      // selected: []
+      order: 'asc',
+      orderBy: 'firstName',
+      selected: null
     };
   }
 
@@ -108,12 +108,12 @@ class EditableDataTable extends Component {
     this.setState({ order, orderBy }, () => console.log(this.state));
   };
 
-  // handleClick = (event, id) => {
-  //   const { selected } = this.state;
-  //   const selectedIndex = selected.indexOf(id);
-  //   let newSelected = [];
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    // const selectedIndex = selected.indexOf(id);
+    // let newSelected = [];
 
-  //   if (selectedIndex === -1) {
+    // if (selectedIndex === -1) {
   //     newSelected = newSelected.concat(selected, id);
   //   } else if (selectedIndex === 0) {
   //     newSelected = newSelected.concat(selected.slice(1));
@@ -125,11 +125,15 @@ class EditableDataTable extends Component {
   //       selected.slice(selectedIndex + 1),
   //     );
   //   }
+    if (selected === id) {
+      this.setState({ selected: null });
+    } 
+    else {
+      this.setState({ selected: id });
+    }
+  };
 
-  //   this.setState({ selected: newSelected });
-  // };
-
-  // isSelected = id => this.state.selected.indexOf(id) !== -1;
+  isSelected = id => this.state.selected === id;
 
   // Given the change event of input fields, update state based on ObjectId and column name
 
@@ -193,6 +197,37 @@ class EditableDataTable extends Component {
   //   });
   // };
 
+
+  deleteBeverage = bevId => {
+    API.deleteBeverage(bevId)
+    .then((resp) => {
+      if (resp.status === 200 && resp.statusText === "OK") {
+        console.log(`All good. Deleted ${resp.data} beverage!`);
+        this.getAllBeverages();
+      }
+      else {
+        console.log(
+          `Delete beverage returned non-error status code: please debug`
+        );
+        if (resp.status === 500) {
+          // Error: Request failed with status code 500
+          console.log(`500 error`);
+        }
+        console.log(resp.status, resp.statusText);
+      }
+    })
+    .catch(err => {
+      console.log(`Error updating beverage: ${err}`);
+      if (err.Error === "Network Error") {
+        console.log(
+          `Internet disconnected, undo state changes and fire modal to let user know`
+        );
+        // this.rollbackStateAfterAPIFail(bevObj);
+      } else {
+        console.log(`Non network-related error. Please debug: ${err}`);
+      }
+    });
+  }
   // Handle updating database when a beverage is changed
   sendUpdateBeverage = bevObj => {
     API.changeBeverage(bevObj)
@@ -318,7 +353,9 @@ class EditableDataTable extends Component {
         <Paper className="overflow-table">
           <Table>
             {this.props.type === "bevs" ? (
-              <BevTableHeader
+              <BevTableHeader 
+                deleteBev={this.deleteBeverage}
+                isSelected={this.state.selected}
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={this.handleRequestSort}
@@ -331,18 +368,18 @@ class EditableDataTable extends Component {
               />
             )}
             <TableBody>
-              {this.props.type === "bevs"
-                ? this.state.data[0] !== "Loading..." &&
-                  stableSort(data, getSorting(order, orderBy)).map(row => {
-                    // const isSelected = this.isSelected(row.id);
-                    return (
-                      <BevTableRow
+              {this.props.type === "bevs" ? 
+                this.state.data[0] !== "Loading..." &&
+                  stableSort(data, getSorting(order, orderBy))
+                    .map(row => {
+                      const isSelected = this.isSelected(row._id);
+                      return (<BevTableRow
                         key={row._id}
+                        handleClick={this.handleClick}
                         handleFieldChange={this.handleFieldChange}
                         handleSwitchToggle={this.handleSwitchToggle}
+                        isSelected={isSelected}
                         readable={dateTime.makeDateReadable}
-                        // selected={isSelected}
-                        // onClick={event => this.handleClick(event, row.id)}
                         {...row}
                       />
                     );
@@ -373,9 +410,9 @@ class EditableDataTable extends Component {
             <p className="text-center">No beverages! Try creating some.</p>
           )}
         </Paper>
-        {this.props.type === "users" ? <AddUser /> : null}
+        {this.props.type === "users" ? <Paper><AddUser /></Paper> : null}
         {this.props.type === "bevs" && this.state.data[0] !== "Loading..." && (
-          <SaveButton saveHandler={this.saveHandler} />
+            <SaveButton saveHandler={this.saveHandler} />
         )}
       </>
     );

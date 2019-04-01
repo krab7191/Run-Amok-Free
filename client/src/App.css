@@ -1,12 +1,16 @@
 html,body {
     margin: 0;
     padding: 0;
-    background: aliceblue;
-    height: 100%
+    background-color: aliceblue;
+    height: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-section {
+.section {
     min-height: calc(100vh - 70px);
     position:relative;
+    margin-bottom: 90px;
 }
 .main {
     margin-bottom: 90px;
