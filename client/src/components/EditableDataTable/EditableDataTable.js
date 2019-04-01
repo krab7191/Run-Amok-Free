@@ -110,10 +110,10 @@ class EditableDataTable extends Component {
 
   handleClick = (event, id) => {
     const { selected } = this.state;
-    // const selectedIndex = selected.indexOf(id);
-    // let newSelected = [];
+  // const selectedIndex = selected.indexOf(id);
+  // let newSelected = [];
 
-    // if (selectedIndex === -1) {
+  // if (selectedIndex === -1) {
   //     newSelected = newSelected.concat(selected, id);
   //   } else if (selectedIndex === 0) {
   //     newSelected = newSelected.concat(selected.slice(1));
