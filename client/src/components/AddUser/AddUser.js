@@ -93,7 +93,12 @@ class AddUser extends React.Component {
       })
       .catch(err => {
         this.setState({ email: "" });
-        toastNotifier.notify(`Please enter a valid email`, "error", 2200, toast);
+        toastNotifier.notify(
+          `Please enter a valid email`,
+          "error",
+          2200,
+          toast
+        );
       });
   };
 
@@ -169,6 +174,10 @@ class AddUser extends React.Component {
           <p>
             These tokens are valid for any bearer, and expire 5 days from
             creation.
+          </p>
+          <p>
+            One time tokens are deleted after someone with the associated email
+            address signs up.
           </p>
         </ReactTooltip>
         <div id="valid-tokens-container" data-tip data-for="global-tooltip">
