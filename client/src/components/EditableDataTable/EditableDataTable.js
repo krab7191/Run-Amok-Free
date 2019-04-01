@@ -103,7 +103,6 @@ class EditableDataTable extends Component {
   };
 
   handleClick = (event, id) => {
-    console.log(id);
     const { selected } = this.state;
     // const selectedIndex = selected.indexOf(id);
     // let newSelected = [];
@@ -360,8 +359,6 @@ class EditableDataTable extends Component {
                         handleSwitchToggle={this.handleSwitchToggle}
                         isSelected={isSelected}
                         readable={dateTime.makeDateReadable}
-                        // selected={isSelected}
-                        // onClick={event => this.handleClick(event, row.id)}
                         {...row}
                       />
                       );
