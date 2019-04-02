@@ -71,8 +71,9 @@ class GrowTextInput extends React.Component {
           const myTextBox = (
             <Paper elevation={4} className={classes.paper}>
               <TextField
+                autoFocus
                 id="outlined-multiline-static"
-                label="Notes"
+                label="Note"
                 multiline
                 rows="8"
                 style={{ width: "85%" }}

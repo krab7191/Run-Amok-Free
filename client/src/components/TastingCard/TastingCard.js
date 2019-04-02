@@ -42,13 +42,16 @@ const styles = theme => ({
   content: {
     padding: "0 10px",
     height: "60px"
+  },
+  label: {
+    fontSize: '0.9rem'
   }
 });
 
 class TastingCard extends React.Component {
   state = {
     expanded: false,
-    inputOpen: true
+    inputOpen: false
   };
 
   handleExpandClick = () => {
@@ -88,12 +91,12 @@ class TastingCard extends React.Component {
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             {!this.state.inputOpen ? (
-              <IconButton onClick={this.handleOpenNote} aria-label="Add A Note">
-                <ExpandLessIcon />{" "}
+              <IconButton className={classes.label} onClick={this.handleOpenNote} aria-label="Add A Note">
+                Leave Note <ExpandMoreIcon />{" "}
               </IconButton>
             ) : (
               <IconButton onClick={this.handleOpenNote} aria-label="Add A Note">
-                <ExpandMoreIcon />{" "}
+                <ExpandLessIcon />{" "}
               </IconButton>
             )}
             <IconButton
