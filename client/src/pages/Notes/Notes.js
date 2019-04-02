@@ -106,7 +106,7 @@ class Notes extends Component {
 
           return (
             <div className="main">
-              <h1 style={styles.header}>Notes</h1>
+              <h1 style={styles.header}>Tasting Notes</h1>
               {this.state.allNotes.length > 0 && this.state.sortNames && (
                 <NoteSort
                   changeType={this.handleSortType}
