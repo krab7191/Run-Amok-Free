@@ -45,7 +45,7 @@ class NativeSelects extends React.Component {
             onChange={changeType}
             input={<FilledInput name="sortType" id="filled-sortType" />}
           >
-            <option value={"Date Left"}>Date Left</option>
+            <option value={"Date Left"}>Tasting Date</option>
             <option value={"Mead Name"}>Mead Name</option>
           </Select>
         </FormControl>

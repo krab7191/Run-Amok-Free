@@ -3,11 +3,17 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Divider from '@material-ui/core/Divider';
 import Typography from "@material-ui/core/Typography";
 
 import Moment from "react-moment";
 
 const styles = {
+  root: {
+    width: '100%',
+    margin: '5px 5px 5px 0',
+    backgroundColor: 'darkgrey',
+  },
   card: {
     maxWidth: "90%",
     margin: "15px auto"
@@ -23,7 +29,6 @@ const styles = {
   },
   pos: {
     marginBottom: 12,
-    position: "absolute",
     top: "15px",
     right: "30px",
     fontSize: 14,
@@ -47,6 +52,7 @@ function CommentCard( props ) {
         >
           {props.name}
         </Typography>
+        <Divider className={classes.root} />
         <Typography className={classes.pos} color="textSecondary">
           {<Moment
                 date={props.date}
