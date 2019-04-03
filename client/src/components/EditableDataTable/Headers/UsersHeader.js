@@ -5,6 +5,24 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Tooltip from '@material-ui/core/Tooltip';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import { withStyles } from "@material-ui/core";
+
+const CustomTableCell = withStyles( (theme) => ({
+  head: {
+    backgroundColor: theme.palette.grey[400],
+    color: theme.palette.common.black,
+    '&::hover':{
+      color: 'black'
+    }
+  },
+}))(TableCell)
+
+const CustomTableSortLabel = withStyles( (theme) => ({
+  root: {
+    marginLeft: '25px',
+    fontSize: '1.1rem',
+  },
+}))(TableSortLabel)
 
 class UserTableHeader extends React.Component {
   constructor(props) {
@@ -32,37 +50,37 @@ class UserTableHeader extends React.Component {
         <TableRow>
           {this.state.heads.map((h, i) => {
             return i === this.state.heads.length - 1 ? (
-              <TableCell key={h.id} align="right" sortDirection={orderBy === h.id ? order : false}>
+              <CustomTableCell key={h.id} align="right" sortDirection={orderBy === h.id ? order : false}>
                 <Tooltip
                     title="Sort"
                     placement={h.numeric ? 'bottom-end' : 'bottom-start'}
                     enterDelay={300}
                   >
-                  <TableSortLabel
+                  <CustomTableSortLabel
                       active={orderBy === h.id}
                       direction={order}
                       onClick={this.createSortHandler(h.id)}
                   >
                     {h.label}
-                  </TableSortLabel>
+                  </CustomTableSortLabel>
                 </Tooltip>
-              </TableCell>
+              </CustomTableCell>
             ) : (
-              <TableCell key={h.id} align="center">
+              <CustomTableCell key={h.id} align="center">
                 <Tooltip
                     title="Sort"
                     placement={h.numeric ? 'bottom-end' : 'bottom-start'}
                     enterDelay={300}
                   >
-                  <TableSortLabel
+                  <CustomTableSortLabel
                       active={orderBy === h.id}
                       direction={order}
                       onClick={this.createSortHandler(h.id)}
                   >
                     {h.label}
-                  </TableSortLabel>
+                  </CustomTableSortLabel>
                 </Tooltip>
-              </TableCell>
+              </CustomTableCell>
             );
           })}
         </TableRow>
