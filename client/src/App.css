@@ -1,11 +1,13 @@
 html,body {
     margin: 0;
     padding: 0;
+    margin-bottom: 50px;
     background-color: aliceblue;
     height: 100%;
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
+    background-image: url("/wine-corks-collection-website-header.jpg");
 }
 .section {
     min-height: calc(100vh - 70px);
