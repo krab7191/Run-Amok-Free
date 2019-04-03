@@ -93,16 +93,21 @@ class Notes extends Component {
       .catch(err => console.log(err));
   };
 
+  noteHandler = (id) => {
+    this.getNoteData(this.getSortNames, id);
+  }
+
   render() {
     return (
       <MyContext.Consumer>
         {context => {
           const sortedNotes = this.state.sortedNotes;
           const { _id } = context.myState.user;
+          // const { deleteNote } = context;
 
           this.state.allNotes.length === 0 &&
             this.state.fetched === false &&
-            this.getNoteData(this.getSortNames, _id);
+            this.noteHandler(_id);
 
           return (
             <div className="main">
@@ -119,9 +124,8 @@ class Notes extends Component {
                 this.state.sortedNotes.map((comment, index) => (
                   <CommentCard
                     key={index}
-                    date={comment.dateCreated}
-                    name={comment.beverages}
-                    comment={comment.body}
+                    noteHandler={this.noteHandler}
+                    {...comment}
                   />
                 ))}
               {sortedNotes.length === 0 && (

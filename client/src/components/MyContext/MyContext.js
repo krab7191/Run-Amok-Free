@@ -47,6 +47,17 @@ class Provider extends Component {
       <MyContext.Provider
         value={{
           myState: this.state,
+          deleteNote: (e, id, cb) => {
+            e.preventDefault();
+            API.deleteNote(id)
+              .then(res => {
+                this.notify(`Deleted ${res.data} note!`);
+              })
+              .catch(err => {
+                console.log(err);
+                this.notify("Error deleting note... Please try again.", "error");
+              });
+          },
           postNote: (e, beverageName, noteData) => {
             e.preventDefault();
             API.addNoteData({

@@ -8,7 +8,6 @@ module.exports = {
     db.Users.findOne({ _id })
       .then(resp => {
         db.Notes.find({})
-          .select(["body", "beverages", "user", "dateCreated"])
           .populate("user", "notes")
           .then(data => {
             if (resp.isAdmin) {
