@@ -52,6 +52,7 @@ class Provider extends Component {
             API.deleteNote(id)
               .then(res => {
                 this.notify(`Deleted ${res.data} note!`);
+                cb();
               })
               .catch(err => {
                 console.log(err);

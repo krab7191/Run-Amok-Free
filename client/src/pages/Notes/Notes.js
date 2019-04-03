@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { MyContext } from "../../components/MyContext/MyContext";
 import CommentCard from "../../components/CommentCard";
 import NoteSort from "../../components/NoteSort";
+import dateTime from "../../utils/dateTime";
 
 import API from "../../utils/API";
 
@@ -18,7 +19,8 @@ class Notes extends Component {
       sortNames: [],
       sortType: "Date Left",
       sortedNotes: [],
-      fetched: false
+      fetched: false,
+      sortNameSel: 'All',
     };
   }
 
@@ -27,8 +29,8 @@ class Notes extends Component {
     this.state.allNotes.length > 0 &&
       this.state.allNotes.forEach(note => {
         if (this.state.sortType === 'Date Left') {
-          if (arr.indexOf(note.dateCreated) === -1) {
-            arr.push(note.dateCreated);
+          if (arr.indexOf(dateTime.makeDateReadable(note.dateCreated)) === -1) {
+            arr.push(dateTime.makeDateReadable(note.dateCreated));
           }
         } 
         else {
@@ -43,6 +45,12 @@ class Notes extends Component {
   getSortNames = () => {
     const sortArr = this.filterSortData();
     this.setState({ sortNames: sortArr });
+  };
+
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value }, () => {
+      this.handleNotesSort(this.state.sortNameSel);
+    });
   };
 
   handleSortType = () => {
@@ -63,7 +71,7 @@ class Notes extends Component {
     if (sel !== "All") {
       let sortArr = this.state.allNotes.filter(note => 
         this.state.sortType === 'Date Left' ? 
-          note.dateCreated === sel :
+          dateTime.makeDateReadable(note.dateCreated) === sel :
           note.beverages === sel
       );
       this.setState({
@@ -76,7 +84,7 @@ class Notes extends Component {
     }
   };
 
-  getNoteData = (cb, userid) => {
+  getNoteData = (userid,cb) => {
     API.getNoteData(userid)
       .then(res => {
         this.setState(
@@ -93,8 +101,8 @@ class Notes extends Component {
       .catch(err => console.log(err));
   };
 
-  noteHandler = (id) => {
-    this.getNoteData(this.getSortNames, id);
+  noteHandler = (id,cb) => {
+    this.getNoteData(id,cb);
   }
 
   render() {
@@ -103,11 +111,10 @@ class Notes extends Component {
         {context => {
           const sortedNotes = this.state.sortedNotes;
           const { _id } = context.myState.user;
-          // const { deleteNote } = context;
 
           this.state.allNotes.length === 0 &&
             this.state.fetched === false &&
-            this.noteHandler(_id);
+            this.noteHandler(_id,this.getSortNames);
 
           return (
             <div className="main">
@@ -115,16 +122,19 @@ class Notes extends Component {
               {this.state.allNotes.length > 0 && this.state.sortNames && (
                 <NoteSort
                   changeType={this.handleSortType}
+                  sortNameSel={this.state.sortNameSel}
                   sortType={this.state.sortType}
                   sortData={this.state.sortNames}
-                  sort={this.handleNotesSort}
+                  handleChange={this.handleChange}
                 />
               )}
               {this.state.sortedNotes.length > 0 &&
                 this.state.sortedNotes.map((comment, index) => (
                   <CommentCard
                     key={index}
+                    handleNotesSort={this.handleNotesSort}
                     noteHandler={this.noteHandler}
+                    sortNameSel={this.state.sortNameSel}
                     {...comment}
                   />
                 ))}

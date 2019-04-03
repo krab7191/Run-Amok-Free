@@ -61,6 +61,8 @@ class CommentCard extends React.Component {
           const {
             classes,
             noteHandler,
+            handleNotesSort,
+            sortNameSel,
             _id,
             beverages,
             dateCreated,
@@ -86,7 +88,10 @@ class CommentCard extends React.Component {
                     <IconButton
                       aria-label="Delete"
                       className={classes.delete} 
-                      onClick={(e) => deleteNote(e,_id,noteHandler(userId))}
+                      onClick={
+                        (e) => deleteNote(e,_id,
+                          () => noteHandler(userId,
+                            () => handleNotesSort(sortNameSel)))}
                     >
                       <DeleteIcon />
                     </IconButton>
