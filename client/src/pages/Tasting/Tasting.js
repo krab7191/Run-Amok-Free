@@ -61,13 +61,10 @@ class Tasting extends Component {
                 </p>
               )}
               {/* If admin, link to bev mgmt and say create some. */}
-
-              <div className="main">
-                <div style={styles.tastingDiv}>
-                  {allAvailBevs.map(bev => (
-                    <TastingCard key={bev._id} bev={bev} />
-                  ))}
-                </div>
+              <div style={styles.tastingDiv}>
+                {allAvailBevs.map(bev => (
+                  <TastingCard key={bev._id} bev={bev} />
+                ))}
               </div>
             </div>
           );
