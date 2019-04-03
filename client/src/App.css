@@ -6,7 +6,7 @@ html,body {
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("/wine-corks-collection-website-header.jpg");
+    /* background-image: url(""); */
 }
 .section {
     min-height: calc(100vh - 70px);
