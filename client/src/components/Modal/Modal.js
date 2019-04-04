@@ -22,6 +22,12 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
+    [theme.breakpoints.down('md')]: {
+      width: '60% !important',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '70% !important',
+    },
   },
   note: {
       color: "green",
