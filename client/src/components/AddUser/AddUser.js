@@ -38,7 +38,8 @@ const styles = theme => ({
     marginTop: 16
   },
   normalCase: {
-    textTransform: "none"
+    textTransform: "none",
+    margin: '5px'
   },
   hidden: {
     display: "none"
@@ -187,19 +188,21 @@ class AddUser extends React.Component {
           data-for="global-tooltip"
         >
           <p className={classes.textField}>Sign-up Tokens:{" "}</p>
-          {this.state.validTokens.map((token, i) => (
-            <span key={i}>
-              <Button
-                className={classes.normalCase}
-                variant="contained"
-                color="primary"
-                onClick={() => this.copyToClipboard(token)}
-              >
-                {token}
-              </Button>
-              &nbsp;
-            </span>
-          ))}
+          <div>
+            {this.state.validTokens.map((token, i) => (
+              <span key={i}>
+                <Button
+                  className={classes.normalCase}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.copyToClipboard(token)}
+                >
+                  {token}
+                </Button>
+                &nbsp;
+              </span>
+            ))}
+          </div>
         </div>
         <SlideInToken
           close={this.handleClose}
