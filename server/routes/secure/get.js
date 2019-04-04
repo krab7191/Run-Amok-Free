@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const mailer = require('./mailer');
 const userController = require('../../controllers/userController');
-const ejs = require("ejs");
+const ejs = require('ejs');
 
 // Private GET routes here:
 // router.get('/secureData', secureGetController.secureData);

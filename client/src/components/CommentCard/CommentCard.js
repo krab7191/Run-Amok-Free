@@ -29,7 +29,8 @@ const styles = {
   },
   title: {
     fontSize: 16,
-    fontWeight: "bolder"
+    fontWeight: "bolder",
+    marginRight: '20%'
   },
   pos: {
     marginBottom: 12,
@@ -48,6 +49,9 @@ const styles = {
   },
   content: {
     position: "relative"
+  },
+  body: {
+    paddingRight: '15%'
   }
 };
 
@@ -104,7 +108,7 @@ class CommentCard extends React.Component {
                         format="MMMM Do YYYY"
                   />}
                 </Typography>
-                <Typography component="p">{body}</Typography>
+                <Typography className={classes.body} component="p">{body}</Typography>
                 <Typography component="p" />
               </CardContent>
             </Card>
