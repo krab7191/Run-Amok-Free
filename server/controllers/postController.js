@@ -4,7 +4,6 @@ const db = require("../models");
 module.exports = {
   createNote: function(req, res) {
     const { permissions } = res.locals;
-    console.log(`Permissions level: ${permissions}`);
     if (permissions > 0) {
       db.Notes.create(req.body)
         .then(data => res.json(data))
@@ -28,12 +27,18 @@ module.exports = {
       });
   },
   createBeverage: function(req, res) {
+    const { permissions } = res.locals;
     const { body } = req;
-    body.dateCreated = new Date();
-    db.Beverages.create(body)
-      .then(data => {
-        res.json(data);
-      })
-      .catch(err => res.status(422).json(err));
+    console.log(`Permissions level: ${permissions}`);
+    if (permissions > 1) {
+      body.dateCreated = new Date();
+      db.Beverages.create(body)
+        .then(data => {
+          res.json(data);
+        })
+        .catch(err => res.status(422).json(err));
+    } else {
+      res.status(401).json({ statusText: "Unauthorized" });
+    }
   }
 };

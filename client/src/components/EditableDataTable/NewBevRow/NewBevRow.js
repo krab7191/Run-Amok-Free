@@ -22,6 +22,7 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
+import { MyContext } from "../../MyContext/MyContext";
 const greenTheme = createMuiTheme({
   typography: {
     useNextVariants: true
@@ -69,7 +70,7 @@ class NewBevRow extends Component {
     });
   };
 
-  saveHandler = () => {
+  saveHandler = user => {
     const { name, description } = this.state;
     if (name.trim().length === 0 || description.trim().length === 0) {
       // function notify (text, type, duration, toast)
@@ -82,44 +83,45 @@ class NewBevRow extends Component {
       return;
     } else {
       // function notify (text, type, duration, toast)
-      toastNotifier.notify(
-        `Saving ${name}`,
-        "info",
-        800,
-        toast
-      );
-      API.saveNewBeverage(this.state).then(resp => {
-        if (resp.status === 200 && resp.statusText === "OK") {
-          // function notify (text, type, duration, toast)
-          toastNotifier.notify(
-            `${name} saved!`,
-            "success",
-            1200,
-            toast
-          );
-          this.setState({
-            name: "",
-            description: ""
-          });
-          this.props.updateStateWithNewBeverage(resp.data);
-        } else {
-          // function notify (text, type, duration, toast)
-          toastNotifier.notify(
-            `Error encountered, please try again`,
-            "error",
-            2000,
-            toast
-          );
-          console.log(
-            `Save beverage returned non-error status code: please debug`
-          );
-          if (resp.status === 500) {
-            // Error: Request failed with status code 500
-            console.log(`500 error`);
+      toastNotifier.notify(`Saving ${name}`, "info", 800, toast);
+      // Spread the state and add userId for BE permissions check
+      let postBevObj = { ...this.state };
+      postBevObj.user = user;
+      API.saveNewBeverage(postBevObj)
+        .then(resp => {
+          if (resp.status === 200 && resp.statusText === "OK") {
+            // function notify (text, type, duration, toast)
+            toastNotifier.notify(`${name} saved!`, "success", 1200, toast);
+            this.setState({
+              name: "",
+              description: ""
+            });
+            this.props.updateStateWithNewBeverage(resp.data);
+          } else {
+            // function notify (text, type, duration, toast)
+            toastNotifier.notify(
+              `Error occurred, please try again`,
+              "error",
+              1800,
+              toast
+            );
           }
-          console.log(resp.status, resp.statusText);
-        }
-      });
+        })
+        .catch(err => {
+          if (
+            err.name === "Error" &&
+            err.message === "Request failed with status code 401"
+          ) {
+            toastNotifier.notify(`Unauthorized`, "error", 2000, toast);
+          } else {
+            toastNotifier.notify(
+              `Error occurred, please try again`,
+              "error",
+              1800,
+              toast
+            );
+          }
+        });
     }
   };
 
@@ -128,53 +130,69 @@ class NewBevRow extends Component {
     const { classes } = this.props;
 
     return (
-      <TableRow>
-        <TableCell padding="checkbox"></TableCell>
-        <TableCell
-          align="center"
-          className={classNames(classes.name, classes.textField)}
-        >
-          <InputBase
-            className={classNames("editable", "beverage-name", classes.form)}
-            placeholder="Name"
-            onChange={e => this.fieldChangeHandler(e, "name")}
-            margin="dense"
-            value={name}
-            onKeyUp={e => this.handleKeyup(e)}
-          />
-        </TableCell>
-        <TableCell
-          align="center"
-          className={classNames(classes.textField, classes.description)}
-        >
-          <InputBase
-            className={classNames("editable", "beverage-description", classes.form)}
-            placeholder="Description"
-            onChange={e => this.fieldChangeHandler(e, "description")}
-            margin="dense"
-            value={description}
-            onKeyUp={e => this.handleKeyup(e)}
-          />
-        </TableCell>
-        <TableCell align="center">
-          <Icon className="fas fa-arrow-right" />
-        </TableCell>
-        <TableCell align="center" />
-        <TableCell align="center">
-          <MuiThemeProvider theme={greenTheme}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              onClick={this.saveHandler}
-              className={classes.saveButton}
-              disableFocusRipple={true}
-            >
-              Save New!
-            </Button>
-          </MuiThemeProvider>
-        </TableCell>
-      </TableRow>
+      <MyContext.Consumer>
+        {context => {
+          const userId = context.myState.user._id;
+
+          return (
+            <TableRow>
+              <TableCell padding="checkbox" />
+              <TableCell
+                align="center"
+                className={classNames(classes.name, classes.textField)}
+              >
+                <InputBase
+                  className={classNames(
+                    "editable",
+                    "beverage-name",
+                    classes.form
+                  )}
+                  placeholder="Name"
+                  onChange={e => this.fieldChangeHandler(e, "name")}
+                  margin="dense"
+                  value={name}
+                  onKeyUp={e => this.handleKeyup(e)}
+                />
+              </TableCell>
+              <TableCell
+                align="center"
+                className={classNames(classes.textField, classes.description)}
+              >
+                <InputBase
+                  className={classNames(
+                    "editable",
+                    "beverage-description",
+                    classes.form
+                  )}
+                  placeholder="Description"
+                  onChange={e => this.fieldChangeHandler(e, "description")}
+                  margin="dense"
+                  value={description}
+                  onKeyUp={e => this.handleKeyup(e)}
+                />
+              </TableCell>
+              <TableCell align="center">
+                <Icon className="fas fa-arrow-right" />
+              </TableCell>
+              <TableCell align="center" />
+              <TableCell align="center">
+                <MuiThemeProvider theme={greenTheme}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => this.saveHandler(userId)}
+                    className={classes.saveButton}
+                    disableFocusRipple={true}
+                  >
+                    Save New!
+                  </Button>
+                </MuiThemeProvider>
+              </TableCell>
+            </TableRow>
+          );
+        }}
+      </MyContext.Consumer>
     );
   }
 }

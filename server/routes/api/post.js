@@ -9,6 +9,6 @@ router.post("/note", userController.checkPermissions, postController.createNote)
 
 router.route("/unameCheck").post(postController.checkUname);
 
-router.post("/beverage", postController.createBeverage);
+router.post("/beverage", userController.checkPermissions, postController.createBeverage);
 
 module.exports = router;
