@@ -49,15 +49,20 @@ class Provider extends Component {
           myState: this.state,
           deleteNote: (e, id, cb) => {
             e.preventDefault();
-            API.deleteNote(id)
-              .then(res => {
-                this.notify(`Deleted ${res.data} note!`);
-                cb();
-              })
-              .catch(err => {
-                console.log(err);
-                this.notify("Error deleting note... Please try again.", "error");
-              });
+            if (window.confirm("Are you sure you want to delete this note?")) {
+              API.deleteNote(id)
+                .then(res => {
+                  this.notify(`Deleted ${res.data} note!`);
+                  cb();
+                })
+                .catch(err => {
+                  console.log(err);
+                  this.notify(
+                    "Error deleting note... Please try again.",
+                    "error"
+                  );
+                });
+            }
           },
           postNote: (e, beverageName, noteData) => {
             e.preventDefault();
