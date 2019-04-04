@@ -84,6 +84,27 @@ module.exports = {
       delete cleanUser.password;
     }
     res.json({ user: cleanUser });
+  },
+  checkPermissions: (req, res, next) => {
+    console.log("Checking permissions...");
+    const _id = req.body.user;
+    db.Users.findOne({ _id })
+      .then(result => {
+        if (result === null) {
+          returnUnauthorized(res);
+        } else if (result.isAdmin) {
+          res.locals.permissions = 2;
+          next();
+        } else {
+          res.locals.permissions = 1;
+          next();
+        }
+      })
+      .catch(err => {
+        console.log(`Error finding user: ${err}`);
+        sendErrMsg(res, "Whoops. Our bad, please try again.");
+      });
+    // next();
   }
 };
 
@@ -99,4 +120,8 @@ function deleteToken(t) {
 
 function sendErrMsg(res, msg) {
   res.status(422).json({ Error: msg });
+}
+
+function returnUnauthorized(res) {
+  res.status(401).json({ statusText: "Unauthorized" });
 }

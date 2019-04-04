@@ -5,7 +5,7 @@ const userController = require("../../controllers/userController");
 // Make sure every API call is authenticated but using passport local middleware
 const passport = require("../../passport");
 
-router.post("/note", userController.auth, passport.authenticate('local'), postController.createNote);
+router.post("/note", userController.checkPermissions, postController.createNote);
 
 router.route("/unameCheck").post(postController.checkUname);
 
