@@ -52,7 +52,9 @@ class Provider extends Component {
             API.addNoteData({
               body: noteData,
               beverages: beverageName,
-              user: this.state.user._id
+              user: this.state.user._id,
+              email: this.state.user.email,
+              password: this.state.user.password
             })
               .then(res => {
                 this.notify("Note saved!", "success");
