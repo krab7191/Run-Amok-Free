@@ -31,13 +31,23 @@ import { toast } from "react-toastify";
 import toastNotifier from "../../utils/toast";
 
 function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
+    if (orderBy !== "isAdmin" && orderBy !== "isAvailable") { 
+      if (b[orderBy].toUpperCase() < a[orderBy].toUpperCase()) {
+        return -1;
+      }
+      if (b[orderBy].toUpperCase() > a[orderBy].toUpperCase()) {
+        return 1;
+      }
+      return 0;
+    } else {  
+      if (b[orderBy] < a[orderBy]) {
+        return -1;
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return 1;
+      }
+      return 0;
+    }
 }
 
 function stableSort(array, cmp) {
@@ -66,7 +76,7 @@ class EditableDataTable extends Component {
       isAvailable: null,
       isAdmin: null,
       order: "asc",
-      orderBy: "firstName",
+      orderBy: this.props.type === "users" ? "firstName" : "name",
       selected: null
     };
   }

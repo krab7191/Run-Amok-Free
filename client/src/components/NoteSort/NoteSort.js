@@ -6,8 +6,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import dateTime from "../../utils/dateTime";
-
 const styles = theme => ({
   filterHeader: {
     display: "flex",
@@ -23,18 +21,16 @@ const styles = theme => ({
 });
 
 class NativeSelects extends React.Component {
-  state = {
-    sortData: "All"
-  };
-
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value }, () => {
-      this.props.sort(this.state.sortData);
-    });
-  };
 
   render() {
-    const { classes, changeType, sortType, sortData } = this.props;
+    const { classes, 
+        changeType, 
+        handleChange, 
+        sortType, 
+        sortData, 
+        sortNameSel } = this.props;
+    console.log( sortData,sortNameSel);
+
     return (
       <div className={classes.filterHeader}>
         <FormControl variant="filled" className={classes.formControl}>
@@ -50,17 +46,17 @@ class NativeSelects extends React.Component {
           </Select>
         </FormControl>
         <FormControl variant="filled" className={classes.formControl}>
-          <InputLabel htmlFor="filled-bevs">Filter</InputLabel>
+          <InputLabel htmlFor="filled-sortNameSel">Filter</InputLabel>
           <Select
             native
-            value={this.state.sortData}
-            onChange={this.handleChange("sortData")}
-            input={<FilledInput name="sortData" id="filled-sortData" />}
+            value={sortNameSel}
+            onChange={handleChange("sortNameSel")}
+            input={<FilledInput name="sortNameSel" id="filled-sortNameSel" />}
           >
             <option value={"All"}>All</option>
             {sortData.map((n, i) => (
               <option key={i} value={n}>
-                {sortType === "Date Left" && dateTime.makeDateReadable(n)}
+                {sortType === "Date Left" && n}
                 {sortType === "Mead Name" && n}
               </option>
             ))}

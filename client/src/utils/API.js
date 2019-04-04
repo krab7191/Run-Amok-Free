@@ -13,6 +13,9 @@ export default {
   addNoteData: noteData => {
     return axios.post("/api/post/note", noteData);
   },
+  deleteNote: noteData => {
+    return axios.delete("/api/delete/note/" + noteData);
+  },
   saveNewBeverage: bevObj => {
     return axios.post("/api/post/beverage", bevObj);
   },

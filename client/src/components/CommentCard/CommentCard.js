@@ -5,8 +5,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from '@material-ui/core/Divider';
 import Typography from "@material-ui/core/Typography";
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import Moment from "react-moment";
+import { MyContext } from "../MyContext/MyContext";
 
 const styles = {
   root: {
@@ -34,36 +38,81 @@ const styles = {
     fontSize: 14,
     fontWeight: "bolder"
   },
+  delete: {
+    position: 'absolute',
+    marginBottom: 12,
+    top: "5px",
+    right: "20px",
+    fontSize: 14,
+    fontWeight: "bolder"
+  },
   content: {
     position: "relative"
   }
 };
 
-function CommentCard( props ) {
-  const { classes } = props;
+class CommentCard extends React.Component {
 
-  return (
-    <Card raised={true} className={classes.card}>
-      <CardContent className={classes.content}>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {props.name}
-        </Typography>
-        <Divider className={classes.root} />
-        <Typography className={classes.pos} color="textSecondary">
-          {<Moment
-                date={props.date}
-                format="MMMM Do YYYY"
-          />}
-        </Typography>
-        <Typography component="p">{props.comment}</Typography>
-        <Typography component="p" />
-      </CardContent>
-    </Card>
-  );
+  render () {
+    return (
+      <MyContext.Consumer>
+        {context => { 
+          
+          const {
+            classes,
+            noteHandler,
+            handleNotesSort,
+            sortNameSel,
+            _id,
+            beverages,
+            dateCreated,
+            body
+          } = this.props;
+
+          const { deleteNote } = context;
+          const userId = context.myState.user._id;
+          const { isAdmin } = context.myState;
+          
+          return (
+            <Card raised={true} className={classes.card}>
+              <CardContent className={classes.content}>
+                <Typography
+                  className={classes.title}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  {beverages}
+                </Typography>
+                { isAdmin ?
+                  <Tooltip title="Delete">
+                    <IconButton
+                      aria-label="Delete"
+                      className={classes.delete} 
+                      onClick={
+                        (e) => deleteNote(e,_id,
+                          () => noteHandler(userId,
+                            () => handleNotesSort(sortNameSel)))}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip> :
+                  null }
+                <Divider className={classes.root} />
+                <Typography className={classes.pos} color="textSecondary">
+                  {<Moment
+                        date={dateCreated}
+                        format="MMMM Do YYYY"
+                  />}
+                </Typography>
+                <Typography component="p">{body}</Typography>
+                <Typography component="p" />
+              </CardContent>
+            </Card>
+          );
+        }}
+      </MyContext.Consumer>
+    );
+  }
 }
 
 CommentCard.propTypes = {

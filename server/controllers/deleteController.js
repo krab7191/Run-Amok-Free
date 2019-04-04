@@ -13,5 +13,16 @@ module.exports = {
         .catch(err => 
             res.status(422).json(err)
         );
-    }
+    },
+    deleteNoteById: function (req,res) {
+        db.Notes.deleteOne({
+            _id: req.params.id
+        })
+        .then(resp => 
+            res.json(resp.deletedCount)
+        )
+        .catch(err => 
+            res.status(422).json(err)
+        );
+    },
 };

@@ -14,7 +14,11 @@ class UsersList extends Component {
       <MyContext.Consumer>
         {context => {
           const { _id } = context.myState.user;
-          return <EditableDataTable type="users" userId={_id} />;
+          return (
+          <div className="main">
+            <EditableDataTable type="users" userId={_id} />
+          </div>
+          )  
         }}
       </MyContext.Consumer>
     );
