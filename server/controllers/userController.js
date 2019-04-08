@@ -38,22 +38,20 @@ module.exports = {
           const token = req.body.token;
           delete req.body.token;
           const del = data.deleteOnRead;
-          db.Users.create(req.body)
-            .then(data => {
-              if (del) {
-                deleteToken(token);
-              }
-              res.json(data);
-            })
-            .catch(err => {
-              f;
-              if (err.name === "MongoError" && err.code === 11000) {
-                sendErrMsg(res, "A user with that email already exists.");
-              } else {
-                sendErrMsg(res, "A problem occurred ask for a new token!");
-              }
-            });
-        } else {
+          data.validUntil < Date.now ?
+            db.Users.create(req.body)
+              .then(data => {
+                del ? deleteToken(token) : null
+                res.json(data);
+              })
+              .catch(err => 
+                err.name === "MongoError" && err.code === 11000 ?
+                  sendErrMsg(res, "A user with that email already exists.") :
+                  sendErrMsg(res, "A problem occurred ask for a new token!")
+              ) : 
+            sendErrMsg(res, "Token expired!");
+        }
+        else {
           sendErrMsg(res, "Token not valid!");
         }
       })
