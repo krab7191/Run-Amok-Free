@@ -28,7 +28,7 @@
   "license": "ISC",
   "homepage": "https://github.com/krab7191/Run-Amok-Free",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^2.0.3",
